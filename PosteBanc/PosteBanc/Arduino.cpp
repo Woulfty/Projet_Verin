@@ -19,7 +19,7 @@ void Arduino::ArduinoConnected() {
 void Arduino::ArduinoConnexion()
 {
 	QString ipArduino = "192.168.65.249";
-	int portArduino = 50630;
+	int portArduino = 50660;
 	ArduinoSocket->connectToHost(ipArduino, portArduino);
 
 	connect(ArduinoSocket, SIGNAL(connected()), this, SLOT(ArduinoConnected()));
@@ -35,7 +35,11 @@ void Arduino::ArduinoDisconnected()
 
 void Arduino::ArduinoSendRequest()
 {
-	ArduinoSocket->write("1");
+	if (ArduinoSocket->state() == QTcpSocket::ConnectedState) {
+
+		ArduinoSocket->write("1");
+
+	}
 }
 
 void Arduino::StopConnection()
@@ -51,29 +55,32 @@ void Arduino::ArduinoReceiveData()
 {
 	
 	QString Data = ArduinoSocket->read(ArduinoSocket->bytesAvailable());
-	QStringList ArduinoValue = Data.split(QLatin1Char(','), Qt::SkipEmptyParts);
-	qDebug() << Data;
-	qDebug() << ArduinoValue;
+	QStringList ArduinoValue = Data.split(QLatin1Char(';'), Qt::SkipEmptyParts);
 
 
 	float ValueEntre = ArduinoValue[0].toFloat();
 	float ValueSortie = ArduinoValue[1].toFloat();
 
-	qDebug() << ValueEntre;
-	qDebug() << ValueSortie;
-	ArduinoSocket->write(0);
-	//Value.insert(ValueEntre, ValueSortie);
-	
+	Value.insert(ValueEntre, ValueSortie);
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
 
-float Arduino::getValueEntre()
+float Arduino::getValueEntre(int NumValeurEntre)
 {
-	return 0;
+	float ValueEntre = Value.key(0);
+	return ValueEntre;
 }
 
-float Arduino::getValueSortie()
+float Arduino::getValueSortie(int NumValeurSortie)
 {
-	return 0;
+	float ValueSortie = Value.key(0);
+	return ValueSortie;
+}
+
+int Arduino::getMapSize()
+{
+	int MapSize = Value.size();
+	qDebug() << MapSize;
+	return MapSize;
 }

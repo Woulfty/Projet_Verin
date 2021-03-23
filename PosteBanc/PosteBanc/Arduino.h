@@ -6,6 +6,7 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "Arduino.h"
 
 class Arduino : public QObject
 {
@@ -30,7 +31,8 @@ public slots:
 
 	void ArduinoReceiveData();
 
-	float getValueEntre();
-	float getValueSortie();
+	float getValueEntre(int);
+	float getValueSortie(int);
+	int	  getMapSize();
 };
 
