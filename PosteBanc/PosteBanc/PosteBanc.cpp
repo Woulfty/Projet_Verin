@@ -157,7 +157,7 @@ void PosteBanc::StartRead()
 	int TempAcquisitionLectureSecond = TempAcquisitionLecture * 1000;
 
 	arduino.ArduinoConnexion();
-
+	
 	Frequence = new QTimer(this);
 	QObject::connect(Frequence, SIGNAL(timeout()), this, SLOT(Mesure()));
 	Frequence->start(FrequenceLecture);
@@ -165,6 +165,7 @@ void PosteBanc::StartRead()
 	TempAcquisition = new QTimer(this);
 	QObject::connect(TempAcquisition, SIGNAL(timeout()), this, SLOT(StopTimer()));
 	TempAcquisition->start(TempAcquisitionLectureSecond);
+	
 }
 
 void PosteBanc::Mesure()
@@ -176,14 +177,20 @@ void PosteBanc::Mesure()
 
 void PosteBanc::SendData()
 {
+	int TailleTableau = arduino.getMapSize();
 
-	QString Affaire = affaire->CreateJSON();
-	qDebug() << Affaire;
+	for(int i = 0; i < TailleTableau; i++)
+	{ 
+		float	ValueEntre = arduino.getValueEntre(i);
+		float	ValueSortie = arduino.getValueSortie(i);
 
-	if (socket->state() == QTcpSocket::ConnectedState) {
+		QString Affaire = affaire->CreateJSON(i, ValueEntre, ValueSortie);
 
-		socket->write(Affaire.toLatin1());
+		if (socket->state() == QTcpSocket::ConnectedState) {
 
+			socket->write(Affaire.toLatin1());
+
+		}
 	}
 }
 
@@ -193,6 +200,7 @@ void PosteBanc::StopTimer()
 	TempAcquisition->stop();
 	qDebug() << "End Timer";
 
+	arduino.getMapSize();
 	arduino.StopConnection();
 	SendData();
 

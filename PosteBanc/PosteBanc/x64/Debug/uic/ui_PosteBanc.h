@@ -17,7 +17,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -54,8 +53,6 @@ public:
     QPushButton *ChangeValueAffaire;
     QPushButton *ValideNewParemetre;
     QPushButton *pushButton_2;
-    QScrollArea *scrollArea;
-    QWidget *scrollAreaWidgetContents;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -152,14 +149,6 @@ public:
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(50, 260, 75, 23));
-        scrollArea = new QScrollArea(centralWidget);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        scrollArea->setGeometry(QRect(370, 290, 391, 161));
-        scrollArea->setWidgetResizable(true);
-        scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 389, 159));
-        scrollArea->setWidget(scrollAreaWidgetContents);
         PosteBancClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(PosteBancClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
