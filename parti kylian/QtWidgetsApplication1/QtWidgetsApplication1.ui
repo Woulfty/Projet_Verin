@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtWidgetsApplication1Class</class>
+ <widget class="QMainWindow" name="QtWidgetsApplication1Class">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>601</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QtWidgetsApplication1</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="slectefile">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>60</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>fichier</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>60</y>
+      <width>301</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="inputMask">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string notr="true"/>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string notr="true"/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>601</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="QtWidgetsApplication1.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>slectefile</sender>
+   <signal>clicked()</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>selectFileButtonclicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>selectFileButtonclicked()</slot>
+ </slots>
+</ui>
