@@ -1,9 +1,0 @@
-﻿  Reading Qt configuration (C:/Qt/5.14.2/msvc2017_32/bin/qmake)
-  rcc QtWidgetsApplication1.qrc
-   RCC: Warning: No resources in 'C:\Users\duval kylian\Desktop\PROJET TP\projet verain\parti kylian\QtWidgetsApplication1\QtWidgetsApplication1.qrc'.
-  affaire.cpp
-  QtWidgetsApplication1.cpp
-  main.cpp
-  moc_QtWidgetsApplication1.cpp
-  qrc_QtWidgetsApplication1.cpp
-  QtWidgetsApplication1.vcxproj -> C:\Users\duval kylian\Desktop\PROJET TP\projet verain\parti kylian\Debug\QtWidgetsApplication1.exe
