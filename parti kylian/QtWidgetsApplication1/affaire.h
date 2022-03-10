@@ -16,6 +16,9 @@ public:
 private:
 	int newAffaire();
 	int save();
+	int selectAffaire();
+	int updateAffaire();
+	int deleteAffaire();
 
 
 };

@@ -32,3 +32,14 @@ int affaire::save()
 
 	return 0;
 }
+int affaire::selectAffaire() {
+	return 0;
+}
+
+int affaire::updateAffaire() {
+	return 0;
+}
+
+int affaire::deleteAffaire() {
+	return 0;
+}
