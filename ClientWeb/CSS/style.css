@@ -1,0 +1,107 @@
+body,
+html {
+    margin: 0px;
+    padding: 0px;
+    /*background-image: url('https://external-preview.redd.it/Tf2MC-orVRAI8OL5tjyF4k4H2Q6QLHTWllekGfqdt3c.png?width=960&crop=smart&auto=webp&s=be4ab9a2fa3ca2f7011799377f118a8dbc64aacb');*/
+    background-color: rgb(255, 255, 255);
+    background-size: cover;
+    background-attachment: fixed;
+}
+.text-zone
+{
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+    margin-top: 10%;
+}
+.text-zone .title
+{
+    padding-left: 5%;
+    margin-left: 20%;
+    width: 60%;
+}
+.text-zone .title a
+{
+    color: #fff;
+    text-decoration: none;
+}
+.text-zone .title a:hover
+{
+    color: rgb(197, 197, 197);
+    transform: 5.2s;
+}
+.text-zone .article
+{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+}
+.text-zone .article h3
+{
+    position: relative;
+    color: rgb(0, 0, 0);
+    align-items: center;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+  
+input[type=submit]{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+  
+input[type=submit]:hover {
+    opacity: 0.8;
+}
+/* affichage des div */
+#dconnexion
+{
+    display: block;
+}
+#dpv
+{
+    display: none;
+}
+#ddeco
+{
+    display: none;
+}
+#ddoc
+{
+    display: none;
+}
+#dhelp
+{
+    display: none;
+}
+#bdeco
+{
+    display: none;
+}
+#bpv
+{
+    display: none;
+}
+#bdoc
+{
+    display: none;
+}
