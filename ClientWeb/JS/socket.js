@@ -1,8 +1,4 @@
-//connexion du socket au serveur
-const socket = new WebSocket("ws://192.168.65.44:3000");
-var socket = io();
-
-
+var socket = io("ws://localhost:4321");
 
 //affichage des div
 var divpv = document.getElementById('dpv');
@@ -20,37 +16,20 @@ var bouttondoc = document.getElementById('bdoc');
 var bouttondeco = document.getElementById('bdeco');
     bouttondeco.remove();
 
-//connexion
-//récupération de des informations du formulaire
-var Logform = document.getElementById('Logform');
+var form = document.getElementById('form');
 var pseudo = document.getElementById('pseudo');
 var mdp = document.getElementById('mdp');
-//formulaire de connexion
-Logform.addEventListener('submit', function(e) {
+
+form.addEventListener('submit', function(e) {
     e.preventDefault();
     if (pseudo.value) {
-        //envoie des données au serveur
-        socket.emit('UserConnexion', pseudo.value, mdp.value);
-        pseudo.value = '';
-        mdp.value = '';
+    socket.emit('UserConnexion', pseudo.value, mdp.value);
+    pseudo.value = '';
+    mdp.value = '';
     }
 });
-//réception de la réponse du serveur
-socket.on("ConnectionTrue", (id) => {
-    if (id.length > 0){
-        console.log(id);
-        writeCookie(id);
+socket.on("ConnectionTrue", (arg) => {
+    if (arg.length > 0){
+        console.log(arg[0].idUser);
     }
-})
-//création du cookie
-function writeCookie(id,value,days) {
-    var date, expires;
-    if (days) {
-        date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        expires = "; expires=" + date.toGMTString();
-            }else{
-        expires = "";
-    }
-    document.cookie = id + "=" + value + expires + "; path=/";
-}
+});
