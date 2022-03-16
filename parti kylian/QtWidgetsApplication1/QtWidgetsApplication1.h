@@ -19,8 +19,9 @@ public:
 private:
     Ui::QtWidgetsApplication1Class ui;
 	QString m_fileName;
-
+	const char* test;
 
 private slots:
 	void selectFileButtonclicked();
+	void confDecodageFichier();
 };

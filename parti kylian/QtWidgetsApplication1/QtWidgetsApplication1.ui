@@ -30,32 +30,52 @@
      <string>fichier</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QPushButton" name="confDcodage">
     <property name="enabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>90</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>lancer</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lineEdit">
     <property name="geometry">
      <rect>
       <x>140</x>
       <y>60</y>
-      <width>301</width>
-      <height>20</height>
+      <width>321</width>
+      <height>21</height>
      </rect>
     </property>
-    <property name="inputMask">
-     <string notr="true"/>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string notr="true"/>
+     <string/>
     </property>
-    <property name="frame">
-     <bool>false</bool>
+   </widget>
+   <widget class="QLabel" name="labelAffiche">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>200</y>
+      <width>391</width>
+      <height>61</height>
+     </rect>
     </property>
-    <property name="dragEnabled">
-     <bool>false</bool>
-    </property>
-    <property name="placeholderText">
-     <string notr="true"/>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -100,8 +120,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>confDcodage</sender>
+   <signal>clicked()</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>confDecodageFichier()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectFileButtonclicked()</slot>
+  <slot>confDecodageFichier()</slot>
  </slots>
 </ui>

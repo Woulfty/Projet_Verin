@@ -11,14 +11,18 @@ int affaire::save()
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 	db.setHostName("192.168.65.20");
-	db.setDatabaseName("");
-	db.setUserName("");
-	db.setPassword("");
+	db.setDatabaseName("verain");
+	db.setUserName("admin");
+	db.setPassword("admin");
 
 	if (db.open()) {
 		qDebug() << "Connexion BDD reussie";
 		QSqlQuery requete;
-		//requete.prepare("INSERT INTO  VALUES(?, ?,?,?,?)");
+		requete.prepare("INSERT INTO `Affaire`(`TypeAffaire`, `Capteur`, `TotalTime`, `Frequence`, `Essaie`, `PV`) VALUES (?,?,?,?,?,?)");
+		//requete.addBindValue();
+		//requete.addBindValue();
+		//requete.addBindValue();
+		//requete.addBindValue();
 		//requete.addBindValue();
 		//requete.addBindValue();
 
