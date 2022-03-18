@@ -11,15 +11,20 @@
 
 class QtWidgetsApplication1 : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    QtWidgetsApplication1(QWidget *parent = Q_NULLPTR);
+	QtWidgetsApplication1(QWidget *parent = Q_NULLPTR);
 
 private:
-    Ui::QtWidgetsApplication1Class ui;
+	Ui::QtWidgetsApplication1Class ui;
 	QString m_fileName;
-	const char* test;
+	QString txt;
+	int TypeAffaire;
+	int IDCapteur;
+	float TotalTime;
+	float Frequence;
+	QString Pv;
 
 private slots:
 	void selectFileButtonclicked();
