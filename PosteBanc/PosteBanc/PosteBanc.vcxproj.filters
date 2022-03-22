@@ -40,17 +40,11 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C9111.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Affaire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C9111.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Affaire.h">
       <Filter>Header Files</Filter>
     </ClInclude>

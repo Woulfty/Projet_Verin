@@ -17,7 +17,7 @@ class PosteBanc : public QMainWindow
 
 public:
     PosteBanc(QWidget *parent = Q_NULLPTR);
-	Affaire * affaire = new Affaire(1, 1, 10, 1000);
+	Affaire * affaire = new Affaire(1, 1, 10, 100);
 	
 	void ChangeValueIHM();
 	

@@ -1,12 +1,12 @@
 #include "Affaire.h"
-Affaire::Affaire(int NumAffaire, int Capteur, int TempAcquisition, int Frequence) {
+Affaire::Affaire(int NumAffaire, int Capteur, int Frequence, int TempAcquisition) {
 
 	this->NumAffaire = NumAffaire;
 	this->Capteur = Capteur;
-	this->TempAcquisition = TempAcquisition;
 	this->Frequence = Frequence;
+	this->TempAcquisition = TempAcquisition;
 
-	qDebug() << NumAffaire << Capteur << TempAcquisition << Frequence;
+	
 }
 
 Affaire::~Affaire()
@@ -14,12 +14,14 @@ Affaire::~Affaire()
 
 }
 
-void Affaire::setValueAffaire(int NumAffaire, int Capteur, int TempAcquisition, int Frequence)
+void Affaire::setValueAffaire(int NumAffaire, int Capteur, int Frequence, int TempAcquisition)
 {
 	this->NumAffaire = NumAffaire;
 	this->Capteur = Capteur;
 	this->TempAcquisition = TempAcquisition;
 	this->Frequence = Frequence;
+	qDebug() << NumAffaire << Capteur << TempAcquisition << Frequence ;
+
 }
 
 QString Affaire::CreateJSON()

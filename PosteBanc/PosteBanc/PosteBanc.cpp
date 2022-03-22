@@ -52,6 +52,7 @@ void PosteBanc::onSocketReadyRead()
 	int Frequence = jsonObject.value("frequence").toInt();
 	int TempAcquisition = jsonObject.value("temp").toInt();
 
+
 	affaire->setValueAffaire(NumAffaire, Capteur, Frequence, TempAcquisition);
 
 	ChangeValueIHM();
@@ -108,6 +109,7 @@ void PosteBanc::ChangeValueIHM()
 	int Frequence = affaire->getFrequence();
 	int TempAcquisition = affaire->getTempAcquisition();
 
+
 	ui.LabelAffaire->setText(QString::number(Affaire));
 	ui.LabelCapteur->setText(QString::number(Capteur));
 	ui.LabelFrequence->setText(QString::number(Frequence));
@@ -121,7 +123,7 @@ void PosteBanc::DeleteAffaire()
 	ChangeValueIHM();
 }
 
-
+/*---------------------------------------------------------------------------------------------------------------*/
 
 void PosteBanc::onButtonClickedSendMessage()
 {
