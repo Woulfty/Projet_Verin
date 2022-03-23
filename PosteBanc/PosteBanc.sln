@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PosteBanc", "PosteBanc\PosteBanc.vcxproj", "{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Debug|x64.ActiveCfg = Debug|x64
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Debug|x64.Build.0 = Debug|x64
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Debug|x86.ActiveCfg = Debug|x64
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Release|x64.ActiveCfg = Debug|x64
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Release|x64.Build.0 = Debug|x64
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Release|x86.ActiveCfg = Debug|x64
+		{C65B2B58-AA10-4451-BD5C-0C458FBB54EA}.Release|x86.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18D0E32E-8DCF-41AA-8078-5CE4D2476261}
+	EndGlobalSection
+EndGlobal

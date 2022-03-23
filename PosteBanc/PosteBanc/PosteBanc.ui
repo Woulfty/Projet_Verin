@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PosteBancClass</class>
+ <widget class="QMainWindow" name="PosteBancClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>908</width>
+    <height>512</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PosteBanc</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGroupBox" name="ConnexionServeur">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>241</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Connexion</string>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>110</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Adresse Serveur : </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>50</y>
+       <width>110</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Port serveur : </string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="AdresseServ">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>20</y>
+       <width>110</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="PortServ">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>60</y>
+       <width>110</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ButtonConnect">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>90</y>
+       <width>120</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Connexion Serveur</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="InformationTest">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>30</y>
+      <width>561</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Information Test</string>
+    </property>
+    <widget class="QLabel" name="TextAffaire">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Affaire :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="TextCapteur">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Capteur :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="TextFrequence">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Fréquence :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="TextAcquisition">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Temp Acquisition :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelAcquisition">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>120</y>
+       <width>55</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelFrequence">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>90</y>
+       <width>55</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelCapteur">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>60</y>
+       <width>55</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelAffaire">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>30</y>
+       <width>55</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>200</y>
+       <width>171</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Envoie message Serveur</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="CancelAffaire">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>160</y>
+       <width>111</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Annuler Affaire</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="AffaireLine">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>30</y>
+       <width>113</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="CapteurLine">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>60</y>
+       <width>113</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="FrequenceLine">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>90</y>
+       <width>113</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="tempAcquisitionLine">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>120</y>
+       <width>113</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelAffaireNew">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>30</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nouvelle Affaire :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelCapteurNew">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>60</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nouveau Capteur :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelFrequenceNew">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>90</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nouvelle Fréquence :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LabelTempAcquisitionNew">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>120</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nouveau Temp acquisition :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ChangeValueAffaire">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>160</y>
+       <width>171</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Changer Paramètre affaire</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ValideNewParemetre">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>200</y>
+       <width>211</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Valider nouveau paramètre Affaire</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>908</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="PosteBanc.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>ButtonConnect</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PosteBancClass</receiver>
+   <slot>ConnectServeur()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PosteBancClass</receiver>
+   <slot>onButtonClickedSendMessage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>685</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>470</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CancelAffaire</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PosteBancClass</receiver>
+   <slot>DeleteAffaire()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>685</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>470</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ValideNewParemetre</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PosteBancClass</receiver>
+   <slot>ChangeValueAffaire()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>725</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>453</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ChangeValueAffaire</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PosteBancClass</receiver>
+   <slot>EnableChangeValue()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>725</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>453</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>ConnectServeur()</slot>
+  <slot>onSocketConnected()</slot>
+  <slot>onSocketReadyRead()</slot>
+  <slot>onSocketDeconnected()</slot>
+  <slot>onButtonClickedSendMessage()</slot>
+  <slot>DeleteAffaire()</slot>
+  <slot>ChangeValueAffaire()</slot>
+  <slot>EnableChangeValue()</slot>
+ </slots>
+</ui>

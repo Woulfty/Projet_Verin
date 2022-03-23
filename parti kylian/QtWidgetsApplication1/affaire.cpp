@@ -6,7 +6,7 @@ int affaire::newAffaire()
 	return 0;
 }
 
-int affaire::save() 
+int affaire::save()
 {
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
