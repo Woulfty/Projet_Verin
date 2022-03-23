@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="CSS/style.css">
     <link rel="stylesheet" type="text/css" href="CSS/menu.css">
+    <!--<link rel="stylesheet" type="text/css" href="CSS/loader.css">-->
   </head>
   <body>
+    
     <!--menu de navigation-->
     <div id="navigation" class="navigation">
       <ul>
@@ -64,6 +66,7 @@
           </li>
       </ul>
     </div>
+
     <!--affichage-->
     <div class="text-zone">
       <!--formulaire de connexion-->
@@ -72,13 +75,13 @@
           <form id="form" action="">
             <input type="text" id="pseudo" autocomplete="off" />
             <input type="password" id="mdp" autocomplete="off" />
-            <input class="input" type="submit" name='sender' value="Connexion">
+            <button class="button">Connexion</button>
           </form>
       </div>
 
       <!--affichage des procés verbaux-->
       <div class="article" id="dpv">
-          <h3>pv</h3>
+          
       </div>
 
       <!--gestion des paramétres-->
@@ -105,10 +108,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js" integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="JS/menu.js"></script>
     <script type="text/javascript" src="JS/socket.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!--
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    
+    -->
   </body>
 </html>
