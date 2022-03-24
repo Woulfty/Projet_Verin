@@ -1,6 +1,7 @@
 // Création WebSocketServer
     var WebSocketServer = require('ws').Server;
     wss = new WebSocketServer({port: 40510});
+    console.log("Serveur Lancé.");
 
 // Lancement WebSocketServer
     wss.on('connection', function (ws){
@@ -13,15 +14,31 @@
             ,10 * 1000)
         // Message Reçu
             ws.on('message', function (message) {
-                console.log('received: %s', message)
+                console.log('received: %s', message);
             })
-        // Request UserConnexion
-            ws.on('UserConnexion', (pseudo, mdp) => {
-                console.log('Pseudo: ' + pseudo);
-                console.log('Mot de passe: ' + mdp);
-                var result = "1";
-                if(pseudo == "woulfty" || mdp == "123"){
-                    ws.send("ConnexionTrue", result)
-                }
-            });
+        // Request
+            // Request UserConnexion
+                ws.on('UserConnexion', function (message){
+                    console.log('received: %s', message);
+                });
+            // Request Calculs Rendements
+                ws.on('ListeAffaire', function (message){
+                    console.log('received: %s', message);
+                })
+            // Request Enregistrement Essai
+                ws.on('CalcRends', function (message){
+                    console.log('received: %s', message);
+                })
+            // Request BDD Exportation
+                ws.on('CalcRends', function (message){
+                    console.log('received: %s', message);
+                })
+            // Request BDD Importation
+                ws.on('CalcRends', function (message){
+                    console.log('received: %s', message);
+                })
+            // Request BDD Initialisation
+                ws.on('CalcRends', function (message){
+                    console.log('received: %s', message);
+                })
     })
