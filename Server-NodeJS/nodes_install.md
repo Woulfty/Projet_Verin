@@ -1,4 +1,4 @@
 #Requirement :
 
-npm install mysql
-npm install --save ws express
+npm install --save mysql
+npm install --save ws
