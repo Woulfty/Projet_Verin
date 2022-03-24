@@ -20,25 +20,49 @@
             // Request UserConnexion
                 ws.on('UserConnexion', function (message){
                     console.log('received: %s', message);
+                    ws.send("Connexion établie.");
                 });
-            // Request Calculs Rendements
-                ws.on('ListeAffaire', function (message){
+            // Request ListAffaires 
+                ws.on('ListAffaires', function (message){
                     console.log('received: %s', message);
+                    ws.send("ListAffaires Reponse.");
+                })
+            // Request Calculs Rendements
+                ws.on('CalcRends', function (message){
+                    console.log('received: %s', message);
+                    ws.send("Connexion établie.");
                 })
             // Request Enregistrement Essai
                 ws.on('CalcRends', function (message){
                     console.log('received: %s', message);
+                    ws.send("Connexion établie.");
                 })
             // Request BDD Exportation
                 ws.on('CalcRends', function (message){
                     console.log('received: %s', message);
+                    ws.send("Connexion établie.");
                 })
             // Request BDD Importation
                 ws.on('CalcRends', function (message){
                     console.log('received: %s', message);
+                    ws.send("Connexion établie.");
                 })
             // Request BDD Initialisation
                 ws.on('CalcRends', function (message){
                     console.log('received: %s', message);
+                    ws.send("Connexion établie.");
                 })
     })
+
+// Création MySQL
+    const mysql = require('mysql');
+    const db = mysql.createConnection({
+        host:"192.168.65.20",
+        user:"root",
+        password:"root"
+    });
+// Connexion BDD
+    db.connect(function(err) {
+        if (err) throw err;
+        console.log("Connecté à la base de données MySQL!");
+    });
