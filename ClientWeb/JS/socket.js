@@ -1,5 +1,5 @@
 //connexion du socket au serveur
-const ws = new WebSocket("ws://192.168.65.44:40510");
+//const ws = new WebSocket("ws://192.168.65.44:40510");
 //récupération de la barre de navigation
 var navigation = document.getElementById('navigation');
     navigation.style.display = "none";
@@ -14,8 +14,8 @@ ws.addEventListener('error', function (event) {
 });
 //Quand le socket c'est connecter
 ws.onopen = function () {
-    console.log('websocket is connected ...')
-    ws.send('connected')
+    console.log('websocket is connected ...');
+    ws.send('connected');
     //loader
     dloader = document.getElementById('dloader');
     dloader.style.display = "none";
@@ -31,13 +31,14 @@ var mdp = document.getElementById('mdp');
 form.addEventListener('submit', function(e) {
     e.preventDefault();
     if (pseudo.value && mdp.value) {
-        ws.send('UserConnexion', pseudo.value , mdp.value);
+        ws.send('UserConnexion' , pseudo.value , mdp.value);
         pseudo.value = '';
         mdp.value = '';
     }else{
         window.alert("veuillez remplir les champs");
-    }
+    }       
 });
+
 //récéption de la demande de connexion
 ws.on("ConnectionTrue", (arg) => {
     if (arg.length > 0){
@@ -64,10 +65,30 @@ ws.on("ConnectionTrue", (arg) => {
     }
 });
 
-ws.on("ListAffaires", (arg) => {
+ws.on("RepListAffaires", (arg) => {
     if (arg.length > 0){
-        
+        // (B1) JSON STRING TO ARRAY
+        var data = '["Red";"Green";"Blue"]';
+        data = JSON.parse(data);
+
+        // (B2) CREATE LIST
+        var list = document.createElement("ol");
+        for (let i of data) {
+            let item = document.createElement("li");
+            item.innerHTML = i;
+            list.appendChild(item);
+        }
+
+        // (B3) APPEND LIST TO CONTAINER
+        document.getElementById("demoA").appendChild(list);
     }else{
         window.alert("Une erreur est survenue lors de la récupération des informations... Veuillez réessayer plus tard.");
     }
 })
+//récupération de l'id sur la liste cliqué
+document.getElementById("RepListAffaires").addEventListener("click",function(e) {
+    if (e.target && e.target.matches("li.item")){
+        ws.send("InfoAffaires","li.item");
+    }
+});
+

@@ -13,25 +13,48 @@ TcpServeur::TcpServeur(QWidget *parent)
 
 void TcpServeur::onServerNewConnection()
 {
-	ui.label->setText("Le client est connecté");
+	ui.LabelBanc->setText("Connected");
 	QTcpSocket * client = server->nextPendingConnection();
 	QObject::connect(client, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
 	QObject::connect(client, SIGNAL(disconnect()), this, SLOT(onClientDisconnected()));
-
-	//this->tcpclient.push_back(client);
-	//qDebug() << tcpclient;
 }
 
 void TcpServeur::onClientReadyRead()
 {
 	QTcpSocket * obj = qobject_cast<QTcpSocket*>(sender());
-
 	QByteArray data = obj->read(obj->bytesAvailable());
-	QString str(data);
-	ui.label_2->setText(data);
+
+
+	QJsonDocument jsonResponse = QJsonDocument::fromJson(data);
+	QJsonObject jsonObject = jsonResponse.object();
+
+
+	int TypeMessage = jsonObject.value("Type").toInt();
+
+	switch (TypeMessage)
+	{
+	case 1:
+		int Affaire = jsonObject.value("affaire").toInt();
+		//BDD->EraseAffaire(int Affaire);
+
+		break;
+	}
+	
 }
 
 void TcpServeur::onClientDisconnected()
 {
+	ui.LabelBanc->setText("Disconected");
+}
 
+void TcpServeur::ConnectToBDD()
+{
+	QString Adresse = ui.AdresseBDD->text();
+	QString Username = ui.Username->text();
+	QString Mdp = ui.MDP->text();
+
+	qDebug() << Adresse << Username << Mdp;
+
+	bdd = new BDD();
+	bdd->ConnectToBDD(Adresse, Username, Mdp);
 }

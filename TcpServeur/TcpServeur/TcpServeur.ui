@@ -14,13 +14,13 @@
    <string>TcpServeur</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="LabelBDDState">
     <property name="geometry">
      <rect>
       <x>70</x>
       <y>40</y>
-      <width>101</width>
-      <height>41</height>
+      <width>110</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="font">
@@ -45,26 +45,13 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>160</y>
-      <width>591</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="LabelBancState">
     <property name="geometry">
      <rect>
       <x>70</x>
       <y>80</y>
-      <width>111</width>
-      <height>41</height>
+      <width>110</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="font">
@@ -124,7 +111,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="PortServ">
+    <widget class="QLineEdit" name="Username">
      <property name="geometry">
       <rect>
        <x>120</x>
@@ -157,7 +144,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="LabelUsername_2">
+    <widget class="QLabel" name="LabelMDP">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -171,6 +158,42 @@
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="LabelBanc">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>80</y>
+      <width>110</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LabelBDD">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>40</y>
+      <width>110</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -178,7 +201,7 @@
      <x>0</x>
      <y>0</y>
      <width>743</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -196,9 +219,27 @@
  <resources>
   <include location="TcpServeur.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ButtonConnect</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TcpServeurClass</receiver>
+   <slot>ConnectToBDD()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>569</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>onServerNewConnection()</slot>
   <slot>onClientDisconnected()</slot>
+  <slot>ConnectToBDD()</slot>
  </slots>
 </ui>
