@@ -8,6 +8,7 @@
 #include <QString>
 #include <string>
 
+
 #include "ui_PosteBanc.h"
 #include "Affaire.h"
 
