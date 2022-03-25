@@ -34,30 +34,40 @@ const mysql = require('mysql2/promise');
             if(message.slice() == 'ListAffaire'){
                 console.log('ListAffaire : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `Affaire`', []);
-                ws.send('RepListAffaire : ' + JSON.stringify(rows))
+                ws.send('RepListAffaire : ' + JSON.stringify(rows));
             }
             // ListPV
             if(message.slice() == 'ListPV'){
                 console.log('ListPV : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `PV`', []);
-                ws.send('RepListPV : ' + JSON.stringify(rows))
+                ws.send('RepListPV : ' + JSON.stringify(rows));
             }
             // ListEssai
             if(message.slice() == 'ListEssai'){
                 console.log('ListEssai : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `Essai`', []);
-                ws.send('RepListEssai : ' + JSON.stringify(rows))
+                ws.send('RepListEssai : ' + JSON.stringify(rows));
             }
             // ListUser
             if(message.slice() == 'ListUser'){
                 console.log('ListUser : %s', message);
                 const[rows, fields] = await con.execute('SELECT `id`, `Username`, `DateCreation` FROM `User`', []);
-                ws.send('RepListUser : ' + JSON.stringify(rows))
+                ws.send('RepListUser : ' + JSON.stringify(rows));
             }
             // UserConnexion
-            if(message.slice() == 'UserConnexion'){
+            if(message.split(';')[0] == 'UserConnexion'){
                 console.log('UserConnexion : %s', message);
-                
+                idUser  = message.split(';')[1];
+                MdpUser = message.split(';')[2];
+                MDP_bdd = await con.execute('SELECT `Mdp` FROM `User` WHERE `idUser` = ?', [MdpUser]);
+                if(MdpUser == MDP_bdd){
+                    console.log('RepUserConnexion ' + idUser + ' true.');
+                    ws.send('RepUserConnexion : ' + idUser + ';true');
+                }
+                else{
+                    console.log('RepUserConnexion ' + idUser + ' false.');
+                    ws.send('RepUserConnexion : ' + idUser + ';false');
+                }
             }
             // InfoAffaire
             if(message.split(';')[0] == 'InfoAffaire'){
