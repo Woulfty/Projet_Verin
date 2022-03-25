@@ -28,6 +28,7 @@ const mysql = require('mysql2/promise');
         ,30 * 1000)
         // Message Reçu Répo
         ws.on('message', async function(message){
+            // Définition String Message
             message = String( message );
             // ListAffaire
             if(message.slice() == 'ListAffaire'){
@@ -73,16 +74,19 @@ const mysql = require('mysql2/promise');
             // AddPV
             if(message.split(';')[0] == 'AddPV'){
                 console.log('AddPV : %s', message);
-                idPV = message.split(';')[1];
-                con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
-                ws.send('DelPV : idPV ' + idPV + ' DELETE.');
+                idUser      = message.split(';')[1];
+                idAffaire   = message.split(';')[2];
+                Texte       = message.split(';')[3];
+                con.execute('INSERT INTO `PV` (`idUser`, `idAffaire`, `Texte`) VALUES (?, ?, ?)', [idUser, idAffaire, Texte]);
+                ws.send('AddPV : PV ADD.');
             }
             // UpdPV
             if(message.split(';')[0] == 'UpdPV'){
                 console.log('UpdPV : %s', message);
-                idPV = message.split(';')[1];
-                con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
-                ws.send('DelPV : idPV ' + idPV + ' DELETE.');
+                idPV        = message.split(';')[1];
+                Texte       = message.split(';')[2];
+                con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
+                ws.send('UpdPV : idPV ' + idPV + ' UPDATE.');
             }
             // ExpBDD
             if(message.slice() == 'ExpBDD'){
