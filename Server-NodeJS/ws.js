@@ -29,11 +29,29 @@ const mysql = require('mysql2/promise');
         // Message Reçu Répo
         ws.on('message', async function(message){
             message = String( message );
-            // ListeAffaires
-            if(message.slice() == 'ListAffaires'){
-                console.log('ListAffaires : %s', message);
-                const[rows, fields] = await con.execute('SELECT `ID` FROM `Affaire`', []);
-                ws.send('RepListAffaires : ' + JSON.stringify(rows))
+            // ListAffaire
+            if(message.slice() == 'ListAffaire'){
+                console.log('ListAffaire : %s', message);
+                const[rows, fields] = await con.execute('SELECT * FROM `Affaire`', []);
+                ws.send('RepListAffaire : ' + JSON.stringify(rows))
+            }
+            // ListPV
+            if(message.slice() == 'ListPV'){
+                console.log('ListPV : %s', message);
+                const[rows, fields] = await con.execute('SELECT * FROM `PV`', []);
+                ws.send('RepListPV : ' + JSON.stringify(rows))
+            }
+            // ListEssai
+            if(message.slice() == 'ListEssai'){
+                console.log('ListEssai : %s', message);
+                const[rows, fields] = await con.execute('SELECT * FROM `Essai`', []);
+                ws.send('RepListEssai : ' + JSON.stringify(rows))
+            }
+            // ListUser
+            if(message.slice() == 'ListUser'){
+                console.log('ListUser : %s', message);
+                const[rows, fields] = await con.execute('SELECT `id`, `Username`, `DateCreation` FROM `User`', []);
+                ws.send('RepListUser : ' + JSON.stringify(rows))
             }
             // UserConnexion
             if(message.slice() == 'UserConnexion'){
@@ -45,27 +63,26 @@ const mysql = require('mysql2/promise');
                 console.log('InfoAffaires : %s', message);
                 
             }
-            // Essais
-            if(message.slice() == 'Essais'){
-                console.log('Essais : %s', message);
-                
-            }
-            // DelPv
-            if(message.split(';')[0] == 'DelPv'){
-                console.log('DelPv : %s', message);
+            // DelPV
+            if(message.split(';')[0] == 'DelPV'){
+                console.log('DelPV : %s', message);
                 idPV = message.split(';')[1];
                 con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
-                ws.send('DelPv : idPV + ' + idPV + ' DELETE.');
+                ws.send('DelPV : idPV ' + idPV + ' DELETE.');
             }
-            // AddPv
-            if(message.slice() == 'AddPv'){
-                console.log('AddPv : %s', message);
-                
+            // AddPV
+            if(message.split(';')[0] == 'AddPV'){
+                console.log('AddPV : %s', message);
+                idPV = message.split(';')[1];
+                con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
+                ws.send('DelPV : idPV ' + idPV + ' DELETE.');
             }
-            // UpdPv
-            if(message.slice() == 'UpdPv'){
-                console.log('UpdPv : %s', message);
-                
+            // UpdPV
+            if(message.split(';')[0] == 'UpdPV'){
+                console.log('UpdPV : %s', message);
+                idPV = message.split(';')[1];
+                con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
+                ws.send('DelPV : idPV ' + idPV + ' DELETE.');
             }
             // ExpBDD
             if(message.slice() == 'ExpBDD'){
