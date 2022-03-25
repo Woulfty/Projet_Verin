@@ -59,10 +59,33 @@ const mysql = require('mysql2/promise');
                 console.log('UserConnexion : %s', message);
                 
             }
-            // InfoAffaires
-            if(message.slice() == 'InfoAffaires'){
+            // InfoAffaire
+            if(message.split(';')[0] == 'InfoAffaire'){
                 console.log('InfoAffaires : %s', message);
-                
+                idAffaire   = message.split(';')[1];
+                const[rows, fields] = await con.execute('SELECT * FROM `Affaire` WHERE `idAffaire` = ?', [idAffaire]);
+                ws.send('RepInfoAffaire : ' + idAffaire + ';' + JSON.stringify(rows));
+            }
+            // InfoEssai
+            if(message.split(';')[0] == 'InfoEssai'){
+                console.log('InfoEssai : %s', message);
+                idEssai     = message.split(';')[1];
+                const[rows, fields] = await con.execute('SELECT * FROM `Essai` WHERE `idEssai` = ?', [idEssai]);
+                ws.send('RepInfoEssai : ' + idEssai + ';' + JSON.stringify(rows));
+            }
+            // InfoUser
+            if(message.split(';')[0] == 'InfoUser'){
+                console.log('InfoUser : %s', message);
+                idUser      = message.split(';')[1];
+                const[rows, fields] = await con.execute('SELECT * FROM `User` WHERE `idUser` = ?', [idUser]);
+                ws.send('RepInfoUser : ' + idUser + ';' + JSON.stringify(rows));
+            }
+            // InfoPV
+            if(message.split(';')[0] == 'InfoPV'){
+                console.log('InfoPV : %s', message);
+                idPV        = message.split(';')[1];
+                const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idPV` = ?', [idPV]);
+                ws.send('RepInfoPV : ' + idPV + ';' + JSON.stringify(rows));
             }
             // DelPV
             if(message.split(';')[0] == 'DelPV'){
