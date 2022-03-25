@@ -1,5 +1,5 @@
 ﻿  Reading Qt configuration (C:/Qt/5.14.2/msvc2017_64/bin/qmake)
-  Affaire.cpp
+  moc PosteBanc.h
   PosteBanc.cpp
   main.cpp
   moc_PosteBanc.cpp
