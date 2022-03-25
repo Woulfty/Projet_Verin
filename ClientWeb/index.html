@@ -84,6 +84,11 @@
             <!--affichage des procés verbaux-->
             <div class="article" id="dpv">
                 <h3>pv</h3>
+                <nav id="RepListAffaires">
+                    <ul>
+                        <li>Liste des Affaires</li>
+                    </ul>
+                </nav>
             </div>
 
             <!--gestion des paramétres-->
@@ -112,8 +117,28 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js" integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript" src="JS/menu.js"></script>
-        <script type="text/javascript" src="JS/socket.js"></script>
+        <script src="JS/socket.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+        <script>
+            const ws = new WebSocket("ws://192.168.65.44:40510");
+
+            var form = document.getElementById('form');
+            var pseudo = document.getElementById('pseudo');
+            var mdp = document.getElementById('mdp');
+            //envoie des données au serveurs
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (pseudo.value && mdp.value) {
+                    ws.send('UserConnexion' , pseudo.value , mdp.value);
+                    pseudo.value = '';
+                    mdp.value = '';
+                }else{
+                    window.alert("veuillez remplir les champs");
+                }       
+            });
+        </script>
+
     </body>
 </html>
