@@ -2,17 +2,24 @@
 
 #include <QObject>
 #include <QtSql/QtSql>
-//#include <qsqldatabase.h>
 
 class BDD : public QObject
 {
+
 	Q_OBJECT
 
 private:
-	QSqlDatabase * BDD;
+	QSqlDatabase * bdd;
 
 public:
 
-	void ConnectToBDD(QString Adresse, QString Username, QString Mdp);
+	BDD( );
+	
+	void EraseAffaire(int Affaire);
+	void UpdateAffaire(int Affaire, int Capteur, int Frequence, int TempAcquisition);
+	void AddAffaire();
+	
+	void ConnectToBDD( QString Adresse, QString Username, QString Mdp );
+	
 };
 

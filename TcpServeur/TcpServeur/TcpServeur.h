@@ -18,11 +18,13 @@ public:
 private:
     Ui::TcpServeurClass ui;
 
-	QList<QTcpSocket*> tcpclient;
+	BDD * bdd;
 	QTcpServer * server;
 
 public slots:
 	void onServerNewConnection();
 	void onClientReadyRead();
 	void onClientDisconnected();
+
+	void ConnectToBDD();
 };
