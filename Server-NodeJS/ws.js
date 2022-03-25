@@ -32,7 +32,52 @@ const mysql = require('mysql2/promise');
             if(message.slice() == 'ListAffaires'){
                 console.log('ListAffaires : %s', message);
                 const[rows, fields] = await con.execute('SELECT `ID` FROM `Affaire`', []);
-                ws.send(JSON.stringify(rows))
+                ws.send('RepListAffaires : ' + JSON.stringify(rows))
+            }
+            // UserConnexion
+            if(message.slice() == 'UserConnexion'){
+                console.log('UserConnexion : %s', message);
+                
+            }
+            // InfoAffaires
+            if(message.slice() == 'InfoAffaires'){
+                console.log('InfoAffaires : %s', message);
+                
+            }
+            // Essais
+            if(message.slice() == 'Essais'){
+                console.log('Essais : %s', message);
+                
+            }
+            // DelPv
+            if(message.slice() == 'DelPv'){
+                console.log('DelPv : %s', message);
+                
+            }
+            // AddPv
+            if(message.slice() == 'AddPv'){
+                console.log('AddPv : %s', message);
+                
+            }
+            // UpdPv
+            if(message.slice() == 'UpdPv'){
+                console.log('UpdPv : %s', message);
+                
+            }
+            // ExpBDD
+            if(message.slice() == 'ExpBDD'){
+                console.log('ExpBDD : %s', message);
+                
+            }
+            // ImpBDD
+            if(message.slice() == 'ImpBDD'){
+                console.log('ImpBDD : %s', message);
+                
+            }
+            // ResBDD
+            if(message.slice() == 'ResBDD'){
+                console.log('ResBDD : %s', message);
+                
             }
             // Autres
             else{
