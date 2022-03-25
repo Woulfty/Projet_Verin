@@ -20,7 +20,7 @@ const mysql = require('mysql2/promise');
     // Lancement WebSocketServer
     wss.on( 'connection', function (ws){
         // News Connexion
-        console.log("Nouvelle connexion");
+        console.log("Nouvelle connexion.");
         ws.send("Connexion établie.");
         // Lancement Date loop for 10 Secondes
         setInterval(() =>
@@ -28,6 +28,7 @@ const mysql = require('mysql2/promise');
         ,30 * 1000)
         // Message Reçu Répo
         ws.on('message', async function(message){
+            message = String( message );
             // ListeAffaires
             if(message.slice() == 'ListAffaires'){
                 console.log('ListAffaires : %s', message);
@@ -50,9 +51,11 @@ const mysql = require('mysql2/promise');
                 
             }
             // DelPv
-            if(message.slice() == 'DelPv'){
+            if(message.split(';')[0] == 'DelPv'){
                 console.log('DelPv : %s', message);
-                
+                idPV = message.split(';')[1];
+                con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
+                ws.send('DelPv : idPV + ' + idPV + ' DELETE.');
             }
             // AddPv
             if(message.slice() == 'AddPv'){
@@ -80,9 +83,8 @@ const mysql = require('mysql2/promise');
                 
             }
             // Autres
-            else{
-                console.log('Reçu (Inconnu) : %s', message);
-                ws.send('Erreur : reçu inconnu : ' + message)
+            else if(message.slice() != 'connected'){
+                console.log('Reçu : %s', message);
             }
         })
     });
