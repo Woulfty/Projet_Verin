@@ -34,25 +34,25 @@ const mysql = require('mysql2/promise');
             if(message.slice() == 'ListAffaire'){
                 console.log('ListAffaire : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `Affaire`', []);
-                ws.send('RepListAffaire : ' + JSON.stringify(rows));
+                ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListPV
             if(message.slice() == 'ListPV'){
                 console.log('ListPV : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `PV`', []);
-                ws.send('RepListPV : ' + JSON.stringify(rows));
+                ws.send('RepListPV' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListEssai
             if(message.slice() == 'ListEssai'){
                 console.log('ListEssai : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `Essai`', []);
-                ws.send('RepListEssai : ' + JSON.stringify(rows));
+                ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListUser
             if(message.slice() == 'ListUser'){
                 console.log('ListUser : %s', message);
-                const[rows, fields] = await con.execute('SELECT `id`, `Username`, `DateCreation` FROM `User`', []);
-                ws.send('RepListUser : ' + JSON.stringify(rows));
+                const[rows, fields] = await con.execute('SELECT `idUser`, `Username`, `DateCreation` FROM `User`', []);
+                ws.send('RepListUser' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // UserConnexion
             if(message.split(';')[0] == 'UserConnexion'){
@@ -61,12 +61,12 @@ const mysql = require('mysql2/promise');
                 MdpUser = message.split(';')[2];
                 MDP_bdd = await con.execute('SELECT `Mdp` FROM `User` WHERE `idUser` = ?', [MdpUser]);
                 if(MdpUser == MDP_bdd){
-                    console.log('RepUserConnexion ' + idUser + ' true.');
-                    ws.send('RepUserConnexion : ' + idUser + ';true');
+                    console.log('RepUserConnexion' + ';' + idUser + ';' + 'true');
+                    ws.send('RepUserConnexion' + ';' + idUser + ';' + 'true');
                 }
                 else{
-                    console.log('RepUserConnexion ' + idUser + ' false.');
-                    ws.send('RepUserConnexion : ' + idUser + ';false');
+                    console.log('RepUserConnexion' + ';' + idUser + ';' + 'false');
+                    ws.send('RepUserConnexion' + ';' + idUser + ';' + 'false');
                 }
             }
             // InfoAffaire
@@ -74,35 +74,35 @@ const mysql = require('mysql2/promise');
                 console.log('InfoAffaires : %s', message);
                 idAffaire   = message.split(';')[1];
                 const[rows, fields] = await con.execute('SELECT * FROM `Affaire` WHERE `idAffaire` = ?', [idAffaire]);
-                ws.send('RepInfoAffaire : ' + idAffaire + ';' + JSON.stringify(rows));
+                ws.send('RepInfoAffaire' + ';' + idAffaire + ';' + JSON.stringify(rows));
             }
             // InfoEssai
             if(message.split(';')[0] == 'InfoEssai'){
                 console.log('InfoEssai : %s', message);
                 idEssai     = message.split(';')[1];
                 const[rows, fields] = await con.execute('SELECT * FROM `Essai` WHERE `idEssai` = ?', [idEssai]);
-                ws.send('RepInfoEssai : ' + idEssai + ';' + JSON.stringify(rows));
+                ws.send('RepInfoEssai' + ';' + idEssai + ';' + JSON.stringify(rows));
             }
             // InfoUser
             if(message.split(';')[0] == 'InfoUser'){
                 console.log('InfoUser : %s', message);
                 idUser      = message.split(';')[1];
                 const[rows, fields] = await con.execute('SELECT * FROM `User` WHERE `idUser` = ?', [idUser]);
-                ws.send('RepInfoUser : ' + idUser + ';' + JSON.stringify(rows));
+                ws.send('RepInfoUser' + ';' + idUser + ';' + JSON.stringify(rows));
             }
             // InfoPV
             if(message.split(';')[0] == 'InfoPV'){
                 console.log('InfoPV : %s', message);
                 idPV        = message.split(';')[1];
                 const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idPV` = ?', [idPV]);
-                ws.send('RepInfoPV : ' + idPV + ';' + JSON.stringify(rows));
+                ws.send('RepInfoPV' + ';' + idPV + ';' + JSON.stringify(rows));
             }
             // DelPV
             if(message.split(';')[0] == 'DelPV'){
                 console.log('DelPV : %s', message);
                 idPV = message.split(';')[1];
                 con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
-                ws.send('DelPV : idPV ' + idPV + ' DELETE.');
+                ws.send('RepDelPV' + ';' + idPV + ';' + 'CONFIRM');
             }
             // AddPV
             if(message.split(';')[0] == 'AddPV'){
@@ -111,7 +111,7 @@ const mysql = require('mysql2/promise');
                 idAffaire   = message.split(';')[2];
                 Texte       = message.split(';')[3];
                 con.execute('INSERT INTO `PV` (`idUser`, `idAffaire`, `Texte`) VALUES (?, ?, ?)', [idUser, idAffaire, Texte]);
-                ws.send('AddPV : PV ADD.');
+                ws.send('RepAddPV' + ';' + 'CONFIRM');
             }
             // UpdPV
             if(message.split(';')[0] == 'UpdPV'){
@@ -119,7 +119,7 @@ const mysql = require('mysql2/promise');
                 idPV        = message.split(';')[1];
                 Texte       = message.split(';')[2];
                 con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
-                ws.send('UpdPV : idPV ' + idPV + ' UPDATE.');
+                ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
             }
             // ExpBDD
             if(message.slice() == 'ExpBDD'){
