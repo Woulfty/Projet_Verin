@@ -1,11 +1,19 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
+
 //récupération de la barre de navigation
 var navigation = document.getElementById('navigation');
     navigation.style.display = "none";
 //récupération du loarder
 var dloader = document.getElementById('dloader');
     dloader.style.display = "block";
+//boutton de la barre
+var toggle = document.getElementById('toggle');
+    toggle.style.display = "none";
+//affichage de la page de connexion
+var dconnexion = document.getElementById('dconnexion');
+    dconnexion.style.display = "none";
+
 //Erreur du socket
 ws.addEventListener('error', function (event) {
     navigation.style.display = "none";
@@ -22,6 +30,12 @@ ws.onopen = function () {
     //barre de navigation
     navigation = document.getElementById('navigation');
     navigation.style.display = "block";
+    //boutton de la barre
+    toggle = document.getElementById('toggle');
+    toggle.style.display = "block";
+    //affichage de la page de connexion
+    dconnexion = document.getElementById('dconnexion');
+    dconnexion.style.display = "block";
 
     //réception de messages
     ws.on('message', async function(message){
@@ -95,7 +109,7 @@ ws.onopen = function () {
             pseudo.value = '';
             mdp.value = '';
         }else{
-            window.alert("veuillez remplir les champs");
+            alert("veuillez remplir les champs");
         }       
     });
 }
