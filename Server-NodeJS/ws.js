@@ -124,17 +124,17 @@ const mysql = require('mysql2/promise');
             // ExpBDD
             if(message.slice() == 'ExpBDD'){
                 console.log('ExpBDD : %s', message);
-                
+                ws.send('RepExpBDD' + ';' + idPV + ';' + 'CONFIRM');
             }
             // ImpBDD
             if(message.slice() == 'ImpBDD'){
                 console.log('ImpBDD : %s', message);
-                
+                ws.send('RepImpBDD' + ';' + idPV + ';' + 'CONFIRM');
             }
             // ResBDD
             if(message.slice() == 'ResBDD'){
                 console.log('ResBDD : %s', message);
-                
+                ws.send('RepResBDD' + ';' + idPV + ';' + 'CONFIRM');
             }
             // Autres
             else if(message.slice() != 'connected'){
