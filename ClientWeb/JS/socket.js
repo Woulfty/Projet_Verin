@@ -1,5 +1,5 @@
 //connexion du socket au serveur
-//const ws = new WebSocket("ws://192.168.65.44:40510");
+const ws = new WebSocket("ws://192.168.65.44:40510");
 //récupération de la barre de navigation
 var navigation = document.getElementById('navigation');
     navigation.style.display = "none";
@@ -22,73 +22,80 @@ ws.onopen = function () {
     //barre de navigation
     navigation = document.getElementById('navigation');
     navigation.style.display = "block";
-}
-//récupération des valeurs dans les champs
-var form = document.getElementById('form');
-var pseudo = document.getElementById('pseudo');
-var mdp = document.getElementById('mdp');
-//envoie des données au serveurs
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (pseudo.value && mdp.value) {
-        ws.send('UserConnexion' , pseudo.value , mdp.value);
-        pseudo.value = '';
-        mdp.value = '';
-    }else{
-        window.alert("veuillez remplir les champs");
-    }       
-});
 
-//récéption de la demande de connexion
-ws.on("ConnectionTrue", (arg) => {
-    if (arg.length > 0){
-        console.log(arg[0].idUser);
-        //création du cookie
-        document.cookie = arg[0].idUser;'path=/; expires=' + date;
-        //on cache la div de connexion
-        var dconnexion = document.getElementById('dconnexion');
-        dconnexion.style.display = "none";
-        //apparition de la div de déconnexion
-        var bdeco = document.getElementById('bdeco');
-        bdeco.style.display = "block";
-        //apparition de la div de visualisation des Affaires
-        var bpv = document.getElementById('bpv');
-        bpv.style.display = "block";    
-        //apparition de la div de téléverement de fichier
-        var ddoc = document.getElementById('ddoc');
-        ddoc.style.display = "block";
+    //réception de messages
+    ws.on('message', async function(message){
+        // Définition String Message
+        message = String( message );
+        //récéption de la connexion
+        if(message.split(';')[0] == 'RepUserConnexion'){
+            idUser = message.split(';')[1];
+            registerRep = message.split(';')[2];
 
-        //demande des affaires au serveur
-        ws.send('ListAffaires');
-    }else{
-        window.alert("Identifiants incorectes");
-    }
-});
+            //création du cookie
+            document.cookie = idUser;'path=/; expires=' + date;
 
-ws.on("RepListAffaires", (arg) => {
-    if (arg.length > 0){
-        // (B1) JSON STRING TO ARRAY
-        var data = '["Red";"Green";"Blue"]';
-        data = JSON.parse(data);
+            //on cache la div de connexion
+            var dconnexion = document.getElementById('dconnexion');
+            dconnexion.style.display = "none";
+            //apparition de la div de déconnexion
+            var bdeco = document.getElementById('bdeco');
+            bdeco.style.display = "block";
+            //apparition de la div de visualisation des Affaires
+            var bpv = document.getElementById('bpv');
+            bpv.style.display = "block";    
+            //apparition de la div de téléverement de fichier
+            var ddoc = document.getElementById('ddoc');
+            ddoc.style.display = "block";
 
-        // (B2) CREATE LIST
-        var list = document.createElement("ol");
-        for (let i of data) {
-            let item = document.createElement("li");
-            item.innerHTML = i;
-            list.appendChild(item);
+            //demande des affaires au serveur
+            ws.send('ListAffaires');
+
+        /*
+        }else{
+            window.alert("Identifiants incorectes");
         }
+        */
+        }
+        //récéption des infos affaires
+        if(message.split(';')[0] == 'RepListAffaire'){
 
-        // (B3) APPEND LIST TO CONTAINER
-        document.getElementById("demoA").appendChild(list);
-    }else{
-        window.alert("Une erreur est survenue lors de la récupération des informations... Veuillez réessayer plus tard.");
-    }
-})
-//récupération de l'id sur la liste cliqué
-document.getElementById("RepListAffaires").addEventListener("click",function(e) {
-    if (e.target && e.target.matches("li.item")){
-        ws.send("InfoAffaires","li.item");
-    }
-});
+        }
+        //récéption des information de l'affaire
+        if(message.split(';')[0] == 'RepInfoAffaire'){
+            
+        }
+        //récéption des Pv de l'affaire
+        if(message.split(';')[0] == 'RepListPV'){
+            
+        }
+        //récéption des essais de l'affaire
+        if(message.split(';')[0] == 'RepListEssai'){
+            
+        }
+        //récéption des information de l'essais
+        if(message.split(';')[0] == 'RepInfoEssai'){
+            
+        }
+        //récéption des information du Pv
+        if(message.split(';')[0] == 'RepInfoPV'){
+            
+        }
+    });
 
+    //récupération des valeurs dans les champs de connexion
+    var form = document.getElementById('form');
+    var pseudo = document.getElementById('pseudo');
+    var mdp = document.getElementById('mdp');
+    //envoie des données au serveurs
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (pseudo.value && mdp.value) {
+            ws.send('UserConnexion' , pseudo.value , mdp.value);
+            pseudo.value = '';
+            mdp.value = '';
+        }else{
+            window.alert("veuillez remplir les champs");
+        }       
+    });
+}
