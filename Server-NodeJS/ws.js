@@ -33,8 +33,10 @@ const mysql = require('mysql2/promise');
             // ListAffaire
             if(message.slice() == 'ListAffaire'){
                 console.log('ListAffaire : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `Affaire`', []);
-                ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
+                //const[rows, fields] = await con.execute('SELECT * FROM `Affaire`', []);
+                //ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows)); //Liste des ID Uniquements
+                const[rows, fields] = await con.execute('SELECT `idAffaire` FROM `Affaire`', []);
+                ws.send('RepListAffaire' + ';' + JSON.stringify(rows));
             }
             // ListPV
             if(message.slice() == 'ListPV'){
