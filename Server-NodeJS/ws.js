@@ -1,6 +1,14 @@
+//  Import
 const WebSocketServer = require('ws').Server;
 const mysql = require('mysql2/promise');
 
+//  Déclaration BDD
+const BDD_IP = "192.168.65.20";
+const BDD_USER = "root";
+const BDD_PWD = "root";
+const BDD_BASE = "verain";
+
+//  WebSocket
 (async() => {
     // Création WebSocketServer
     const wss = new WebSocketServer({port: 40510});
@@ -8,10 +16,10 @@ const mysql = require('mysql2/promise');
 
     try{
         var con = await mysql.createConnection({
-            host:"192.168.65.20",
-            user:"root",
-            password:"root",
-            database : "verain"
+            host:       BDD_IP,
+            user:       BDD_USER,
+            password:   BDD_PWD,
+            database:   BDD_BASE
         });
     }catch(error){
         console.log("Erreure de connexion à la base de données", error);
