@@ -136,17 +136,17 @@ const BDD_BASE = "verain";
             // ExpBDD
             if(message.slice() == 'ExpBDD'){
                 console.log('ExpBDD : %s', message);
-                ws.send('RepExpBDD' + ';' + idPV + ';' + 'CONFIRM');
+                ws.send('RepExpBDD' + ';' + 'CONFIRM');
             }
             // ImpBDD
             if(message.slice() == 'ImpBDD'){
                 console.log('ImpBDD : %s', message);
-                ws.send('RepImpBDD' + ';' + idPV + ';' + 'CONFIRM');
+                ws.send('RepImpBDD' + ';' + 'CONFIRM');
             }
             // ResBDD
             if(message.slice() == 'ResBDD'){
                 console.log('ResBDD : %s', message);
-                ws.send('RepResBDD' + ';' + idPV + ';' + 'CONFIRM');
+                ws.send('RepResBDD' + ';' + 'CONFIRM');
             }
             // Autres
             else if(message.slice() != 'connected'){
