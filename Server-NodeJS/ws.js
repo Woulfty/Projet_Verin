@@ -57,16 +57,16 @@ const mysql = require('mysql2/promise');
             // UserConnexion
             if(message.split(';')[0] == 'UserConnexion'){
                 console.log('UserConnexion : %s', message);
-                idUser  = message.split(';')[1];
-                MdpUser = message.split(';')[2];
-                MDP_bdd = await con.execute('SELECT `Mdp` FROM `User` WHERE `idUser` = ?', [MdpUser]);
+                Username    = message.split(';')[1];
+                MdpUser     = message.split(';')[2];
+                MDP_bdd     = await con.execute('SELECT `Mdp` FROM `User` WHERE `Username` = ?', [MdpUser]);
                 if(MdpUser == MDP_bdd){
-                    console.log('RepUserConnexion' + ';' + idUser + ';' + 'true');
-                    ws.send('RepUserConnexion' + ';' + idUser + ';' + 'true');
+                    console.log('RepUserConnexion' + ';' + Username + ';' + 'true');
+                    ws.send('RepUserConnexion' + ';' + Username + ';' + 'true');
                 }
                 else{
-                    console.log('RepUserConnexion' + ';' + idUser + ';' + 'false');
-                    ws.send('RepUserConnexion' + ';' + idUser + ';' + 'false');
+                    console.log('RepUserConnexion' + ';' + Username + ';' + 'false');
+                    ws.send('RepUserConnexion' + ';' + Username + ';' + 'false');
                 }
             }
             // InfoAffaire
