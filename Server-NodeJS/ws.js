@@ -1,6 +1,7 @@
 //  Import
 const WebSocketServer = require('ws').Server;
 const mysql = require('mysql2/promise');
+const mysqldump = require('mysqldump');
 
 //  Déclaration BDD
 const BDD_IP = "192.168.65.20";
