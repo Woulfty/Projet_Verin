@@ -46,12 +46,18 @@ ws.addEventListener("message", async (event, isBinary ) => {
             //apparition de la div de déconnexion
             var bdeco = document.getElementById('bdeco');
             bdeco.style.display = "block";
-            //apparition de la div de visualisation des Affaires
+            //apparition du bouton de visualisation des Affaires
             var bpv = document.getElementById('bpv');
             bpv.style.display = "block";    
             //apparition de la div de téléverement de fichier
             var ddoc = document.getElementById('ddoc');
             ddoc.style.display = "block";
+            //apparition de la div de téléverement de fichier
+            var bdoc = document.getElementById('bdoc');
+            bdoc.style.display = "block";
+            //apparition de la div de visualisation des affaire
+            var dpv = document.getElementById('dpv');
+            dpv.style.display = "block";
 
             //demande des affaires au serveur
             ws.send('ListAffaires');
@@ -59,7 +65,14 @@ ws.addEventListener("message", async (event, isBinary ) => {
     }
     //récéption des infos affaires
     if(message.split(';')[0] == 'RepListAffaire'){
+        let listData = message.length;
+        let list = document.getElementById('ListAffaires');
 
+        listData.forEach((item)=>{
+            let li = document.createElement("li");
+            li.innerText = item;
+            list.appendChild(li);
+        })
     }
     //récéption des information de l'affaire
     if(message.split(';')[0] == 'RepInfoAffaire'){
@@ -129,5 +142,4 @@ ws.onopen = function () {
         e.preventDefault();
         location.reload();
     });
-    
 }
