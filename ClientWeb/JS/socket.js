@@ -20,6 +20,67 @@ navigation.style.display = "none"
 
 ws.addEventListener("message", async (event, isBinary ) => {
     console.log( event.data )
+    
+    // Définition String Message
+    message = String( event.data );
+    //alert('poopy');
+    //récéption de la connexion
+    if(message.split(';')[0] == 'RepUserConnexion'){
+        //découpage du message
+        var idUser = message.split(';')[1];
+        var registerRep = message.split(';')[2];
+        //condition si l'utilisateur n'existe pas ou si le login et le mot de passe ne correspondes pas 
+        if(registerRep == "false"){
+            alert("Identifiants incorectes");
+        }
+        //condition si l'utilisateur exsite et qu'il a entrer le bon mot de passe et login
+        if(registerRep == "true"){
+            //création du cookie
+            //document.cookie = idUser;'path=/; expires=' + date;
+            //on cache la div de connexion
+            dconnexion = document.getElementById('dconnexion');
+            dconnexion.style.display = "none";
+            //on cache le bouton de connexion
+            bconnexion = document.getElementById('bconnexion');
+            bconnexion.style.display = "none";
+            //apparition de la div de déconnexion
+            var bdeco = document.getElementById('bdeco');
+            bdeco.style.display = "block";
+            //apparition de la div de visualisation des Affaires
+            var bpv = document.getElementById('bpv');
+            bpv.style.display = "block";    
+            //apparition de la div de téléverement de fichier
+            var ddoc = document.getElementById('ddoc');
+            ddoc.style.display = "block";
+
+            //demande des affaires au serveur
+            ws.send('ListAffaires');
+        }
+    }
+    //récéption des infos affaires
+    if(message.split(';')[0] == 'RepListAffaire'){
+
+    }
+    //récéption des information de l'affaire
+    if(message.split(';')[0] == 'RepInfoAffaire'){
+        
+    }
+    //récéption des Pv de l'affaire
+    if(message.split(';')[0] == 'RepListPV'){
+        
+    }
+    //récéption des essais de l'affaire
+    if(message.split(';')[0] == 'RepListEssai'){
+        
+    }
+    //récéption des information de l'essais
+    if(message.split(';')[0] == 'RepInfoEssai'){
+        
+    }
+    //récéption des information du Pv
+    if(message.split(';')[0] == 'RepInfoPV'){
+        
+    }
 })
 
 //Erreur du socket
@@ -47,65 +108,6 @@ ws.onopen = function () {
     dconnexion = document.getElementById('dconnexion');
     dconnexion.style.display = "block";
 
-    //réception de messages
-    ws.onmessage = async function (message) {
-        // Définition String Message
-        message = String( message );
-        //récéption de la connexion
-        if(message.split(';')[0] == 'RepUserConnexion'){
-            var idUser = message.split(';')[1];
-            var registerRep = message.split(';')[2];
-
-            if(registerRep == "false"){
-                alert("Identifiants incorectes");
-            }
-            else if(registerRep == "true"){
-                //création du cookie
-                document.cookie = idUser;'path=/; expires=' + date;
-
-                //on cache la div de connexion
-                dconnexion = document.getElementById('dconnexion');
-                dconnexion.style.display = "none";
-                //apparition de la div de déconnexion
-                var bdeco = document.getElementById('bdeco');
-                bdeco.style.display = "block";
-                //apparition de la div de visualisation des Affaires
-                var bpv = document.getElementById('bpv');
-                bpv.style.display = "block";    
-                //apparition de la div de téléverement de fichier
-                var ddoc = document.getElementById('ddoc');
-                ddoc.style.display = "block";
-
-                //demande des affaires au serveur
-                ws.send('ListAffaires');
-            }
-        }
-        //récéption des infos affaires
-        if(message.split(';')[0] == 'RepListAffaire'){
-
-        }
-        //récéption des information de l'affaire
-        if(message.split(';')[0] == 'RepInfoAffaire'){
-            
-        }
-        //récéption des Pv de l'affaire
-        if(message.split(';')[0] == 'RepListPV'){
-            
-        }
-        //récéption des essais de l'affaire
-        if(message.split(';')[0] == 'RepListEssai'){
-            
-        }
-        //récéption des information de l'essais
-        if(message.split(';')[0] == 'RepInfoEssai'){
-            
-        }
-        //récéption des information du Pv
-        if(message.split(';')[0] == 'RepInfoPV'){
-            
-        }
-    }
-
     //récupération des valeurs dans les champs de connexion
     var form = document.getElementById('form');
     var pseudo = document.getElementById('pseudo');
@@ -121,4 +123,11 @@ ws.onopen = function () {
             alert("veuillez remplir les champs");
         }       
     });
+    //déconnexion
+    var formdeco = document.getElementById('formdeco');
+    formdeco.addEventListener('submit', function(e){
+        e.preventDefault();
+        location.reload();
+    });
+    
 }
