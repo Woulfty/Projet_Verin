@@ -133,7 +133,7 @@ const BDD_BASE = "verain";
                 ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
             }
             // ExpBDD
-            if(message.slice() == 'ExpBDD'){
+            if(message.split(';')[0] == 'ExpBDD'){
                 console.log('ExpBDD : %s', message);
                 // Récupération de la BDD
                 await mysqldump({
@@ -154,12 +154,12 @@ const BDD_BASE = "verain";
                 console.log('RepExpBDD' + ';' + 'CONFIRM');
             }
             // ImpBDD
-            if(message.slice() == 'ImpBDD'){
+            if(message.split(';')[0] == 'ImpBDD'){
                 console.log('ImpBDD : %s', message);
                 ws.send('RepImpBDD' + ';' + 'CONFIRM');
             }
             // ResBDD
-            if(message.slice() == 'ResBDD'){
+            if(message.split(';')[0] == 'ResBDD'){
                 console.log('ResBDD : %s', message);
                 ws.send('RepResBDD' + ';' + 'CONFIRM');
             }
