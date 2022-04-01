@@ -24,7 +24,7 @@ const BDD_BASE = "verain";
             database:   BDD_BASE
         });
     }catch(error){
-        console.log("Erreure de connexion à la base de données", error);
+        console.log("Erreur de connexion à la base de données", error);
     }
 
     // Lancement WebSocketServer
