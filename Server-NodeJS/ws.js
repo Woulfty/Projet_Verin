@@ -3,12 +3,17 @@ const WebSocketServer = require('ws').Server;
 const mysql = require('mysql2/promise');
 const mysqldump = require('mysqldump');
 const fs = require('fs');
+const Importer = require('mysql-import');
 
 //  Déclaration BDD
 const BDD_IP = "192.168.65.20";
-const BDD_USER = "root";
-const BDD_PWD = "root";
+const BDD_USER = "verain";
+const BDD_PWD = "verain";
 const BDD_BASE = "verain";
+const host = BDD_IP;
+const user = BDD_USER;
+const password = BDD_PWD;
+const database = BDD_BASE;
 
 //  WebSocket
 (async() => {
@@ -161,7 +166,27 @@ const BDD_BASE = "verain";
             // ResBDD
             if(message.split(';')[0] == 'ResBDD'){
                 console.log('ResBDD : %s', message);
-                ws.send('RepResBDD' + ';' + 'CONFIRM');
+                // Suppresion ancienne BDD
+                con.execute('TRUNCATE `verain`.`Affaire`');
+                con.execute('TRUNCATE `verain`.`Essai`');
+                con.execute('TRUNCATE `verain`.`PV`');
+                con.execute('TRUNCATE `verain`.`User`');
+                // Importation BDD
+                const BDD_Import = new Importer({host, user, password, database});
+                BDD_Import.onProgress(progress=>{
+                    var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
+                    // Réponse
+                    console.log(`${percent}% Completé`);
+                    ws.send('RepResBDD' + ';' + `${percent}%`);
+                });
+                BDD_Import.import('./BDD_files/dump.sql').then(()=>{
+                    var files_imported = BDD_Import.getImported();
+                    console.log(`${files_imported.length} SQL file(s) imported.`);
+                }).catch(err=>{
+                    // Réponse
+                    ws.send('RepResBDD' + ';' + 'ERREUR' + ';' + err);
+                    console.error(err);
+                });
             }
             // Autres
             else if(message.slice() != 'connected'){
