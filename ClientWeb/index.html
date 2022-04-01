@@ -43,7 +43,7 @@
                         <span class="icon">
                             <ion-icon name="bar-chart-outline"></ion-icon>
                         </span>
-                        <span class="title">Procés-verbaux</span>
+                        <span class="title">Liste affaires</span>
                     </a>
                 </li>
                 <li class="list" id="bdoc">
@@ -53,7 +53,7 @@
                         <span class="icon">
                             <ion-icon name="document-attach-outline"></ion-icon>
                         </span>
-                        <span class="title">Ajouter un document</span>
+                        <span class="title">Action BDD</span>
                     </a>
                 </li>
                 <li class="list" id="bhelp">
@@ -83,30 +83,31 @@
 
             <!--affichage des procés verbaux-->
             <div class="article" id="dpv">
-                <h3>pv</h3>
-                <nav>
-                    <ul id="ListAffaires">
-                        <li>Liste des Affaires</li>
-                    </ul>
-                </nav>
+                <h3>Liste des affaires :</h3>
+                <div id="ListAffaire">
+
+                </div>
             </div>
 
             <!--gestion des paramétres-->
             <div class="article" id="ddoc">
-                <h3>document</h3>
+                <h3>Action avec la base de données :</h3>
+                <button class="button" id="resetbdd">Réinitialiser la base</button>
+                <button class="button" id="importbdd">Importé la base</button>
+                <button class="button" id="exportbdd">Exporté la base</button>
             </div>
 
             <!--déconnexion-->
             <div class="article" id="ddeco">
                 <h3>deco</h3>
                 <form id="formdeco" action="">
-                    <button class="button">déconnexion</button>
+                    <button class="button">Déconnexion</button>
                 </form>
             </div>
 
             <!--aide-->
             <div class="article" id="dhelp">
-                <h3>aide</h3>
+                <h3>Aide</h3>
             </div>
         </div>
 

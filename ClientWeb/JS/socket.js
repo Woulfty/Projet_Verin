@@ -48,10 +48,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             bdeco.style.display = "block";
             //apparition du bouton de visualisation des Affaires
             var bpv = document.getElementById('bpv');
-            bpv.style.display = "block";    
-            //apparition de la div de téléverement de fichier
-            var ddoc = document.getElementById('ddoc');
-            ddoc.style.display = "block";
+            bpv.style.display = "block"; 
             //apparition de la div de téléverement de fichier
             var bdoc = document.getElementById('bdoc');
             bdoc.style.display = "block";
@@ -60,19 +57,33 @@ ws.addEventListener("message", async (event, isBinary ) => {
             dpv.style.display = "block";
 
             //demande des affaires au serveur
-            ws.send('ListAffaires');
+            ws.send('ListAffaire');
         }
     }
     //récéption des infos affaires
     if(message.split(';')[0] == 'RepListAffaire'){
-        let listData = message.length;
-        let list = document.getElementById('ListAffaires');
+        //taille du message
+        var Datasize = message.split(';')[1];
+        //données
+        var Json = message.split(';')[2];
+        //découpage du dossier json
+        var data = JSON.parse(Json);
 
-        listData.forEach((item)=>{
-            let li = document.createElement("li");
-            li.innerText = item;
-            list.appendChild(li);
-        })
+        //récupération de la div ou je crée ma liste
+        var listDiv = document.getElementById('ListAffaire');
+        //création de la liste
+        var ul = document.createElement('ul');
+        ul.classList.add( "datalist" );
+        //création des données selon la taille du message
+        for (var i = 0; i < Datasize; ++i) {
+            var li = document.createElement('li');
+            li.innerHTML = "Affaire n°" + data[ i ].idAffaire;
+            li.classList.add( "aff" );
+            li.id = data[ i ].idAffaire;
+            ul.appendChild(li);                        
+        }
+        //définission de l'enfant
+        listDiv.appendChild(ul);
     }
     //récéption des information de l'affaire
     if(message.split(';')[0] == 'RepInfoAffaire'){
@@ -94,6 +105,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
     if(message.split(';')[0] == 'RepInfoPV'){
         
     }
+
 })
 
 //Erreur du socket
@@ -142,4 +154,15 @@ ws.onopen = function () {
         e.preventDefault();
         location.reload();
     });
+
+    // Quand un utilisateur clique sur une affaire.
+    document.addEventListener("click", ( event ) => {
+
+        if (event.target.classList.value == "aff" ) {
+            //event.target.id
+            ws.send('InfoAffaire;'+ event.target.id)
+        }
+ 
+    });
+
 }

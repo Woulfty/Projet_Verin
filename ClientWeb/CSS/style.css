@@ -49,6 +49,16 @@ html {
     color: rgb(0, 0, 0);
     align-items: center;
 }
+.text-zone .article div
+{
+    position: relative;
+    width: 100%;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+}
 input[type=text], input[type=password] {
     width: 50%;
     padding: 12px 20px;
@@ -65,10 +75,34 @@ input[type=text], input[type=password] {
     border: none;
     cursor: pointer;
     width: 50%;
-}
-  
+} 
 .button:hover {
     opacity: 0.8;
+}
+.aff
+{
+    color: black;
+    margin-top: 2% ;
+}
+.datalist
+{
+    width: 100%;
+    margin-top: 2%;
+    height: auto;
+    color: black;
+}
+.datalist li
+{
+    border: 3px solid;
+    border-color: black;
+    border-width:2px;
+    cursor: grab;
+    list-style: none;
+}
+.datalist li:hover
+{
+    background-color: rgb(242, 254, 255);
+    transform: scale(1.02);
 }
 /*a faire réaparaitre a la connexion*/
 #navigation
