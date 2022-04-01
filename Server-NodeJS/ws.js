@@ -43,25 +43,25 @@ const BDD_BASE = "verain";
             // ListAffaire
             if(message.slice() == 'ListAffaire'){
                 console.log('ListAffaire : %s', message);
-                const[rows, fields] = await con.execute('SELECT `idAffaire` FROM `Affaire`', []);
+                const[rows, fields] = await con.execute('SELECT `idAffaire` FROM `Affaire` ORDER BY `idAffaire` ASC', []);
                 ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListPV
             if(message.slice() == 'ListPV'){
                 console.log('ListPV : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `PV`', []);
+                const[rows, fields] = await con.execute('SELECT * FROM `PV` ORDER BY `idPV` ASC', []);
                 ws.send('RepListPV' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListEssai
             if(message.slice() == 'ListEssai'){
                 console.log('ListEssai : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `Essai`', []);
+                const[rows, fields] = await con.execute('SELECT * FROM `Essai` ORDER BY `idEssai` ASC', []);
                 ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListUser
             if(message.slice() == 'ListUser'){
                 console.log('ListUser : %s', message);
-                const[rows, fields] = await con.execute('SELECT `idUser`, `Username`, `DateCreation` FROM `User`', []);
+                const[rows, fields] = await con.execute('SELECT `idUser`, `Username`, `DateCreation` FROM `User` ORDER BY `idUser` ASC', []);
                 ws.send('RepListUser' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // UserConnexion
