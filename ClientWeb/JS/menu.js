@@ -37,6 +37,7 @@ bconnexion.addEventListener("click", () => {
     ddeco.style.display = "none";
     ddoc.style.display = "none";
     dhelp.style.display = "none";
+    daffaire.style.display = "none";
 })
 //pv
 bpv.addEventListener("click", () => {
@@ -46,6 +47,7 @@ bpv.addEventListener("click", () => {
     ddeco.style.display = "none";
     ddoc.style.display = "none";
     dhelp.style.display = "none";
+    daffaire.style.display = "none";
 })
 //deco
 bdeco.addEventListener("click", () => {
@@ -55,6 +57,7 @@ bdeco.addEventListener("click", () => {
     ddeco.style.display = "block";
     ddoc.style.display = "none";
     dhelp.style.display = "none";
+    daffaire.style.display = "none";
 })
 //doc
 bdoc.addEventListener("click", () => {
@@ -64,6 +67,7 @@ bdoc.addEventListener("click", () => {
     ddeco.style.display = "none";
     ddoc.style.display = "block";
     dhelp.style.display = "none";
+    daffaire.style.display = "none";
 })
 //aide
 bhelp.addEventListener("click", () => {
@@ -73,4 +77,5 @@ bhelp.addEventListener("click", () => {
     ddeco.style.display = "none";
     ddoc.style.display = "none";
     dhelp.style.display = "block";
+    daffaire.style.display = "none";
 })

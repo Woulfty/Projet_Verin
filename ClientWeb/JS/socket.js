@@ -13,10 +13,14 @@ var toggle = document.getElementById('toggle');
 //affichage de la page de connexion
 dconnexion = document.getElementById('dconnexion');
 
+//affichage de l'affaire
+daffaire = document.getElementById('daffaire');
+            
 dloader.style.display = "block"
 toggle.style.display = "none"
 dconnexion.style.display = "none"
 navigation.style.display = "none"
+daffaire.style.display = "none";
 
 ws.addEventListener("message", async (event, isBinary ) => {
     console.log( event.data )
@@ -55,6 +59,9 @@ ws.addEventListener("message", async (event, isBinary ) => {
             //apparition de la div de visualisation des affaire
             var dpv = document.getElementById('dpv');
             dpv.style.display = "block";
+            //apparition de la div de visualisation des affaire
+            daffaire = document.getElementById('daffaire');
+            daffaire.style.display = "none";
 
             //demande des affaires au serveur
             ws.send('ListAffaire');
@@ -87,7 +94,27 @@ ws.addEventListener("message", async (event, isBinary ) => {
     }
     //récéption des information de l'affaire
     if(message.split(';')[0] == 'RepInfoAffaire'){
+        //apparition de la div de visualisation des affaire
+        dpv = document.getElementById('dpv');
+        dpv.style.display = "none";
+        //apparition de la div de visualisation des affaire
+        daffaire = document.getElementById('daffaire');
+        daffaire.style.display = "block";
         
+        var Datasize = message.split(';')[1];
+        //données
+        var Json = message.split(';')[2];
+        //récupération de la div ou j'affiche mes affaires
+        var divaffaire = document.getElementById('affaire');
+        //découpage du dossier json
+        var data = JSON.parse(Json);
+
+        var h3 = document.createElement('h3');
+
+        for (var i = 0; i < 1; ++i) {
+            h3.innerHTML = "Affaire n°" + data[ i ].idAffaire;                       
+        }
+        divaffaire.appendChild(h3);
     }
     //récéption des Pv de l'affaire
     if(message.split(';')[0] == 'RepListPV'){
@@ -155,14 +182,12 @@ ws.onopen = function () {
         location.reload();
     });
 
-    // Quand un utilisateur clique sur une affaire.
+    //Quand un utilisateur clique sur une affaire
     document.addEventListener("click", ( event ) => {
 
         if (event.target.classList.value == "aff" ) {
             //event.target.id
             ws.send('InfoAffaire;'+ event.target.id)
         }
- 
     });
-
 }
