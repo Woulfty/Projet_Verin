@@ -161,7 +161,35 @@ const database = BDD_BASE;
             // ImpBDD
             if(message.split(';')[0] == 'ImpBDD'){
                 console.log('ImpBDD : %s', message);
-                ws.send('RepImpBDD' + ';' + 'CONFIRM');
+                // Définition BDD_Temps
+                const content = message.slice(8);
+                fs.writeFile('./BDD_files/BDD_Temps.sql', content, err => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+                })
+                // Suppresion ancienne BDD
+                con.execute('TRUNCATE `verain`.`Affaire`');
+                con.execute('TRUNCATE `verain`.`Essai`');
+                con.execute('TRUNCATE `verain`.`PV`');
+                con.execute('TRUNCATE `verain`.`User`');
+                // Importation BDD
+                const BDD_Import = new Importer({host, user, password, database});
+                BDD_Import.onProgress(progress=>{
+                    var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
+                    // Réponse
+                    console.log(`${percent}% Completé`);
+                    ws.send('RepImpBDD' + ';' + `${percent}%`);
+                });
+                BDD_Import.import('./BDD_files/BDD_Temps.sql').then(()=>{
+                    var files_imported = BDD_Import.getImported();
+                    console.log(`${files_imported.length} SQL file(s) imported.`);
+                }).catch(err=>{
+                    // Réponse
+                    ws.send('RepImpBDD' + ';' + 'ERREUR' + ';' + err);
+                    console.error(err);
+                });
             }
             // ResBDD
             if(message.split(';')[0] == 'ResBDD'){
