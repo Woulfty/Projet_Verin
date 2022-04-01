@@ -2,6 +2,7 @@
 const WebSocketServer = require('ws').Server;
 const mysql = require('mysql2/promise');
 const mysqldump = require('mysqldump');
+const fs = require('fs');
 
 //  Déclaration BDD
 const BDD_IP = "192.168.65.20";
@@ -136,7 +137,23 @@ const BDD_BASE = "verain";
             // ExpBDD
             if(message.slice() == 'ExpBDD'){
                 console.log('ExpBDD : %s', message);
-                ws.send('RepExpBDD' + ';' + 'CONFIRM');
+                // Récupération de la BDD
+                await mysqldump({
+                    connection:{
+                        host:       BDD_IP,
+                        user:       BDD_USER,
+                        password:   BDD_PWD,
+                        database:   BDD_BASE
+                    },
+                    // Création du fichier
+                    dumpToFile:'./BDD_files/dump.sql',
+                });
+                // Récupération du Fichier
+                const BDD_Files = fs.readFileSync('./BDD_files/dump.sql','utf8');
+                // Transformation et communication data
+                String(BDD_Files);
+                ws.send('RepExpBDD' + ';' + BDD_Files);
+                console.log('RepExpBDD' + ';' + 'CONFIRM');
             }
             // ImpBDD
             if(message.slice() == 'ImpBDD'){
