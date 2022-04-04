@@ -189,5 +189,26 @@ ws.onopen = function () {
             //event.target.id
             ws.send('InfoAffaire;'+ event.target.id)
         }
+        //réinitialisation de la BDD
+        if (event.target.classList.value == "reset") {
+            //confirmation de l'action
+            if (confirm("Veuillez confirmer la réinitialisation") == true) {
+                console.log("réinitialisation de la bdd");
+                ws.send("ResBDD;")
+            } else {
+                console.log("annulation de la réinitialisation")
+            }
+        }
+        //importation de la BDD (ajouté un fichier)
+        if (event.target.classList.value == "import") {
+            alert('import');
+            console.log("importation de la bdd")
+        }
+        //exportation de la BDD (recevoir le fichier)
+        if (event.target.classList.value == "export") {
+            alert('export');
+            console.log("exportation de la bdd")
+        }
     });
 }
+
