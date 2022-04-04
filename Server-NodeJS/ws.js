@@ -63,6 +63,13 @@ const database = BDD_BASE;
                 const[rows, fields] = await con.execute('SELECT * FROM `Essai` ORDER BY `idEssai` ASC', []);
                 ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
+            // ListEssaiID
+            if(message.split(';')[0] == 'ListEssaiID'){
+                console.log('ListEssaiID : %s', message);
+                EssaiID  = message.split(';')[1];
+                const[rows, fields] = await con.execute('SELECT * FROM `Essai` WHERE `idEssai` = ? ORDER BY `idEssai` ASC', [EssaiID]);
+                ws.send('RepListEssaiID' + ';ID=' + EssaiID + ';' + rows.length + ';' + JSON.stringify(rows));
+            }
             // ListUser
             if(message.slice() == 'ListUser'){
                 console.log('ListUser : %s', message);
