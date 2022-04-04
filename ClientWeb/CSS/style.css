@@ -49,6 +49,21 @@ html {
     color: rgb(0, 0, 0);
     align-items: center;
 }
+.text-zone .article button
+{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+.text-zone .article button:hover
+{
+    background-color: green;
+    transform: scale(1.02);
+}
 .text-zone .article div
 {
     position: relative;
