@@ -156,10 +156,10 @@ const database = BDD_BASE;
                         database:   BDD_BASE
                     },
                     // Création du fichier
-                    dumpToFile:'./BDD_files/dump.sql',
+                    dumpToFile:'./BDD_files/BDD_Export.sql',
                 });
                 // Récupération du Fichier
-                const BDD_Files = fs.readFileSync('./BDD_files/dump.sql','utf8');
+                const BDD_Files = fs.readFileSync('./BDD_files/BDD_Export.sql','utf8');
                 // Transformation et communication data
                 String(BDD_Files);
                 ws.send('RepExpBDD' + ';' + BDD_Files);
@@ -214,7 +214,7 @@ const database = BDD_BASE;
                     console.log(`${percent}% Completé`);
                     ws.send('RepResBDD' + ';' + `${percent}%`);
                 });
-                BDD_Import.import('./BDD_files/dump.sql').then(()=>{
+                BDD_Import.import('./BDD_files/BDD_Default.sql').then(()=>{
                     var files_imported = BDD_Import.getImported();
                     console.log(`${files_imported.length} SQL file(s) imported.`);
                 }).catch(err=>{
