@@ -177,10 +177,10 @@ const database = BDD_BASE;
                     }
                 })
                 // Suppresion ancienne BDD
-                con.execute('TRUNCATE `verain`.`Affaire`');
-                con.execute('TRUNCATE `verain`.`Essai`');
-                con.execute('TRUNCATE `verain`.`PV`');
-                con.execute('TRUNCATE `verain`.`User`');
+                await con.execute('DROP TABLE `Essai`');
+                await con.execute('DROP TABLE `Affaire`');
+                await con.execute('DROP TABLE `PV`');
+                await con.execute('DROP TABLE `User`');
                 // Importation BDD
                 const BDD_Import = new Importer({host, user, password, database});
                 BDD_Import.onProgress(progress=>{
@@ -202,10 +202,10 @@ const database = BDD_BASE;
             if(message.split(';')[0] == 'ResBDD'){
                 console.log('ResBDD : %s', message);
                 // Suppresion ancienne BDD
-                con.execute('TRUNCATE `verain`.`Affaire`');
-                con.execute('TRUNCATE `verain`.`Essai`');
-                con.execute('TRUNCATE `verain`.`PV`');
-                con.execute('TRUNCATE `verain`.`User`');
+                await con.execute('DROP TABLE `Essai`');
+                await con.execute('DROP TABLE `Affaire`');
+                await con.execute('DROP TABLE `PV`');
+                await con.execute('DROP TABLE `User`');
                 // Importation BDD
                 const BDD_Import = new Importer({host, user, password, database});
                 BDD_Import.onProgress(progress=>{
