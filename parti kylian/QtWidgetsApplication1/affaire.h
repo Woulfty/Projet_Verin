@@ -1,24 +1,28 @@
 #pragma once
 #include <QSqlDatabase>
 #include <QtSql/QtSql>
+#include <QtSql>
 #include <qsqldatabase.h>
 #include <qdebug.h>
 class affaire
 {
-public:
+private:
+	QSqlDatabase  db;
+	QSqlQuery requete;
 	int id;
-	int TypeAffaire;
+	int IdAffaire;
 	int IDCapteur;
 	float TotalTime;
 	float Frequence;
-	char Pv;
+	//char Pv;
 
-private:
+public:
+	affaire(QString Ip, QString DataNam, QString Login, QString Mdp);
 	int newAffaire();
 	int save();
 	int selectAffaire();
-	int updateAffaire();
-	int deleteAffaire();
+	int updateAffaire(QString, QString, QString);
+	int deleteAffaire(QString Id);
 
 
 };
