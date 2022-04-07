@@ -3,16 +3,12 @@ const ws = new WebSocket("ws://192.168.65.44:40510");
 
 //récupération de la barre de navigation
 navigation = document.getElementById('navigation');
-
 //récupération du loarder
 dloader = document.getElementById('dloader');
-    
 //boutton de la barre
 var toggle = document.getElementById('toggle');
-   
 //affichage de la page de connexion
 dconnexion = document.getElementById('dconnexion');
-
 //affichage de l'affaire
 daffaire = document.getElementById('daffaire');
             
@@ -22,6 +18,16 @@ dconnexion.style.display = "none"
 navigation.style.display = "none"
 daffaire.style.display = "none";
 
+//erreur
+ws.addEventListener('error', function (event) {
+    console.log('Erreur WebSocket : ', event);
+    dloader.style.display = "block"
+    toggle.style.display = "none"
+    dconnexion.style.display = "none"
+    navigation.style.display = "none"
+    daffaire.style.display = "none";
+});
+//reception d'un message
 ws.addEventListener("message", async (event, isBinary ) => {
     console.log( event.data )
     
@@ -109,19 +115,100 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //découpage du dossier json
         var data = JSON.parse(Json);
 
+        //a revoir pour le découpage des informations
         var h3 = document.createElement('h3');
 
         for (var i = 0; i < 1; ++i) {
             h3.innerHTML = "Affaire n°" + data[ i ].idAffaire;                       
         }
-        divaffaire.appendChild(h3);
-    }
-    //récéption des Pv de l'affaire
-    if(message.split(';')[0] == 'RepListPV'){
-        
+        //divaffaire.appendChild(h3);
+
+        //affichage de la courbes de pression
+
+        if(message.split(';')[0] == 'RepListEssaiID'){
+
+            if(message.split(';')[1] >= '2'){
+                console.log('supérieur a 2');
+
+                //nombre de relever (essais)
+                var Datasize = message.split(';')[1];
+                //données
+                var Json = message.split(';')[2];
+                //découpage du dossier json
+                var datacourbe = JSON.parse(Json);
+
+                var cv = document.getElementById("myCanvas");
+                var ctx = cv.getContext("2d");
+
+                function gradient(a, b) {
+                    return (b.y-a.y)/(b.x-a.x);
+                }
+
+                function bzCurve(points, f, t) {
+                    if (typeof(f) == 'undefined') f = 0.3;
+                    if (typeof(t) == 'undefined') t = 0.6;
+
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+
+                    var m = 0;
+                    var dx1 = 0;
+                    var dy1 = 0;
+
+                    var preP = points[0];
+                    for (var i = 1; i < points.length; i++) {
+                        var curP = points[i];
+                        nexP = points[i + 1];
+                        if (nexP) {
+                            m = gradient(preP, nexP);
+                            dx2 = (nexP.x - curP.x) * -f;
+                            dy2 = dx2 * m * t;
+                        } else {
+                            dx2 = 0;
+                            dy2 = 0;
+                        }
+                        ctx.bezierCurveTo(preP.x - dx1, preP.y - dy1, curP.x + dx2, curP.y + dy2, curP.x, curP.y);
+                        dx1 = dx2;
+                        dy1 = dy2;
+                        preP = curP;
+                    }
+                    ctx.stroke();
+                }
+
+                var lines = [];
+                var X = 10;
+                var t = 40;
+                for (var i = 0; i < Datasize; i++ ) {
+                    Y = datacourbe[ i ].frequence;
+                    //Y = datapoint;
+                    p = { x: X, y: Y };
+                    lines.push(p);
+                    X = X + t;
+                }
+
+                //courbe pointille
+                ctx.beginPath();
+                ctx.setLineDash([5]);
+                ctx.lineWidth = 1;
+                bzCurve(lines, 0, 1);
+
+                //courbe pleine
+                ctx.setLineDash([0]);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "blue";
+                bzCurve(lines, 0.3, 1);
+            }else{
+                console.log('inférieur a 2');
+                //affichage d'un loader a la place de la courbe
+            }
+        }
     }
     //récéption des essais de l'affaire
     if(message.split(';')[0] == 'RepListEssai'){
+        
+    }
+    //récéption des Pv de l'affaire
+    if(message.split(';')[0] == 'RepListPV'){
         
     }
     //récéption des information de l'essais
@@ -187,7 +274,8 @@ ws.onopen = function () {
 
         if (event.target.classList.value == "aff" ) {
             //event.target.id
-            ws.send('InfoAffaire;'+ event.target.id)
+            ws.send('InfoAffaire;'+ event.target.id);
+            ws.send('ListEssaiID;'+ event.target.id);
         }
         //réinitialisation de la BDD
         if (event.target.classList.value == "reset") {
@@ -211,4 +299,3 @@ ws.onopen = function () {
         }
     });
 }
-

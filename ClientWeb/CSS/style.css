@@ -119,6 +119,12 @@ input[type=text], input[type=password] {
     background-color: rgb(242, 254, 255);
     transform: scale(1.02);
 }
+.canvas
+{
+    width: 1200; 
+    height: 700;
+    border:1px solid #d3d3d3;
+}
 /*a faire réaparaitre a la connexion*/
 #navigation
 {
