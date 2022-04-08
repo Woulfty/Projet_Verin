@@ -43,12 +43,28 @@ html {
     align-items: center;
     padding-left: 10%;
 }
+.text-zone .article1
+{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .text-zone .article h3
 {
     position: relative;
     color: rgb(0, 0, 0);
     align-items: center;
 }
+.text-zone .article1 h3
+{
+    position: relative;
+    color: rgb(0, 0, 0);
+    align-items: center;
+}
+/*
 .text-zone .article button
 {
     background-color: #04AA6D;
@@ -59,12 +75,24 @@ html {
     cursor: pointer;
     width: 50%;
 }
+
 .text-zone .article button:hover
 {
     background-color: green;
     transform: scale(1.02);
 }
+*/
 .text-zone .article div
+{
+    position: relative;
+    width: 100%;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+}
+.text-zone .articleaffaire div
 {
     position: relative;
     width: 100%;
@@ -82,7 +110,8 @@ input[type=text], input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-.button{
+.button
+{
     background-color: #04AA6D;
     color: white;
     padding: 14px 20px;
@@ -92,6 +121,22 @@ input[type=text], input[type=password] {
     width: 50%;
 } 
 .button:hover {
+    opacity: 0.8;
+}
+.littlebutton
+{
+    background-color: #04AA6D;
+    color: white;
+    float: left;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 85px;
+    border-radius: 5px;
+}
+.littlebutton:hover
+{
     opacity: 0.8;
 }
 .aff
@@ -121,9 +166,18 @@ input[type=text], input[type=password] {
 }
 .canvas
 {
-    width: 1200; 
-    height: 700;
-    border:1px solid #d3d3d3;
+    width: 1200px; 
+    height: 500px;
+    border:1px solid #000000;
+}
+.h3title
+{
+    color: #000000;
+}
+.bouttonreturn
+{
+    height: 5%;
+    padding-left: 50px;
 }
 /*a faire réaparaitre a la connexion*/
 #navigation

@@ -19,7 +19,7 @@
                 <li class="list" id="bconnexion">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="#" class="deletediv">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
                         </span>
@@ -29,7 +29,7 @@
                 <li class="list" id="bdeco">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="#" class="deletediv">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
@@ -39,7 +39,7 @@
                 <li class="list" id="bpv">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="#" class="deletediv">
                         <span class="icon">
                             <ion-icon name="bar-chart-outline"></ion-icon>
                         </span>
@@ -49,7 +49,7 @@
                 <li class="list" id="bdoc">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="#" class="deletediv">
                         <span class="icon">
                             <ion-icon name="document-attach-outline"></ion-icon>
                         </span>
@@ -59,7 +59,7 @@
                 <li class="list" id="bhelp">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="#" class="deletediv">
                         <span class="icon">
                             <ion-icon name="search-circle-outline"></ion-icon>
                         </span>
@@ -71,9 +71,10 @@
 
         <!--affichage-->
         <div class="text-zone">
+
             <!--formulaire de connexion-->
             <div class="article" id="dconnexion">
-                <h3>connexion</h3>
+                <h3><u>Connexion</h3></h3>
                 <form id="form" action="">
                     <input type="text" id="pseudo" autocomplete="off" />
                     <input type="password" id="mdp" autocomplete="off" />
@@ -106,10 +107,12 @@
             </div>
 
             <!--affichage de l'affaire-->
-            <div class="article" id="daffaire">
-                <h3>Affaire</h3>
-                <div class="affaire">
-                    <canvas class="canvas" id="myCanvas"></canvas>
+            <div class="article1" id="daffaire">
+                <div class="bouttonreturn">
+                    <button id="backbutton" class="littlebutton">Retour</button>
+                </div>
+                <div id="infothisaffaire" class="affaire">
+
                 </div>
             </div>
             <!--aide-->

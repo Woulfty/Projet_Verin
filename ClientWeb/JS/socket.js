@@ -1,6 +1,6 @@
 //connexion du socket au serveur
-const ws = new WebSocket("ws://192.168.65.44:40510");
-
+//const ws = new WebSocket("ws://192.168.65.44:40510");
+const ws = new WebSocket("ws://192.168.64.183:40510");
 //récupération de la barre de navigation
 navigation = document.getElementById('navigation');
 //récupération du loarder
@@ -103,105 +103,181 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //apparition de la div de visualisation des affaire
         dpv = document.getElementById('dpv');
         dpv.style.display = "none";
+        toggle = document.getElementById('toggle');
+        toggle.style.display = "none"
+        navigation = document.getElementById('navigation');
+        navigation.style.display = "none"
+
         //apparition de la div de visualisation des affaire
         daffaire = document.getElementById('daffaire');
         daffaire.style.display = "block";
-        
-        var Datasize = message.split(';')[1];
+        //id de l'affaire
+        var ID = message.split(';')[1];
         //données
         var Json = message.split(';')[2];
         //récupération de la div ou j'affiche mes affaires
-        var divaffaire = document.getElementById('affaire');
+        var divaffaire = document.getElementById('infothisaffaire');
         //découpage du dossier json
         var data = JSON.parse(Json);
 
-        //a revoir pour le découpage des informations
-        var h3 = document.createElement('h3');
+        //création des éléments
+        var h3title = document.createElement('h3');
+        var divinfo = document.createElement('div');
+        var canvas = document.createElement('canvas');
+        var listpv = document.createElement('ul');
+        var listessais = document.createElement('ul');
+        //ajout des class
+        h3title.classList.add( "h3title" );
+        divinfo.classList.add("affaire");
+        canvas.classList.add("canvas");
+        //ajout des id
+        divinfo.id = "infothisaffaire";
+        canvas.id = "myCanvas";
+        h3title.id = "h3title";
+        //ajout des informations
+        h3title.innerHTML = "Affaire n°" + ID;
+        //attribution des enfants          
+        divaffaire.appendChild(h3title);
+        divaffaire.appendChild(divinfo);
+        divinfo.appendChild(canvas);
+    }
+    //affichage de la courbes de pression
+    if(message.split(';')[0] == 'RepListEssaiID'){
+        console.log('supérieur a 2');
+        /*
+        //nombre de relever (essais)
+        var Datasize = message.split(';')[1];
+        //données
+        var Json = message.split(';')[2];
+        //découpage du dossier json
+        var datacourbe = JSON.parse(Json);
 
-        for (var i = 0; i < 1; ++i) {
-            h3.innerHTML = "Affaire n°" + data[ i ].idAffaire;                       
+        var cv = document.getElementById("myCanvas")
+        var ctx = cv.getContext("2d")
+
+        function gradient(a, b) {
+            return (b.y-a.y)/(b.x-a.x);
         }
-        //divaffaire.appendChild(h3);
 
-        //affichage de la courbes de pression
+        function bzCurve(points, f, t) {
+            if (typeof(f) == 'undefined') f = 0.3;
+            if (typeof(t) == 'undefined') t = 0.6;
 
-        if(message.split(';')[0] == 'RepListEssaiID'){
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
 
-            if(message.split(';')[1] >= '2'){
-                console.log('supérieur a 2');
+            var m = 0;
+            var dx1 = 0;
+            var dy1 = 0;
 
-                //nombre de relever (essais)
-                var Datasize = message.split(';')[1];
-                //données
-                var Json = message.split(';')[2];
-                //découpage du dossier json
-                var datacourbe = JSON.parse(Json);
-
-                var cv = document.getElementById("myCanvas");
-                var ctx = cv.getContext("2d");
-
-                function gradient(a, b) {
-                    return (b.y-a.y)/(b.x-a.x);
+            var preP = points[0];
+            for (var i = 1; i < points.length; i++) {
+                var curP = points[i];
+                nexP = points[i + 1];
+                if (nexP) {
+                    m = gradient(preP, nexP);
+                    dx2 = (nexP.x - curP.x) * -f;
+                    dy2 = dx2 * m * t;
+                } else {
+                    dx2 = 0;
+                    dy2 = 0;
                 }
-
-                function bzCurve(points, f, t) {
-                    if (typeof(f) == 'undefined') f = 0.3;
-                    if (typeof(t) == 'undefined') t = 0.6;
-
-                    ctx.beginPath();
-                    ctx.moveTo(points[0].x, points[0].y);
-
-                    var m = 0;
-                    var dx1 = 0;
-                    var dy1 = 0;
-
-                    var preP = points[0];
-                    for (var i = 1; i < points.length; i++) {
-                        var curP = points[i];
-                        nexP = points[i + 1];
-                        if (nexP) {
-                            m = gradient(preP, nexP);
-                            dx2 = (nexP.x - curP.x) * -f;
-                            dy2 = dx2 * m * t;
-                        } else {
-                            dx2 = 0;
-                            dy2 = 0;
-                        }
-                        ctx.bezierCurveTo(preP.x - dx1, preP.y - dy1, curP.x + dx2, curP.y + dy2, curP.x, curP.y);
-                        dx1 = dx2;
-                        dy1 = dy2;
-                        preP = curP;
-                    }
-                    ctx.stroke();
-                }
-
-                var lines = [];
-                var X = 10;
-                var t = 40;
-                for (var i = 0; i < Datasize; i++ ) {
-                    Y = datacourbe[ i ].frequence;
-                    //Y = datapoint;
-                    p = { x: X, y: Y };
-                    lines.push(p);
-                    X = X + t;
-                }
-
-                //courbe pointille
-                ctx.beginPath();
-                ctx.setLineDash([5]);
-                ctx.lineWidth = 1;
-                bzCurve(lines, 0, 1);
-
-                //courbe pleine
-                ctx.setLineDash([0]);
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = "blue";
-                bzCurve(lines, 0.3, 1);
-            }else{
-                console.log('inférieur a 2');
-                //affichage d'un loader a la place de la courbe
+                ctx.bezierCurveTo(preP.x - dx1, preP.y - dy1, curP.x + dx2, curP.y + dy2, curP.x, curP.y);
+                dx1 = dx2;
+                dy1 = dy2;
+                preP = curP;
             }
+            ctx.stroke();
         }
+        var lines = [];
+        var X = 10;
+        var t = 40;
+        for (var i = 0; i < Datasize; i++ ) {
+            Y = datacourbe[ i ].Fréquence;
+            //Y = datapoint;
+            p = { x: X, y: Y };
+            lines.push(p);
+            X = X + t;
+        }
+
+        //courbe pointille
+        ctx.beginPath();
+        ctx.setLineDash([5]);
+        ctx.lineWidth = 1;
+        bzCurve(lines, 0, 1);
+
+        //courbe pleine
+        ctx.setLineDash([0]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "blue";
+        bzCurve(lines, 0.3, 1);
+        */
+
+        var cv = document.getElementById("myCanvas");
+        var ctx = cv.getContext("2d");
+
+        function gradient(a, b) {
+            return (b.y-a.y)/(b.x-a.x);
+        }
+
+        function bzCurve(points, f, t) {
+            //f = 0, will be straight line
+            //t suppose to be 1, but changing the value can control the smoothness too
+            if (typeof(f) == 'undefined') f = 0.3;
+            if (typeof(t) == 'undefined') t = 0.6;
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+
+            var m = 0;
+            var dx1 = 0;
+            var dy1 = 0;
+
+            var preP = points[0];
+            for (var i = 1; i < points.length; i++) {
+                var curP = points[i];
+                nexP = points[i + 1];
+                if (nexP) {
+                    m = gradient(preP, nexP);
+                    dx2 = (nexP.x - curP.x) * -f;
+                    dy2 = dx2 * m * t;
+                } else {
+                    dx2 = 0;
+                    dy2 = 0;
+                }
+                ctx.bezierCurveTo(preP.x - dx1, preP.y - dy1, curP.x + dx2, curP.y + dy2, curP.x, curP.y);
+                dx1 = dx2;
+                dy1 = dy2;
+                preP = curP;
+            }
+            ctx.stroke();
+        }
+
+        // Generate random data
+        var lines = [];
+        var datalenth = 12;
+        var X = 10;
+        //var datapoint = [12, 45, 61, 20];
+        var t = 40; //to control width of X
+        for (var i = 0; i < datalenth; i++ ) {
+            Y = Math.floor((Math.random() * 300) + 50);
+            //Y = datapoint;
+            p = { x: X, y: Y };
+            lines.push(p);
+            X = X + t;
+        }
+
+        //draw straight line
+        ctx.beginPath();
+        ctx.setLineDash([5]);
+        ctx.lineWidth = 1;
+        bzCurve(lines, 0, 1);
+
+        //draw smooth line
+        ctx.setLineDash([0]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "blue";
+        bzCurve(lines, 0.3, 1);
     }
     //récéption des essais de l'affaire
     if(message.split(';')[0] == 'RepListEssai'){
@@ -297,5 +373,40 @@ ws.onopen = function () {
             alert('export');
             console.log("exportation de la bdd")
         }
+        //suppression de la div de l'affaire
+        
+        if (event.target.classList.value == "littlebutton"){
+            console.log("boutton");
+
+            try{
+                
+                h3title = document.getElementById("h3title");
+                divinfo = document.getElementById("infothisaffaire");
+                canvas = document.getElementById("myCanvas");
+
+                h3title.remove();
+                divinfo.remove();
+                canvas.remove();
+                
+            }catch (error) {
+                console.log(error);
+            }
+
+            daffaire = document.getElementById('daffaire');
+            daffaire.style.display = "none";
+            dpv = document.getElementById('dpv');
+            dpv.style.display = "block";
+            toggle = document.getElementById('toggle');
+            toggle.style.display = "block"
+            navigation = document.getElementById('navigation');
+            navigation.style.display = "block"
+        }
+        //demande de la lite des affaires
+        /*
+        if(event.target.id == "bpv"){
+            console.log('demande dinfo');
+            ws.send('ListAffaire');
+        }
+        */
     });
 }
