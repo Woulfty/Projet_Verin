@@ -22,25 +22,25 @@
 	 //}
 }
 
-int affaire::newAffaire()
+int affaire::newAffaire(QString Capteur, QString Frequence, QString TempAcquisition, QString Pv)
 {
+	this->IDCapteur = Capteur;
+	this->Frequence = Frequence;
+	this->TotalTime = TempAcquisition;
+	this->Pv = Pv;
 	return 0;
 }
 
 int affaire::save()
 {
-
+	QSqlQuery requetes(db);
 	if (db.open()) {
-		qDebug() << "Connexion BDD reussie";
-		requete.prepare("INSERT INTO `Affaire`(`TypeAffaire`, `Capteur`, `TotalTime`, `Frequence`, `Essaie`, `PV`) VALUES (?,?,?,?,?,?)");
-		//requete.addBindValue();
-		//requete.addBindValue();
-		//requete.addBindValue();
-		//requete.addBindValue();
-		//requete.addBindValue();
-		//requete.addBindValue();
-
-		requete.exec();
+		requetes.prepare("INSERT INTO `Affaire`(`Capteur`, `Frequence`, `TempAcquisition`, `PV`) VALUES (?,?,?,?)");
+		requetes.addBindValue(this->IDCapteur);
+		requetes.addBindValue(this->Frequence);
+		requetes.addBindValue(this->TotalTime);
+		requetes.addBindValue(this->Pv);
+		requetes.exec();
 		db.close();
 	}
 	else {
@@ -64,12 +64,13 @@ int affaire::selectAffaire() {
 	//return 0;
 }
 
-int affaire::updateAffaire(QString id, QString capteur, QString temp) {
+int affaire::updateAffaire(QString id, QString capteur, QString temp, QString frequence) {
 	QSqlQuery requetes(db);
 	if (db.open()) {
-		requetes.prepare("UPDATE `Affaire` SET `Capteur`= ?,`tacquisition`= ? WHERE `idAffaire` = ?");
+		requetes.prepare("UPDATE `Affaire` SET `Capteur`= ?,`TempAcquisition`= ?, `Frequence` = ? WHERE `idAffaire` = ?");
 		requetes.addBindValue(capteur);
 		requetes.addBindValue(temp);
+		requetes.addBindValue(frequence);
 		requetes.addBindValue(id);
 		requetes.exec();
 		db.close();

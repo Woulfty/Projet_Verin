@@ -7,7 +7,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	ui.setupUi(this);
 	ui.disconectpushButton->setVisible(false);
 	QString ip = "192.168.65.20";
-	QString nameDate = "verain";
+	QString nameDate = "Verin";
 	QString loginData = "admin";
 	QString MdpData = "admin";
 	ui.labelclientConnectToServer->setText("client connect : " + ClientConnectoServerToQString);
@@ -94,10 +94,10 @@ void QtWidgetsApplication1::confDecodageFichier()
 			file.close();
 			ui.labelAffiche->setText(data);
 			qDebug() << m_fileName.section('.', 1, 1);
-			this->TypeAffaire = data.section(';', 0, 0).toInt();
-			this->IDCapteur = data.section(';', 1, 1).toInt();
-			this->TotalTime = data.section(';', 2, 2).toFloat();
-			this->Frequence = data.section(';', 3, 3).toFloat();
+			this->TypeAffaire = data.section(';', 0, 0);
+			this->IDCapteur = data.section(';', 1, 1);
+			this->TotalTime = data.section(';', 2, 2);
+			this->Frequence = data.section(';', 3, 3);
 			this->Pv = data.section(';', 4, 4);
 
 			qDebug() << this->TypeAffaire;
@@ -107,7 +107,7 @@ void QtWidgetsApplication1::confDecodageFichier()
 			qDebug() << this->Pv;
 
 			this->IdAffaire = Affaire->selectAffaire();
-			QString json = "{\"affaire\":4, \"capteur\":4, \"frequence\":900, \"temp\":10}";
+			QString json = "{\"affaire\":5, \"capteur\":4, \"frequence\":900, \"temp\":10}";
 			//QString json = "{\"affaire\":" + QString::number(TypeAffaire) + ", \"capteur\":1, \"frequence\":900, \"temp\":10}";
 
 			if(ClientConnectoServerToInt != 0){
@@ -129,7 +129,7 @@ void QtWidgetsApplication1::onServerNewConnection()
 	qDebug() << client;
 	QObject::connect(client, SIGNAL(readyRead()), this, SLOT(onclientReadyRead()));
 	QObject::connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
-	client->write("test");
+	client->write("connected");
 
 	ClientConnectoServerToInt++;
 	qDebug() << "client tcp c'est connecter au serveur";
@@ -156,12 +156,12 @@ void QtWidgetsApplication1::onclientReadyRead()
 	QString str(data);
 	ui.labelAffiche->setText(str);
 	qDebug() << "le message recu est : " + str;
-	odj->write(data);
+	//odj->write(data);
 
 	qDebug() << str.section(':', 1, 1);
 	QString methode = str.section(':', 1, 1);
 	methode = methode.section(',', 0, 0);
-	qDebug() << methode;
+	qDebug() << "methode" +methode;
 
 	if (methode == QString::number(2)) {
 		QString id = str.section(':', 2, 2);
@@ -172,11 +172,21 @@ void QtWidgetsApplication1::onclientReadyRead()
 	}
 	else if (methode == QString::number(3))
 	{
-		//QString id = str.section(':', 2, 2);
-		//id = id.section(',', 0, 0);
-		//id = id.section('}', 0, 0);
-		//qDebug() << id;
-		//Affaire->updateAffaire(id);
+		QString id = str.section(':', 2, 2);
+		id = id.section(',', 0, 0);
+		this->IDCapteur = str.section(':', 3, 3);
+		this->IDCapteur = IDCapteur.section(',', 0, 0);
+		this->Frequence = str.section(':', 4, 4);
+		this->Frequence = this->Frequence.section(',', 0, 0);
+		this->TotalTime = str.section(':', 5, 5);
+		this->TotalTime = this->TotalTime.section(',', 0, 0);
+		this->TotalTime = this->TotalTime.section('}', 0, 0);
+		qDebug() << "l'id de la methode 3 " + id;
+		qDebug() << "l'idcpateur de la methode 3 " + IDCapteur;
+		qDebug() << "frequence " + this->Frequence;
+		qDebug() << "totalTime " + this->TotalTime;
+
+		Affaire->updateAffaire(id,this->IDCapteur, this->TotalTime, this->Frequence);
 	}
 	
 }

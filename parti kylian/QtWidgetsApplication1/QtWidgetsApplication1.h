@@ -26,11 +26,11 @@ private:
 	QTcpSocket * tcpSocket;
 	QTcpServer * server;
 	affaire  *Affaire;
-	int IdAffaire;
-	int TypeAffaire;
-	int IDCapteur;
-	float TotalTime;
-	float Frequence;
+	QString IdAffaire;
+	QString TypeAffaire;
+	QString IDCapteur;
+	QString TotalTime;
+	QString Frequence;
 	QString Pv;
 	int ClientConnectoServerToInt = 0;
 	QString ClientConnectoServerToQString = QString::number(ClientConnectoServerToInt);;
