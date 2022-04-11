@@ -61,7 +61,9 @@ int affaire::selectAffaire() {
 		qDebug() << "l'id de l'affaire et " + QString::number(id);
 		return id;
 	}
-	//return 0;
+	else{ 
+		return 0;
+	}
 }
 
 int affaire::updateAffaire(QString id, QString capteur, QString temp, QString frequence) {

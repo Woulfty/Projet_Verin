@@ -91,24 +91,27 @@ void QtWidgetsApplication1::confDecodageFichier()
 				data = in.readLine();
 				in << data;
 			}
+
 			file.close();
 			ui.labelAffiche->setText(data);
 			qDebug() << m_fileName.section('.', 1, 1);
-			this->TypeAffaire = data.section(';', 0, 0);
-			this->IDCapteur = data.section(';', 1, 1);
+			//this->TypeAffaire = data.section(';', 0, 0);
+			this->IDCapteur = data.section(';', 0, 0);
+			this->Frequence = data.section(';', 1, 1);
 			this->TotalTime = data.section(';', 2, 2);
-			this->Frequence = data.section(';', 3, 3);
-			this->Pv = data.section(';', 4, 4);
+			this->Pv = data.section(';', 3, 3);
 
-			qDebug() << this->TypeAffaire;
+			//qDebug() << this->TypeAffaire;
 			qDebug() << this->IDCapteur;
 			qDebug() << this->TotalTime;
 			qDebug() << this->Frequence;
 			qDebug() << this->Pv;
-
-			this->IdAffaire = Affaire->selectAffaire();
-			QString json = "{\"affaire\":5, \"capteur\":4, \"frequence\":900, \"temp\":10}";
-			//QString json = "{\"affaire\":" + QString::number(TypeAffaire) + ", \"capteur\":1, \"frequence\":900, \"temp\":10}";
+			Affaire->newAffaire(this->IDCapteur, this->TotalTime, this->Frequence, this->Pv);
+			Affaire->save();
+			this->IdAffaire = QString::number(Affaire->selectAffaire());
+			qDebug() << "l'id de l'affaire est" + this->IdAffaire;
+			//QString json = "{\"affaire\":5, \"capteur\":4, \"frequence\":900, \"temp\":10}"; (test)
+			QString json = "{\"affaire\":"+this->IdAffaire+", \"capteur\":"+ this->IDCapteur+", \"frequence\":"+this->Frequence+", \"temp\":"+this->TotalTime +"}";
 
 			if(ClientConnectoServerToInt != 0){
 				client->write(json.toLatin1());
