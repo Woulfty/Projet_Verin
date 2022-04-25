@@ -179,6 +179,48 @@ input[type=text], input[type=password] {
     height: 5%;
     padding-left: 50px;
 }
+.reset
+{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+.reset:hover
+{
+    opacity: 0.8;
+}
+.import
+{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+.import:hover
+{
+    opacity: 0.8;
+}
+.export
+{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+.export:hover
+{   
+    opacity: 0.8;
+}
 /*a faire réaparaitre a la connexion*/
 #navigation
 {
