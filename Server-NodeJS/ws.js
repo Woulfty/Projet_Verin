@@ -173,11 +173,10 @@ const database = BDD_BASE;
                 console.log('RepExpBDD' + ';' + 'CONFIRM');
             }
             // ImpBDD
-            if(message.split(';')[0] == 'ImpBDD'){
+            if(message.slice(0, 22) == '-- phpMyAdmin SQL Dump'){
                 console.log('ImpBDD : %s', message);
                 // Définition BDD_Temps
-                const content = message.slice(8);
-                fs.writeFile('./BDD_files/BDD_Temps.sql', content, err => {
+                fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
                     if (err) {
                         console.error(err)
                         return
