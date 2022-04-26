@@ -63,6 +63,7 @@ html {
     position: relative;
     color: rgb(0, 0, 0);
     align-items: center;
+    padding-right: 5%;
 }
 /*
 .text-zone .article button
@@ -91,6 +92,7 @@ html {
     justify-content: center;
     align-items: center;
     padding-left: 10%;
+    padding-top: 2%;
 }
 .text-zone .articleaffaire div
 {
@@ -163,12 +165,6 @@ input[type=text], input[type=password] {
 {
     background-color: rgb(242, 254, 255);
     transform: scale(1.02);
-}
-.canvas
-{
-    width: 1200px; 
-    height: 500px;
-    border:1px solid #000000;
 }
 .h3title
 {
@@ -266,4 +262,9 @@ input[type=text], input[type=password] {
 #daffaire
 {
     display: none;
+}
+.canvas
+{
+    padding: 8%;
+    padding-top: 0%;
 }
