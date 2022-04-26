@@ -79,10 +79,10 @@ ws.addEventListener("message", async (event, isBinary ) => {
                 const d = new Date();
                 d.setTime(d.getTime() + (exdays*24*60*60*1000));
                 let expires = "expires=" + d.toUTCString();
-                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                document.cookie = "username = " + cname + "=" + cvalue + ";" + expires + ";path=/";
               }
-              setCookie( idUser, "user", "30" );
-
+              setCookie( idUser, "user", "30" )
+            
             //demande des affaires au serveur
             ws.send('ListAffaire');
         }
@@ -132,7 +132,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //récupération de la div ou j'affiche mes affaires
         var divaffaire = document.getElementById('infothisaffaire');
         //découpage du dossier json
-        var data = JSON.parse(Json);
+        var dataJson = JSON.parse(Json);
 
         //création des éléments
         var h3title = document.createElement('h3');
@@ -149,11 +149,42 @@ ws.addEventListener("message", async (event, isBinary ) => {
         canvas.id = "myCanvas";
         h3title.id = "h3title";
         //ajout des informations
-        h3title.innerHTML = "Affaire n°" + ID;
+        h3title.innerHTML = "Affaire numéro : " + ID;
         //attribution des enfants          
         divaffaire.appendChild(h3title);
         divaffaire.appendChild(divinfo);
         divinfo.appendChild(canvas);
+
+        //courbe
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+    
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        };
+    
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+        myCanvas = new Chart(
+            document.getElementById('myCanvas'),
+            config
+        );
+        
     }
     //affichage de la courbes de pression
     if(message.split(';')[0] == 'RepListEssaiID'){
@@ -165,19 +196,37 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var Json = message.split(';')[2];
         //découpage du dossier json
         var datacourbe = JSON.parse(Json);
-
-        const canvas = document.getElementById('myCanvas');
-        const ctx = canvas.getContext('2d');
-
-        var poincourbes = Json.ValuesEssais;
-
-        console.log(poincourbes);
-
-        ctx.beginPath();
-        ctx.moveTo(30, 30);
-        //ctx.bezierCurveTo(poincourbes);
-        ctx.bezierCurveTo(120,180, 180,100, 220,140);
-        ctx.stroke();
+        /*
+        //courbe
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+    
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        };
+    
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+        myCanvas = new Chart(
+            document.getElementById('myCanvas'),
+            config
+        );
+        */
     }
     //récéption des essais de l'affaire
     if(message.split(';')[0] == 'RepListEssai'){
