@@ -49,21 +49,21 @@ INSERT INTO `Affaire` (`idAffaire`, `TypeAffaire`, `Capteur`, `tacquisition`, `P
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Essai`
+-- Structure de la table `Essaie`
 --
 
-CREATE TABLE `Essai` (
-  `idEssai` int(11) NOT NULL,
+CREATE TABLE `Essaie` (
+  `idEssaie` int(11) NOT NULL,
   `Fréquence` float NOT NULL,
   `Temp` float NOT NULL,
   `idAffaire` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `Essai`
+-- Déchargement des données de la table `Essaie`
 --
 
-INSERT INTO `Essai` (`idEssai`, `Fréquence`, `Temp`, `idAffaire`) VALUES
+INSERT INTO `Essaie` (`idEssaie`, `Fréquence`, `Temp`, `idAffaire`) VALUES
 (1, 1, 1, 1),
 (2, 2, 2, 2),
 (3, 3, 3, 3),
@@ -127,10 +127,10 @@ ALTER TABLE `Affaire`
   ADD PRIMARY KEY (`idAffaire`);
 
 --
--- Index pour la table `Essai`
+-- Index pour la table `Essaie`
 --
-ALTER TABLE `Essai`
-  ADD PRIMARY KEY (`idEssai`),
+ALTER TABLE `Essaie`
+  ADD PRIMARY KEY (`idEssaie`),
   ADD KEY `IDAffaire` (`idAffaire`);
 
 --
@@ -156,10 +156,10 @@ ALTER TABLE `Affaire`
   MODIFY `idAffaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
--- AUTO_INCREMENT pour la table `Essai`
+-- AUTO_INCREMENT pour la table `Essaie`
 --
-ALTER TABLE `Essai`
-  MODIFY `idEssai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `Essaie`
+  MODIFY `idEssaie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `PV`
@@ -178,9 +178,9 @@ ALTER TABLE `User`
 --
 
 --
--- Contraintes pour la table `Essai`
+-- Contraintes pour la table `Essaie`
 --
-ALTER TABLE `Essai`
+ALTER TABLE `Essaie`
   ADD CONSTRAINT `Essai_ibfk_1` FOREIGN KEY (`IDAffaire`) REFERENCES `Affaire` (`idAffaire`);
 COMMIT;
 
