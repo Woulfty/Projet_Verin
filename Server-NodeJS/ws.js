@@ -60,14 +60,14 @@ const database = BDD_BASE;
             // ListEssai
             if(message.slice() == 'ListEssai'){
                 console.log('ListEssai : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `Essai` ORDER BY `idEssai` ASC', []);
+                const[rows, fields] = await con.execute('SELECT * FROM `Essaie` ORDER BY `idEssaie` ASC', []);
                 ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListEssaiID
             if((message.split(';')[0] == 'ListEssaiID') && (message.split(';')[1] > 0)){
                 console.log('ListEssaiID : %s', message);
                 idAffaire  = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `Essai` WHERE `idAffaire` = ? ORDER BY `idEssai` ASC', [idAffaire]);
+                const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idAffaire` = ? ORDER BY `idEssaie` ASC', [idAffaire]);
                 ws.send('RepListEssaiID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListUser
@@ -103,7 +103,7 @@ const database = BDD_BASE;
             if(message.split(';')[0] == 'InfoEssai'){
                 console.log('InfoEssai : %s', message);
                 idEssai     = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `Essai` WHERE `idEssai` = ?', [idEssai]);
+                const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idEssaie` = ?', [idEssai]);
                 ws.send('RepInfoEssai' + ';' + idEssai + ';' + JSON.stringify(rows));
             }
             // InfoUser
@@ -177,7 +177,7 @@ const database = BDD_BASE;
                     }
                 })
                 // Suppresion ancienne BDD
-                await con.execute('DROP TABLE `Essai`');
+                await con.execute('DROP TABLE `Essaie`');
                 await con.execute('DROP TABLE `Affaire`');
                 await con.execute('DROP TABLE `PV`');
                 await con.execute('DROP TABLE `User`');
@@ -202,7 +202,7 @@ const database = BDD_BASE;
             if(message.split(';')[0] == 'ResBDD'){
                 console.log('ResBDD : %s', message);
                 // Suppresion ancienne BDD
-                await con.execute('DROP TABLE `Essai`');
+                await con.execute('DROP TABLE `Essaie`');
                 await con.execute('DROP TABLE `Affaire`');
                 await con.execute('DROP TABLE `PV`');
                 await con.execute('DROP TABLE `User`');
