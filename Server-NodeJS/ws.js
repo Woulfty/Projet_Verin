@@ -52,13 +52,20 @@ const database = BDD_BASE;
                 ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListPV
-            if(message.slice() == 'ListPV'){
+            if(message.split(';')[0] == 'ListPV'){
                 console.log('ListPV : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `PV` ORDER BY `idPV` ASC', []);
                 ws.send('RepListPV' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
+            // ListPVID
+            if((message.split(';')[0] == 'ListPVID') && (message.split(';')[1] > 0)){
+                console.log('ListPVID : %s', message);
+                idAffaire  = message.split(';')[1];
+                const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idAffaire` = ? ORDER BY `idAffaire` ASC', [idAffaire]);
+                ws.send('RepListPVID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
+            }
             // ListEssai
-            if(message.slice() == 'ListEssai'){
+            if(message.split(';')[0] == 'ListEssai'){
                 console.log('ListEssai : %s', message);
                 const[rows, fields] = await con.execute('SELECT * FROM `Essaie` ORDER BY `idEssaie` ASC', []);
                 ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
