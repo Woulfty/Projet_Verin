@@ -328,12 +328,6 @@ ws.onopen = function () {
         //importation de la BDD (ajouté un fichier)
         if (event.target.classList.value == "import") {
             console.log("importation de la bdd");
-
-            async function loadFile(file){
-                let sqldoc = await file.text();
-                document.getElementById('output').textContent = sqldoc;
-                ws.send(sqldoc);
-            }
         }
         //exportation de la BDD (recevoir le fichier)
         if (event.target.classList.value == "export") {

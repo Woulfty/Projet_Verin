@@ -97,7 +97,6 @@
                 <label>
                     <span class="buttonfile">Importé la base</span>
                     <input type="file" class="import" id="importbdd" accept=".sql" onchange="loadFile(this.files[0])" >
-                    <pre id="output"></pre>
                 </label>
                 <button class="export" id="exportbdd">Exporté la base</button>
             </div>
@@ -130,6 +129,12 @@
             <ion-icon name="menu-outline" class="open"></ion-icon>
             <ion-icon name="close-outline" class="close"></ion-icon>
         </div>
+        <script>
+            async function loadFile(file){
+                let sqldoc = await file.text();
+                ws.send(sqldoc);
+            }
+        </script>
         <!--API-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js" integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
