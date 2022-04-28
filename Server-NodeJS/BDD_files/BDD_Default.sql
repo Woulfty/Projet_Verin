@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mar. 26 avr. 2022 à 15:33
+-- Généré le : jeu. 28 avr. 2022 à 08:03
 -- Version du serveur :  10.3.29-MariaDB-0+deb10u1
 -- Version de PHP : 7.3.27-1~deb10u1
 
@@ -89,6 +89,7 @@ INSERT INTO `PV` (`idPV`, `idAffaire`, `idUser`, `Texte`, `Date`) VALUES
 (1, 7, 1, 'test1', '2022-04-26 11:54:15'),
 (2, 7, 1, 'test2', '2022-04-26 11:54:39'),
 (3, 8, 1, 'test3', '2022-04-26 11:54:39'),
+(4, 7, 1, 'Exemple', '2022-04-26 12:03:54');
 
 -- --------------------------------------------------------
 
@@ -107,8 +108,8 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`idUser`, `Username`, `Mdp`) VALUES
-(1, 'root', 'root'),
-(2, 'greg', 'greg');
+(0, 'root', 'root'),
+(1, 'greg', 'greg');
 
 --
 -- Index pour les tables déchargées
@@ -168,7 +169,7 @@ ALTER TABLE `PV`
 -- AUTO_INCREMENT pour la table `User`
 --
 ALTER TABLE `User`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
