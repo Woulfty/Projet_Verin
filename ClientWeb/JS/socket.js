@@ -217,6 +217,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var listDiv = document.getElementById('infothisaffaire');
         //création de la liste
         var ul = document.createElement('ul');
+        ul.id = 'ullistpv';
         ul.classList.add( "pvlist" );
         //création des données selon la taille du message
         for (var i = 0; i < Datasize; ++i) {
@@ -329,10 +330,10 @@ ws.onopen = function () {
 
             h3title = document.getElementById("h3title");
             canvas = document.getElementById("myCanvas");
-            //listDiv = document.getElementsByName("divlistpv");
+            listDiv = document.getElementById("ullistpv");
             h3title.remove();
             canvas.remove();
-            //listDiv.remove();
+            listDiv.remove();
 
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";
