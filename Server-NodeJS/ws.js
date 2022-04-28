@@ -183,7 +183,10 @@ const database = BDD_BASE;
                     }
                 })
                 // Suppresion ancienne BDD
-                await con.execute('DROP DATABASE `Verin`');
+                await con.execute('DROP TABLE `Essaie`');
+                await con.execute('DROP TABLE `PV`');
+                await con.execute('DROP TABLE `Affaire`');
+                await con.execute('DROP TABLE `User`');
                 // Importation BDD
                 const BDD_Import = new Importer({host, user, password, database});
                 BDD_Import.onProgress(progress=>{
@@ -202,10 +205,13 @@ const database = BDD_BASE;
                 });
             }
             // ResBDD
-            if(message.split(';')[0] == 'VERIF ResBDD'){
+            if(message.split(';')[0] == 'ResBDD'){
                 console.log('ResBDD : %s', message);
                 // Suppresion ancienne BDD
-                await con.execute('DROP DATABASE `Verin`');
+                await con.execute('DROP TABLE `Essaie`');
+                await con.execute('DROP TABLE `PV`');
+                await con.execute('DROP TABLE `Affaire`');
+                await con.execute('DROP TABLE `User`');
                 // Importation BDD
                 const BDD_Import = new Importer({host, user, password, database});
                 BDD_Import.onProgress(progress=>{
