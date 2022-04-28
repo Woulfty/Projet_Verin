@@ -61,7 +61,7 @@ const database = BDD_BASE;
             if((message.split(';')[0] == 'ListPVID') && (message.split(';')[1] > 0)){
                 console.log('ListPVID : %s', message);
                 idAffaire  = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idAffaire` = ? ORDER BY `idAffaire` ASC', [idAffaire]);
+                const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idAffaire` = ? ORDER BY `Date` DESC', [idAffaire]);
                 ws.send('RepListPVID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListEssai
@@ -183,10 +183,7 @@ const database = BDD_BASE;
                     }
                 })
                 // Suppresion ancienne BDD
-                await con.execute('DROP TABLE `Essaie`');
-                await con.execute('DROP TABLE `Affaire`');
-                await con.execute('DROP TABLE `PV`');
-                await con.execute('DROP TABLE `User`');
+                await con.execute('DROP DATABASE `Verin`');
                 // Importation BDD
                 const BDD_Import = new Importer({host, user, password, database});
                 BDD_Import.onProgress(progress=>{
@@ -205,13 +202,10 @@ const database = BDD_BASE;
                 });
             }
             // ResBDD
-            if(message.split(';')[0] == 'ResBDD'){
+            if(message.split(';')[0] == 'VERIF ResBDD'){
                 console.log('ResBDD : %s', message);
                 // Suppresion ancienne BDD
-                await con.execute('DROP TABLE `Essaie`');
-                await con.execute('DROP TABLE `Affaire`');
-                await con.execute('DROP TABLE `PV`');
-                await con.execute('DROP TABLE `User`');
+                await con.execute('DROP DATABASE `Verin`');
                 // Importation BDD
                 const BDD_Import = new Importer({host, user, password, database});
                 BDD_Import.onProgress(progress=>{
