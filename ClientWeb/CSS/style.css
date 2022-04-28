@@ -104,13 +104,35 @@ html {
     align-items: center;
     padding-left: 10%;
 }
-input[type=text], input[type=password] {
+input[type=text], input[type=password] 
+{
     width: 50%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+}
+input[type=file]
+{
+    
+    display: none;
+}
+.buttonfile
+{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 50%;
+    font-size: 30%;
+}
+.buttonfile:hover
+{
+    opacity: 0.8;
 }
 .button
 {
@@ -121,6 +143,7 @@ input[type=text], input[type=password] {
     border: none;
     cursor: pointer;
     width: 50%;
+    font-size: 30%;
 } 
 .button:hover {
     opacity: 0.8;
