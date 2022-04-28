@@ -1,6 +1,6 @@
 //connexion du socket au serveur
-//const ws = new WebSocket("ws://192.168.65.44:40510");
-const ws = new WebSocket("ws://192.168.64.183:40510");
+const ws = new WebSocket("ws://192.168.65.44:40510");
+//const ws = new WebSocket("ws://192.168.64.183:40510");
 
 //récupération de la barre de navigation
 navigation = document.getElementById('navigation');
@@ -152,43 +152,12 @@ ws.addEventListener("message", async (event, isBinary ) => {
         h3title.innerHTML = "Affaire numéro : " + ID;
         //attribution des enfants          
         divaffaire.appendChild(h3title);
-        divaffaire.appendChild(divinfo);
-        divinfo.appendChild(canvas);
-
-        //courbe
-        const labels = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-        ];
-    
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
-            }]
-        };
-    
-        const config = {
-            type: 'line',
-            data: data,
-            options: {}
-        };
-        myCanvas = new Chart(
-            document.getElementById('myCanvas'),
-            config
-        );
+        divaffaire.appendChild(canvas);
+         
         
     }
     //affichage de la courbes de pression
     if(message.split(';')[0] == 'RepListEssaiID'){
-        console.log('supérieur a 2');
         
         //nombre de relever (essais)
         var Datasize = message.split(';')[1];
@@ -196,15 +165,22 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var Json = message.split(';')[2];
         //découpage du dossier json
         var datacourbe = JSON.parse(Json);
-        /*
+        
         //courbe
         const labels = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11',
+            '12',
+            '13',
         ];
     
         const data = {
@@ -213,7 +189,8 @@ ws.addEventListener("message", async (event, isBinary ) => {
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                //data: [0, 10, 5, 2, 20, 30, 45],
+                data: datacourbe,
             }]
         };
     
@@ -226,15 +203,33 @@ ws.addEventListener("message", async (event, isBinary ) => {
             document.getElementById('myCanvas'),
             config
         );
-        */
-    }
-    //récéption des essais de l'affaire
-    if(message.split(';')[0] == 'RepListEssai'){
-        
     }
     //récéption des Pv de l'affaire
-    if(message.split(';')[0] == 'RepListPV'){
-        
+    if(message.split(';')[0] == 'RepListPVID'){
+        //taille du message
+        var Datasize = message.split(';')[2];
+        //données
+        var Json = message.split(';')[3];
+        //découpage du dossier json
+        var data = JSON.parse(Json);
+        console.log(Datasize);
+        //récupération de la div ou je crée ma liste
+        var listDiv = document.getElementById('infothisaffaire');
+        //création de la liste
+        var ul = document.createElement('ul');
+        ul.classList.add( "pvlist" );
+        //création des données selon la taille du message
+        for (var i = 0; i < Datasize; ++i) {
+            var li = document.createElement('li');
+            var date = data[ i ].Date;
+            date.split('T')[10];
+            li.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3] + " à " + date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + date[19] + " : " + data[ i ].Texte;
+            li.classList.add( "pv" );
+            li.id = data[ i ].idPV;
+            ul.appendChild(li);                        
+        }
+        //définission de l'enfant
+        listDiv.appendChild(ul);
     }
     //récéption des information de l'essais
     if(message.split(';')[0] == 'RepInfoEssai'){
@@ -242,6 +237,10 @@ ws.addEventListener("message", async (event, isBinary ) => {
     }
     //récéption des information du Pv
     if(message.split(';')[0] == 'RepInfoPV'){
+        
+    }
+    //récéption des essais de l'affaire
+    if(message.split(';')[0] == 'RepListEssai'){
         
     }
 
@@ -302,6 +301,7 @@ ws.onopen = function () {
             //event.target.id
             ws.send('InfoAffaire;'+ event.target.id);
             ws.send('ListEssaiID;'+ event.target.id);
+            ws.send('ListPVID;'+ event.target.id);
         }
         //réinitialisation de la BDD
         if (event.target.classList.value == "reset") {
@@ -329,8 +329,10 @@ ws.onopen = function () {
 
             h3title = document.getElementById("h3title");
             canvas = document.getElementById("myCanvas");
+            //listDiv = document.getElementsByName("divlistpv");
             h3title.remove();
             canvas.remove();
+            //listDiv.remove();
 
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";

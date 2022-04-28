@@ -267,4 +267,29 @@ input[type=text], input[type=password] {
 {
     padding: 8%;
     padding-top: 0%;
+    padding-bottom: 1%;
+}
+.pvlist
+{
+    padding-left: 5%;
+    margin: 0 auto;
+    width: 100%;
+    margin-top: 2%;
+    height: auto;
+    color: black;
+    text-align: left;
+}
+.pv{
+    border: 3px solid;
+    border-radius: 3px;
+    border-color: black;
+    border-width: 2px;
+    cursor: grab;
+    list-style: none;
+    align-items: center;
+    box-sizing: border-box;
+    word-wrap: anywhere;
+    width: 95%;
+    margin-bottom: 2%;
+    
 }
