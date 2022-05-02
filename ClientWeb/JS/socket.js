@@ -182,15 +182,15 @@ ws.addEventListener("message", async (event, isBinary ) => {
             '12',
             '13',
         ];
-    
+        //console.log(datacourbe[ i ].Value);
         const data = {
             labels: labels,
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                //data: [0, 10, 5, 2, 20, 30, 45],
-                data: datacourbe,
+                data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
+                //data: datacourbe,
             }]
         };
     
@@ -212,7 +212,6 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var Json = message.split(';')[3];
         //découpage du dossier json
         var data = JSON.parse(Json);
-        console.log(Datasize);
         //récupération de la div ou je crée ma liste
         var listDiv = document.getElementById('infothisaffaire');
 
