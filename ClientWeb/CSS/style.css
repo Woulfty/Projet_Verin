@@ -104,13 +104,35 @@ html {
     align-items: center;
     padding-left: 10%;
 }
-input[type=text], input[type=password] {
+input[type=text], input[type=password] 
+{
     width: 50%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+}
+input[type=file]
+{
+    
+    display: none;
+}
+.buttonfile
+{
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 50%;
+    font-size: 30%;
+}
+.buttonfile:hover
+{
+    opacity: 0.8;
 }
 .button
 {
@@ -121,6 +143,7 @@ input[type=text], input[type=password] {
     border: none;
     cursor: pointer;
     width: 50%;
+    font-size: 30%;
 } 
 .button:hover {
     opacity: 0.8;
@@ -143,8 +166,13 @@ input[type=text], input[type=password] {
 }
 .aff
 {
+    border: 0.5px solid;
+    border-color: rgb(118, 118, 118);
+    border-width: 2px;
+    background-color: rgb(235, 235, 235);
+    font-size: 40%;
     color: black;
-    margin-top: 2% ;
+    margin-top: 1% ;
 }
 .datalist
 {
@@ -265,31 +293,34 @@ input[type=text], input[type=password] {
 }
 .canvas
 {
-    padding: 8%;
+    padding: 17%;
     padding-top: 0%;
-    padding-bottom: 1%;
+    padding-bottom: 13%;
 }
 .pvlist
 {
-    padding-left: 5%;
+    padding-left: 20%;
     margin: 0 auto;
     width: 100%;
-    margin-top: 2%;
+    margin-top: -10%;
     height: auto;
     color: black;
     text-align: left;
 }
 .pv{
-    border: 3px solid;
-    border-radius: 3px;
-    border-color: black;
+    font-size: 40%;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: rgb(118, 118, 118);
     border-width: 2px;
+    background-color: rgb(235, 235, 235);
     cursor: grab;
     list-style: none;
     align-items: center;
     box-sizing: border-box;
     word-wrap: anywhere;
-    width: 95%;
-    margin-bottom: 2%;
+    width: 75%;
+    margin-bottom: 1%;
+    text-decoration: none;
     
 }

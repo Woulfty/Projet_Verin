@@ -182,15 +182,15 @@ ws.addEventListener("message", async (event, isBinary ) => {
             '12',
             '13',
         ];
-    
+        //console.log(datacourbe[ i ].Value);
         const data = {
             labels: labels,
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                //data: [0, 10, 5, 2, 20, 30, 45],
-                data: datacourbe,
+                data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
+                //data: datacourbe,
             }]
         };
     
@@ -212,11 +212,22 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var Json = message.split(';')[3];
         //découpage du dossier json
         var data = JSON.parse(Json);
-        console.log(Datasize);
         //récupération de la div ou je crée ma liste
         var listDiv = document.getElementById('infothisaffaire');
+
+        //création du boutton pour crée un pv
+        /*
+        var divbutton = document.createElement('div');
+        divbutton.classList.add('bouttonreturn');
+        var buttonaddpv = document.createElement('button');
+        buttonaddpv.innerHTML = 'Ajoutez';
+        buttonaddpv.classList.add('littlebutton');
+        divbutton.appendChild(buttonaddpv);
+        listDiv.appendChild(divbutton);
+        */
         //création de la liste
         var ul = document.createElement('ul');
+        ul.id = 'ullistpv';
         ul.classList.add( "pvlist" );
         //création des données selon la taille du message
         for (var i = 0; i < Datasize; ++i) {
@@ -310,18 +321,17 @@ ws.onopen = function () {
                 console.log("réinitialisation de la bdd");
                 ws.send("ResBDD;")
             } else {
-                console.log("annulation de la réinitialisation")
+                console.log("annulation de la réinitialisation");
             }
         }
         //importation de la BDD (ajouté un fichier)
         if (event.target.classList.value == "import") {
-            alert('import');
-            console.log("importation de la bdd")
+            console.log("importation de la bdd");
         }
         //exportation de la BDD (recevoir le fichier)
         if (event.target.classList.value == "export") {
             alert('export');
-            console.log("exportation de la bdd")
+            console.log("exportation de la bdd");
         }
         //suppression de la div de l'affaire
         
@@ -329,10 +339,10 @@ ws.onopen = function () {
 
             h3title = document.getElementById("h3title");
             canvas = document.getElementById("myCanvas");
-            //listDiv = document.getElementsByName("divlistpv");
+            listDiv = document.getElementById("ullistpv");
             h3title.remove();
             canvas.remove();
-            //listDiv.remove();
+            listDiv.remove();
 
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";
