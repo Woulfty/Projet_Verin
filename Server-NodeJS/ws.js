@@ -48,7 +48,7 @@ const database = BDD_BASE;
             // ListAffaire
             if(message.slice() == 'ListAffaire'){
                 console.log('ListAffaire : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `Affaire` ORDER BY `idAffaire` ASC', []);
+                const[rows, fields] = await con.execute('SELECT * FROM `Affaire` ORDER BY `idAffaire` DESC', []);
                 ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
             }
             // ListPV
