@@ -95,24 +95,32 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var Json = message.split(';')[2];
         //découpage du dossier json
         var data = JSON.parse(Json);
-
-        //var date = data[ i ].Date;
-        //récupération de la div ou je crée ma liste
-        var listDiv = document.getElementById('ListAffaire');
-        //création de la liste
-        var ul = document.createElement('ul');
-        ul.classList.add( "datalist" );
-        //création des données selon la taille du message
+        //récupération du tableau
+        var affaireTable = document.getElementById('affaire');
+        //ajout des valeurs
         for (var i = 0; i < Datasize; ++i) {
-            var li = document.createElement('li');
-            //li.innerHTML = "le " + data[ i ].Date[8] + data[ i ].Date[9] + "/" + data[ i ].Date[5] + data[ i ].Date[6] + "/" + data[ i ].Date[0] + data[ i ].Date[1] + data[ i ].Date[2] + data[ i ].Date[3] + " à "+ data[ i ].Date[11] + data[ i ].Date[12] + ":" + data[ i ].Date[14] + data[ i ].Date[15] + ":" + data[ i ].Date[17] + data[ i ].Date[18] + " Affaire n°" + data[ i ].idAffaire;
-            li.innerHTML = "Affaire n°" + data[ i ].idAffaire + " \u00a0 " + "|" + " \u00a0 " + " relever à "+ data[ i ].Date[11] + data[ i ].Date[12] + ":" + data[ i ].Date[14] + data[ i ].Date[15] + ":" + data[ i ].Date[17] + data[ i ].Date[18] + " \u00a0 " + " \u00a0 " + " date :" + data[ i ].Date[8] + data[ i ].Date[9] + "/" + data[ i ].Date[5] + data[ i ].Date[6] + "/" + data[ i ].Date[0] + data[ i ].Date[1] + data[ i ].Date[2] + data[ i ].Date[3];
-            li.classList.add( "aff" );
-            li.id = data[ i ].idAffaire;
-            ul.appendChild(li);                        
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+
+            tr.id = data[ i ].idAffaire;
+            tr.classList.add("traffaire");
+            td1.classList.add("traffaire");
+            td2.classList.add("traffaire");
+            td3.classList.add("traffaire");
+            td1.id = data[ i ].idAffaire;
+            td2.id = data[ i ].idAffaire;
+            td3.id = data[ i ].idAffaire;
+            td1.innerHTML = "Affaire n°" + data[ i ].idAffaire;
+            td3.innerHTML = data[ i ].Date[11] + data[ i ].Date[12] + ":" + data[ i ].Date[14] + data[ i ].Date[15] + ":" + data[ i ].Date[17] + data[ i ].Date[18];
+            td2.innerHTML = data[ i ].Date[8] + data[ i ].Date[9] + "/" + data[ i ].Date[5] + data[ i ].Date[6] + "/" + data[ i ].Date[0] + data[ i ].Date[1] + data[ i ].Date[2] + data[ i ].Date[3];
+
+            tr.appendChild( td1 );
+            tr.appendChild( td2 );
+            tr.appendChild( td3 );
+            affaireTable.appendChild(tr);
         }
-        //définission de l'enfant
-        listDiv.appendChild(ul);
     }
     //récéption des information de l'affaire
     if(message.split(';')[0] == 'RepInfoAffaire'){
@@ -224,8 +232,8 @@ ws.addEventListener("message", async (event, isBinary ) => {
             deletebutton.type = "button";
             updatebutton.value = "modifier";
             deletebutton.value = "supprimer";
-            updatebutton.innerHTML = `<ion-icon name="create-outline"></ion-icon>`;
-            deletebutton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
+            updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
+            deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
 
             updatebutton.id = data[ i ].idPV;
             deletebutton.id = data[ i ].idPV;
@@ -315,8 +323,7 @@ ws.onopen = function () {
 
     //Quand un utilisateur clique sur une affaire
     document.addEventListener("click", ( event ) => {
-
-        if (event.target.classList.value == "aff" ) {
+        if (event.target.classList.value == "traffaire" ) {
             //event.target.id
             ws.send('InfoAffaire;'+ event.target.id);
             ws.send('ListEssaiID;'+ event.target.id);
@@ -376,6 +383,20 @@ ws.onopen = function () {
             toggle.style.display = "block"
             navigation = document.getElementById('navigation');
             navigation.style.display = "block"
+        }
+        //supression du pv
+        if (event.target.classList.value == "deletebutton" || event.target.id == "trash"){
+            console.log("kaboom");
+            if (confirm("Tu est sur de vouloir supprimé ce pv ? Cette action est irréverssible !") == true) {
+                console.log("suppression du pv");
+                //ws.send("ResBDD;")
+            } else {
+                console.log("annulation de la suppression");
+            }
+        }
+        //modifiaction du pv
+        if (event.target.classList.value == "updatebutton" || event.target.id == "create"){
+            console.log("zuip");
         }
     });
 }
