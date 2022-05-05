@@ -339,6 +339,10 @@ table
     margin-left: auto;
     margin-right: auto;
 }
+tr :last-child
+{
+    display: flex;
+}
 td, th 
 {
     border: 1px solid #dddddd;
@@ -355,6 +359,7 @@ tr:hover
 }
 .updatebutton
 {
+    background-color: #04AA6D;
     position: relative;
     display: block;
     min-width: 55px;
@@ -363,9 +368,17 @@ tr:hover
     transition: 0.5s;
     border-radius: 10px;
     font-size: 1.75em;
+    padding-left: 7px;
+    padding-top: 2px;
+    color: #fff;
+}
+.updatebutton:hover
+{
+    opacity: 0.8;
 }
 .deletebutton
 {
+    background-color: #c12e2e;
     position: relative;
     display: block;
     min-width: 55px;
@@ -374,4 +387,11 @@ tr:hover
     transition: 0.5s;
     border-radius: 10px;
     font-size: 1.75em;
+    padding-left: 7px;
+    padding-top: 6px;
+    color: #fff;
+}
+.deletebutton:hover
+{
+    opacity: 0.4;
 }

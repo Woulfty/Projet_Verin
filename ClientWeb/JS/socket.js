@@ -213,17 +213,32 @@ ws.addEventListener("message", async (event, isBinary ) => {
             var td1 = document.createElement('td');
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
+            var td4 = document.createElement('td');
+
+            var updatebutton = document.createElement('button');
+            var deletebutton = document.createElement('button')
+            updatebutton.classList.add('updatebutton');
+            deletebutton.classList.add('deletebutton');
+            updatebutton.type = "button";
+            deletebutton.type = "button";
+            updatebutton.value = "modifier";
+            deletebutton.value = "supprimer";
+            updatebutton.innerHTML = `<ion-icon name="create-outline"></ion-icon>`;
+            deletebutton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
+
             var date = data[ i ].Date;
             date.split('T')[10];
 
             td1.innerHTML = data[ i ].Texte;
             td2.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
             td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + date[19];
-        
+            td4.appendChild( updatebutton )
+            td4.appendChild( deletebutton )
             // Définition de l'enfant
             tr.appendChild( td1 );
             tr.appendChild( td2 );
             tr.appendChild( td3 );
+            tr.appendChild( td4 );
             pvTable.appendChild(tr);
 
         }
