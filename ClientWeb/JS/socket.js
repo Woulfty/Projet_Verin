@@ -209,6 +209,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var pvTable = document.getElementById( 'pv' );
         //création des données
         for (var i = 0; i < Datasize; ++i) {
+
             var tr = document.createElement('tr');
             var td1 = document.createElement('td');
             var td2 = document.createElement('td');
@@ -216,7 +217,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             var td4 = document.createElement('td');
 
             var updatebutton = document.createElement('button');
-            var deletebutton = document.createElement('button')
+            var deletebutton = document.createElement('button');
             updatebutton.classList.add('updatebutton');
             deletebutton.classList.add('deletebutton');
             updatebutton.type = "button";
@@ -225,6 +226,9 @@ ws.addEventListener("message", async (event, isBinary ) => {
             deletebutton.value = "supprimer";
             updatebutton.innerHTML = `<ion-icon name="create-outline"></ion-icon>`;
             deletebutton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
+
+            updatebutton.id = data[ i ].idPV;
+            deletebutton.id = data[ i ].idPV;
 
             var date = data[ i ].Date;
             date.split('T')[10];
@@ -242,7 +246,6 @@ ws.addEventListener("message", async (event, isBinary ) => {
             pvTable.appendChild(tr);
 
         }
-
     }
     //récéption de la base
     if(message.split(';')[0] == 'RepExpBDD'){
@@ -343,16 +346,27 @@ ws.onopen = function () {
         
         if (event.target.classList.value == "littlebutton"){
 
-            /*
-            h3title = document.getElementById("h3title");
-            canvas = document.getElementById("myCanvas");
-            listDiv = document.getElementById("ullistpv");
-            h3title.remove();
-            canvas.remove();
-            listDiv.remove();
-            */
-            table = document.getElementById('pvtable');
-            table.remove();
+            h3title = document.getElementById('h3title');
+            canvas = document.getElementById('myCanvas');
+            pvTable = document.getElementById( 'pv' );
+
+            if (h3title != '') {
+                document.getElementById('h3title').innerHTML = "";
+            }
+
+            var context = canvas.getContext('2d');
+            const divaffaire = document.getElementById( "infothisaffaire" );
+            divaffaire.removeChild( canvas );
+            
+            const newCanvas = document.createElement( "canvas" );
+            newCanvas.classList.add( "canvas" );
+            newCanvas.id = "myCanvas";
+
+            divaffaire.insertBefore( newCanvas, document.getElementById( "pvtable" ) );
+            
+            if (pvTable != '') {
+                document.getElementById('pv').innerHTML = "";
+            }
 
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";

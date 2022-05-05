@@ -369,12 +369,11 @@ tr:hover
     border-radius: 10px;
     font-size: 1.75em;
     padding-left: 7px;
-    padding-top: 2px;
     color: #fff;
 }
 .updatebutton:hover
 {
-    opacity: 0.8;
+    opacity: 0.4;
 }
 .deletebutton
 {
