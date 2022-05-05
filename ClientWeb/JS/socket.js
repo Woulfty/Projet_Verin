@@ -96,6 +96,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //découpage du dossier json
         var data = JSON.parse(Json);
 
+        //var date = data[ i ].Date;
         //récupération de la div ou je crée ma liste
         var listDiv = document.getElementById('ListAffaire');
         //création de la liste
@@ -104,7 +105,8 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //création des données selon la taille du message
         for (var i = 0; i < Datasize; ++i) {
             var li = document.createElement('li');
-            li.innerHTML = "Affaire n°" + data[ i ].idAffaire;
+            //li.innerHTML = "le " + data[ i ].Date[8] + data[ i ].Date[9] + "/" + data[ i ].Date[5] + data[ i ].Date[6] + "/" + data[ i ].Date[0] + data[ i ].Date[1] + data[ i ].Date[2] + data[ i ].Date[3] + " à "+ data[ i ].Date[11] + data[ i ].Date[12] + ":" + data[ i ].Date[14] + data[ i ].Date[15] + ":" + data[ i ].Date[17] + data[ i ].Date[18] + " Affaire n°" + data[ i ].idAffaire;
+            li.innerHTML = "Affaire n°" + data[ i ].idAffaire + " \u00a0 " + "|" + " \u00a0 " + " relever à "+ data[ i ].Date[11] + data[ i ].Date[12] + ":" + data[ i ].Date[14] + data[ i ].Date[15] + ":" + data[ i ].Date[17] + data[ i ].Date[18] + " \u00a0 " + " \u00a0 " + " date :" + data[ i ].Date[8] + data[ i ].Date[9] + "/" + data[ i ].Date[5] + data[ i ].Date[6] + "/" + data[ i ].Date[0] + data[ i ].Date[1] + data[ i ].Date[2] + data[ i ].Date[3];
             li.classList.add( "aff" );
             li.id = data[ i ].idAffaire;
             ul.appendChild(li);                        
@@ -242,9 +244,13 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //définission de l'enfant
         listDiv.appendChild(ul);
     }
-    //récéption des information de l'essais
-    if(message.split(';')[0] == 'RepInfoEssai'){
+    //récéption de la base
+    if(message.split(';')[0] == 'RepExpBDD'){
+        var BDD = message.slice(13);
         
+        var blob = new Blob([BDD], { type: "text/plain;charset=utf-8" });
+            saveAs(blob, "dynamic.txt");
+
     }
     //récéption des information du Pv
     if(message.split(';')[0] == 'RepInfoPV'){
@@ -254,7 +260,6 @@ ws.addEventListener("message", async (event, isBinary ) => {
     if(message.split(';')[0] == 'RepListEssai'){
         
     }
-
 })
 
 //Erreur du socket
@@ -332,6 +337,7 @@ ws.onopen = function () {
         if (event.target.classList.value == "export") {
             alert('export');
             console.log("exportation de la bdd");
+            ws.send("ExpBDD;");
         }
         //suppression de la div de l'affaire
         
