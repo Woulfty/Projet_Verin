@@ -303,24 +303,95 @@ input[type=file]
     margin: 0 auto;
     width: 100%;
     margin-top: -10%;
+    margin-bottom: 5%;
     height: auto;
     color: black;
     text-align: left;
 }
-.pv{
+.pv
+{
     font-size: 40%;
     border: 1px solid;
-    border-radius: 5px;
     border-color: rgb(118, 118, 118);
-    border-width: 2px;
-    background-color: rgb(235, 235, 235);
-    cursor: grab;
+    border-width: 1px;
+    background-color: rgb(223, 223, 223);
     list-style: none;
     align-items: center;
     box-sizing: border-box;
     word-wrap: anywhere;
     width: 75%;
-    margin-bottom: 1%;
     text-decoration: none;
-    
+}
+.pv:hover
+{
+    opacity: 0.8;
+}
+table 
+{
+    margin-top: -12%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    color: #000000;
+    padding: 5%;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+tr :last-child
+{
+    display: flex;
+}
+td, th 
+{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even) 
+{
+    background-color: #dddddd;
+}
+tr:hover
+{
+    opacity: 0.8;
+}
+.updatebutton
+{
+    background-color: #04AA6D;
+    position: relative;
+    display: block;
+    min-width: 55px;
+    height: 55px;
+    line-height: 60px;
+    transition: 0.5s;
+    border-radius: 10px;
+    font-size: 1.75em;
+    padding-left: 7px;
+    padding-top: 2px;
+    color: #fff;
+}
+.updatebutton:hover
+{
+    opacity: 0.8;
+}
+.deletebutton
+{
+    background-color: #c12e2e;
+    position: relative;
+    display: block;
+    min-width: 55px;
+    height: 55px;
+    line-height: 60px;
+    transition: 0.5s;
+    border-radius: 10px;
+    font-size: 1.75em;
+    padding-left: 7px;
+    padding-top: 6px;
+    color: #fff;
+}
+.deletebutton:hover
+{
+    opacity: 0.4;
 }

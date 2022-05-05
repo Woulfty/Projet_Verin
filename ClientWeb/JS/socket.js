@@ -137,24 +137,15 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var dataJson = JSON.parse(Json);
 
         //création des éléments
-        var h3title = document.createElement('h3');
+        var h3title = document.getElementById('h3title');
         var divinfo = document.createElement('div');
-        var canvas = document.createElement('canvas');
-        var listpv = document.createElement('ul');
-        var listessais = document.createElement('ul');
+        var canvas = document.getElementById('MyCanvas');
         //ajout des class
-        h3title.classList.add( "h3title" );
         divinfo.classList.add("affaire");
-        canvas.classList.add("canvas");
         //ajout des id
         divinfo.id = "infothisaffaire";
-        canvas.id = "myCanvas";
-        h3title.id = "h3title";
         //ajout des informations
         h3title.innerHTML = "Affaire numéro : " + ID;
-        //attribution des enfants          
-        divaffaire.appendChild(h3title);
-        divaffaire.appendChild(canvas);
          
         
     }
@@ -214,35 +205,44 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var Json = message.split(';')[3];
         //découpage du dossier json
         var data = JSON.parse(Json);
-        //récupération de la div ou je crée ma liste
-        var listDiv = document.getElementById('infothisaffaire');
-
-        //création du boutton pour crée un pv
-        /*
-        var divbutton = document.createElement('div');
-        divbutton.classList.add('bouttonreturn');
-        var buttonaddpv = document.createElement('button');
-        buttonaddpv.innerHTML = 'Ajoutez';
-        buttonaddpv.classList.add('littlebutton');
-        divbutton.appendChild(buttonaddpv);
-        listDiv.appendChild(divbutton);
-        */
-        //création de la liste
-        var ul = document.createElement('ul');
-        ul.id = 'ullistpv';
-        ul.classList.add( "pvlist" );
-        //création des données selon la taille du message
+        //récupération du tableau
+        var pvTable = document.getElementById( 'pv' );
+        //création des données
         for (var i = 0; i < Datasize; ++i) {
-            var li = document.createElement('li');
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+            var td4 = document.createElement('td');
+
+            var updatebutton = document.createElement('button');
+            var deletebutton = document.createElement('button')
+            updatebutton.classList.add('updatebutton');
+            deletebutton.classList.add('deletebutton');
+            updatebutton.type = "button";
+            deletebutton.type = "button";
+            updatebutton.value = "modifier";
+            deletebutton.value = "supprimer";
+            updatebutton.innerHTML = `<ion-icon name="create-outline"></ion-icon>`;
+            deletebutton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
+
             var date = data[ i ].Date;
             date.split('T')[10];
-            li.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3] + " à " + date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + date[19] + " : " + data[ i ].Texte;
-            li.classList.add( "pv" );
-            li.id = data[ i ].idPV;
-            ul.appendChild(li);                        
+
+            td1.innerHTML = data[ i ].Texte;
+            td2.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
+            td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + date[19];
+            td4.appendChild( updatebutton )
+            td4.appendChild( deletebutton )
+            // Définition de l'enfant
+            tr.appendChild( td1 );
+            tr.appendChild( td2 );
+            tr.appendChild( td3 );
+            tr.appendChild( td4 );
+            pvTable.appendChild(tr);
+
         }
-        //définission de l'enfant
-        listDiv.appendChild(ul);
+
     }
     //récéption de la base
     if(message.split(';')[0] == 'RepExpBDD'){
@@ -343,12 +343,16 @@ ws.onopen = function () {
         
         if (event.target.classList.value == "littlebutton"){
 
+            /*
             h3title = document.getElementById("h3title");
             canvas = document.getElementById("myCanvas");
             listDiv = document.getElementById("ullistpv");
             h3title.remove();
             canvas.remove();
             listDiv.remove();
+            */
+            table = document.getElementById('pvtable');
+            table.remove();
 
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";
