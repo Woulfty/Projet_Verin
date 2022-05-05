@@ -40,7 +40,7 @@ const database = BDD_BASE;
         // Lancement Date loop for 10 Secondes
         setInterval(() =>
             ws.send(`Temps : ${new Date()}`)
-        ,30 * 1000)
+        ,60 * 1000)
         // Message Reçu Répo
         ws.on('message', async function(message){
             // Définition String Message
