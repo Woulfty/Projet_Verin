@@ -45,193 +45,195 @@ const database = BDD_BASE;
         ws.on('message', async function(message){
             // Définition String Message
             message = String( message );
-            // ListAffaire
-            if(message.slice() == 'ListAffaire'){
-                console.log('ListAffaire : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `Affaire` ORDER BY `idAffaire` DESC', []);
-                ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
-            }
-            // ListPV
-            if(message.split(';')[0] == 'ListPV'){
-                console.log('ListPV : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `PV` ORDER BY `idPV` ASC', []);
-                ws.send('RepListPV' + ';' + rows.length + ';' + JSON.stringify(rows));
-            }
-            // ListPVID
-            if((message.split(';')[0] == 'ListPVID') && (message.split(';')[1] > 0)){
-                console.log('ListPVID : %s', message);
-                idAffaire  = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idAffaire` = ? ORDER BY `Date` DESC', [idAffaire]);
-                ws.send('RepListPVID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
-            }
-            // ListEssai
-            if(message.split(';')[0] == 'ListEssai'){
-                console.log('ListEssai : %s', message);
-                const[rows, fields] = await con.execute('SELECT * FROM `Essaie` ORDER BY `idEssaie` ASC', []);
-                ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
-            }
-            // ListEssaiID
-            if((message.split(';')[0] == 'ListEssaiID') && (message.split(';')[1] > 0)){
-                console.log('ListEssaiID : %s', message);
-                idAffaire  = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idAffaire` = ? ORDER BY `idEssaie` ASC', [idAffaire]);
-                ws.send('RepListEssaiID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
-            }
-            // ListUser
-            if(message.slice() == 'ListUser'){
-                console.log('ListUser : %s', message);
-                const[rows, fields] = await con.execute('SELECT `idUser`, `Username`, `DateCreation` FROM `User` ORDER BY `idUser` ASC', []);
-                ws.send('RepListUser' + ';' + rows.length + ';' + JSON.stringify(rows));
-            }
-            // UserConnexion
-            if(message.split(';')[0] == 'UserConnexion'){
-                console.log('UserConnexion : %s', message);
-                Username    = message.split(';')[1];
-                MdpUser     = message.split(';')[2];
-                const[rows, fields] = await con.execute('SELECT `Username` FROM `User` WHERE `Username` = ? AND `Mdp` = ?', [Username,MdpUser]);
-                console.log(rows)
-                if(rows.length > 0){
-                    console.log('RepUserConnexion' + ';' + Username + ';' + 'true');
-                    ws.send('RepUserConnexion' + ';' + Username + ';' + 'true');
+            // Trie
+            if((message.slice() == 'ListAffaire') || (message.split(';')[0] == 'ListPV') || (message.split(';')[0] == 'ListPVID') || (message.split(';')[0] == 'ListEssai') || ((message.split(';')[0] == 'ListEssaiID') && (message.split(';')[1] > 0)) || (message.slice() == 'ListUser') || (message.split(';')[0] == 'UserConnexion') || (message.split(';')[0] == 'InfoAffaire') || (message.split(';')[0] == 'InfoEssai') || (message.split(';')[0] == 'InfoUser') || (message.split(';')[0] == 'InfoPV') || (message.split(';')[0] == 'DelPV') || (message.split(';')[0] == 'AddPV') || (message.split(';')[0] == 'UpdPV') || (message.split(';')[0] == 'ExpBDD') || (message.slice(0, 22) == '-- phpMyAdmin SQL Dump') || (message.split(';')[0] == 'ResBDD')){
+                // ListAffaire
+                if(message.slice() == 'ListAffaire'){
+                    console.log('ListAffaire : %s', message);
+                    const[rows, fields] = await con.execute('SELECT * FROM `Affaire` ORDER BY `idAffaire` DESC', []);
+                    ws.send('RepListAffaire' + ';' + rows.length + ';' + JSON.stringify(rows));
                 }
-                else{
-                    console.log('RepUserConnexion' + ';' + Username + ';' + 'false');
-                    ws.send('RepUserConnexion' + ';' + Username + ';' + 'false');
+                // ListPV
+                if(message.split(';')[0] == 'ListPV'){
+                    console.log('ListPV : %s', message);
+                    const[rows, fields] = await con.execute('SELECT * FROM `PV` ORDER BY `idPV` ASC', []);
+                    ws.send('RepListPV' + ';' + rows.length + ';' + JSON.stringify(rows));
                 }
-            }
-            // InfoAffaire
-            if(message.split(';')[0] == 'InfoAffaire'){
-                console.log('InfoAffaires : %s', message);
-                idAffaire   = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `Affaire` WHERE `idAffaire` = ?', [idAffaire]);
-                ws.send('RepInfoAffaire' + ';' + idAffaire + ';' + JSON.stringify(rows));
-            }
-            // InfoEssai
-            if(message.split(';')[0] == 'InfoEssai'){
-                console.log('InfoEssai : %s', message);
-                idEssai     = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idEssaie` = ?', [idEssai]);
-                ws.send('RepInfoEssai' + ';' + idEssai + ';' + JSON.stringify(rows));
-            }
-            // InfoUser
-            if(message.split(';')[0] == 'InfoUser'){
-                console.log('InfoUser : %s', message);
-                idUser      = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `User` WHERE `idUser` = ?', [idUser]);
-                ws.send('RepInfoUser' + ';' + idUser + ';' + JSON.stringify(rows));
-            }
-            // InfoPV
-            if(message.split(';')[0] == 'InfoPV'){
-                console.log('InfoPV : %s', message);
-                idPV        = message.split(';')[1];
-                const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idPV` = ?', [idPV]);
-                ws.send('RepInfoPV' + ';' + idPV + ';' + JSON.stringify(rows));
-            }
-            // DelPV
-            if(message.split(';')[0] == 'DelPV'){
-                console.log('DelPV : %s', message);
-                idPV = message.split(';')[1];
-                con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
-                ws.send('RepDelPV' + ';' + idPV + ';' + 'CONFIRM');
-            }
-            // AddPV
-            if(message.split(';')[0] == 'AddPV'){
-                console.log('AddPV : %s', message);
-                idUser      = message.split(';')[1];
-                idAffaire   = message.split(';')[2];
-                Texte       = message.split(';')[3];
-                con.execute('INSERT INTO `PV` (`idUser`, `idAffaire`, `Texte`) VALUES (?, ?, ?)', [idUser, idAffaire, Texte]);
-                ws.send('RepAddPV' + ';' + 'CONFIRM');
-            }
-            // UpdPV
-            if(message.split(';')[0] == 'UpdPV'){
-                console.log('UpdPV : %s', message);
-                idPV        = message.split(';')[1];
-                Texte       = message.split(';')[2];
-                con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
-                ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
-            }
-            // ExpBDD
-            if(message.split(';')[0] == 'ExpBDD'){
-                console.log('ExpBDD : %s', message);
-                // Récupération de la BDD
-                await mysqldump({
-                    connection:{
-                        host:       BDD_IP,
-                        user:       BDD_USER,
-                        password:   BDD_PWD,
-                        database:   BDD_BASE
-                    },
-                    // Création du fichier
-                    dumpToFile:'./BDD_files/BDD_Export.sql',
-                });
-                // Récupération du Fichier
-                const BDD_Files = fs.readFileSync('./BDD_files/BDD_Export.sql','utf8');
-                // Transformation et communication data
-                String(BDD_Files);
-                ws.send('RepExpBDD' + ';' + BDD_Files);
-                console.log('RepExpBDD' + ';' + 'CONFIRM');
-            }
-            // ImpBDD
-            if(message.slice(0, 22) == '-- phpMyAdmin SQL Dump'){
-                console.log('ImpBDD : %s', message);
-                // Définition BDD_Temps
-                fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
-                    if (err) {
-                        console.error(err)
-                        return
+                // ListPVID
+                if((message.split(';')[0] == 'ListPVID') && (message.split(';')[1] > 0)){
+                    console.log('ListPVID : %s', message);
+                    idAffaire  = message.split(';')[1];
+                    const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idAffaire` = ? ORDER BY `Date` DESC', [idAffaire]);
+                    ws.send('RepListPVID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
+                }
+                // ListEssai
+                if(message.split(';')[0] == 'ListEssai'){
+                    console.log('ListEssai : %s', message);
+                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` ORDER BY `idEssaie` ASC', []);
+                    ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
+                }
+                // ListEssaiID
+                if((message.split(';')[0] == 'ListEssaiID') && (message.split(';')[1] > 0)){
+                    console.log('ListEssaiID : %s', message);
+                    idAffaire  = message.split(';')[1];
+                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idAffaire` = ? ORDER BY `idEssaie` ASC', [idAffaire]);
+                    ws.send('RepListEssaiID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
+                }
+                // ListUser
+                if(message.slice() == 'ListUser'){
+                    console.log('ListUser : %s', message);
+                    const[rows, fields] = await con.execute('SELECT `idUser`, `Username`, `DateCreation` FROM `User` ORDER BY `idUser` ASC', []);
+                    ws.send('RepListUser' + ';' + rows.length + ';' + JSON.stringify(rows));
+                }
+                // UserConnexion
+                if(message.split(';')[0] == 'UserConnexion'){
+                    console.log('UserConnexion : %s', message);
+                    Username    = message.split(';')[1];
+                    MdpUser     = message.split(';')[2];
+                    const[rows, fields] = await con.execute('SELECT `Username` FROM `User` WHERE `Username` = ? AND `Mdp` = ?', [Username,MdpUser]);
+                    if(rows.length > 0){
+                        console.log('RepUserConnexion' + ';' + Username + ';' + 'true');
+                        ws.send('RepUserConnexion' + ';' + Username + ';' + 'true');
                     }
-                })
-                // Suppresion ancienne BDD
-                await con.execute('DROP TABLE `Essaie`');
-                await con.execute('DROP TABLE `PV`');
-                await con.execute('DROP TABLE `Affaire`');
-                await con.execute('DROP TABLE `User`');
-                // Importation BDD
-                const BDD_Import = new Importer({host, user, password, database});
-                BDD_Import.onProgress(progress=>{
-                    var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
-                    // Réponse
-                    console.log(`${percent}% Completé`);
-                    ws.send('RepImpBDD' + ';' + `${percent}%`);
-                });
-                BDD_Import.import('./BDD_files/BDD_Temps.sql').then(()=>{
-                    var files_imported = BDD_Import.getImported();
-                    console.log(`${files_imported.length} SQL file(s) imported.`);
-                }).catch(err=>{
-                    // Réponse
-                    ws.send('RepImpBDD' + ';' + 'ERREUR' + ';' + err);
-                    console.error(err);
-                });
-            }
-            // ResBDD
-            if(message.split(';')[0] == 'ResBDD'){
-                console.log('ResBDD : %s', message);
-                // Suppresion ancienne BDD
-                await con.execute('DROP TABLE `Essaie`');
-                await con.execute('DROP TABLE `PV`');
-                await con.execute('DROP TABLE `Affaire`');
-                await con.execute('DROP TABLE `User`');
-                // Importation BDD
-                const BDD_Import = new Importer({host, user, password, database});
-                BDD_Import.onProgress(progress=>{
-                    var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
-                    // Réponse
-                    console.log(`${percent}% Completé`);
-                    ws.send('RepResBDD' + ';' + `${percent}%`);
-                });
-                BDD_Import.import('./BDD_files/BDD_Default.sql').then(()=>{
-                    var files_imported = BDD_Import.getImported();
-                    console.log(`${files_imported.length} SQL file(s) imported.`);
-                }).catch(err=>{
-                    // Réponse
-                    ws.send('RepResBDD' + ';' + 'ERREUR' + ';' + err);
-                    console.error(err);
-                });
+                    else{
+                        console.log('RepUserConnexion' + ';' + Username + ';' + 'false');
+                        ws.send('RepUserConnexion' + ';' + Username + ';' + 'false');
+                    }
+                }
+                // InfoAffaire
+                if(message.split(';')[0] == 'InfoAffaire'){
+                    console.log('InfoAffaires : %s', message);
+                    idAffaire   = message.split(';')[1];
+                    const[rows, fields] = await con.execute('SELECT * FROM `Affaire` WHERE `idAffaire` = ?', [idAffaire]);
+                    ws.send('RepInfoAffaire' + ';' + idAffaire + ';' + JSON.stringify(rows));
+                }
+                // InfoEssai
+                if(message.split(';')[0] == 'InfoEssai'){
+                    console.log('InfoEssai : %s', message);
+                    idEssai     = message.split(';')[1];
+                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idEssaie` = ?', [idEssai]);
+                    ws.send('RepInfoEssai' + ';' + idEssai + ';' + JSON.stringify(rows));
+                }
+                // InfoUser
+                if(message.split(';')[0] == 'InfoUser'){
+                    console.log('InfoUser : %s', message);
+                    idUser      = message.split(';')[1];
+                    const[rows, fields] = await con.execute('SELECT * FROM `User` WHERE `idUser` = ?', [idUser]);
+                    ws.send('RepInfoUser' + ';' + idUser + ';' + JSON.stringify(rows));
+                }
+                // InfoPV
+                if(message.split(';')[0] == 'InfoPV'){
+                    console.log('InfoPV : %s', message);
+                    idPV        = message.split(';')[1];
+                    const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idPV` = ?', [idPV]);
+                    ws.send('RepInfoPV' + ';' + idPV + ';' + JSON.stringify(rows));
+                }
+                // DelPV
+                if(message.split(';')[0] == 'DelPV'){
+                    console.log('DelPV : %s', message);
+                    idPV = message.split(';')[1];
+                    con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
+                    ws.send('RepDelPV' + ';' + idPV + ';' + 'CONFIRM');
+                }
+                // AddPV
+                if(message.split(';')[0] == 'AddPV'){
+                    console.log('AddPV : %s', message);
+                    idUser      = message.split(';')[1];
+                    idAffaire   = message.split(';')[2];
+                    Texte       = message.split(';')[3];
+                    con.execute('INSERT INTO `PV` (`idUser`, `idAffaire`, `Texte`) VALUES (?, ?, ?)', [idUser, idAffaire, Texte]);
+                    ws.send('RepAddPV' + ';' + 'CONFIRM');
+                }
+                // UpdPV
+                if(message.split(';')[0] == 'UpdPV'){
+                    console.log('UpdPV : %s', message);
+                    idPV        = message.split(';')[1];
+                    Texte       = message.split(';')[2];
+                    con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
+                    ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
+                }
+                // ExpBDD
+                if(message.split(';')[0] == 'ExpBDD'){
+                    console.log('ExpBDD : %s', message);
+                    // Récupération de la BDD
+                    await mysqldump({
+                        connection:{
+                            host:       BDD_IP,
+                            user:       BDD_USER,
+                            password:   BDD_PWD,
+                            database:   BDD_BASE
+                        },
+                        // Création du fichier
+                        dumpToFile:'./BDD_files/BDD_Export.sql',
+                    });
+                    // Récupération du Fichier
+                    const BDD_Files = fs.readFileSync('./BDD_files/BDD_Export.sql','utf8');
+                    // Transformation et communication data
+                    String(BDD_Files);
+                    ws.send('RepExpBDD' + ';' + BDD_Files);
+                    console.log('RepExpBDD' + ';' + 'CONFIRM');
+                }
+                // ImpBDD
+                if(message.slice(0, 22) == '-- phpMyAdmin SQL Dump'){
+                    console.log('ImpBDD : %s', message);
+                    // Définition BDD_Temps
+                    fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
+                        if (err) {
+                            console.error(err)
+                            return
+                        }
+                    })
+                    // Suppresion ancienne BDD
+                    await con.execute('DROP TABLE `Essaie`');
+                    await con.execute('DROP TABLE `PV`');
+                    await con.execute('DROP TABLE `Affaire`');
+                    await con.execute('DROP TABLE `User`');
+                    // Importation BDD
+                    const BDD_Import = new Importer({host, user, password, database});
+                    BDD_Import.onProgress(progress=>{
+                        var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
+                        // Réponse
+                        console.log(`${percent}% Completé`);
+                        ws.send('RepImpBDD' + ';' + `${percent}%`);
+                    });
+                    BDD_Import.import('./BDD_files/BDD_Temps.sql').then(()=>{
+                        var files_imported = BDD_Import.getImported();
+                        console.log(`${files_imported.length} SQL file(s) imported.`);
+                    }).catch(err=>{
+                        // Réponse
+                        ws.send('RepImpBDD' + ';' + 'ERREUR' + ';' + err);
+                        console.error(err);
+                    });
+                }
+                // ResBDD
+                if(message.split(';')[0] == 'ResBDD'){
+                    console.log('ResBDD : %s', message);
+                    // Suppresion ancienne BDD
+                    await con.execute('DROP TABLE `Essaie`');
+                    await con.execute('DROP TABLE `PV`');
+                    await con.execute('DROP TABLE `Affaire`');
+                    await con.execute('DROP TABLE `User`');
+                    // Importation BDD
+                    const BDD_Import = new Importer({host, user, password, database});
+                    BDD_Import.onProgress(progress=>{
+                        var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
+                        // Réponse
+                        console.log(`${percent}% Completé`);
+                        ws.send('RepResBDD' + ';' + `${percent}%`);
+                    });
+                    BDD_Import.import('./BDD_files/BDD_Default.sql').then(()=>{
+                        var files_imported = BDD_Import.getImported();
+                        console.log(`${files_imported.length} SQL file(s) imported.`);
+                    }).catch(err=>{
+                        // Réponse
+                        ws.send('RepResBDD' + ';' + 'ERREUR' + ';' + err);
+                        console.error(err);
+                    });
+                }
             }
             // Autres
             else if(message.slice() != 'connected'){
-                console.log('Reçu : %s', message);
+                console.log('Reçu inconnu : %s', message);
             }
         })
     });
