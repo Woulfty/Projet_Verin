@@ -98,12 +98,13 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //récupération du tableau
         var affaireTable = document.getElementById('affaire');
         //ajout des valeurs
+        console.log('banane');
         for (var i = 0; i < Datasize; ++i) {
             var tr = document.createElement('tr');
             var td1 = document.createElement('td');
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
-
+            
             tr.id = data[ i ].idAffaire;
             tr.classList.add("traffaire");
             td1.classList.add("traffaire");
@@ -232,8 +233,8 @@ ws.addEventListener("message", async (event, isBinary ) => {
             deletebutton.type = "button";
             updatebutton.value = "modifier";
             deletebutton.value = "supprimer";
-            updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
-            deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
+            //updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
+            //deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
 
             updatebutton.id = data[ i ].idPV;
             deletebutton.id = data[ i ].idPV;
@@ -387,9 +388,21 @@ ws.onopen = function () {
         //supression du pv
         if (event.target.classList.value == "deletebutton" || event.target.id == "trash"){
             console.log("kaboom");
+
             if (confirm("Tu est sur de vouloir supprimé ce pv ? Cette action est irréverssible !") == true) {
                 console.log("suppression du pv");
-                //ws.send("ResBDD;")
+
+                idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+                ws.send("DelPV;" + event.target.id);
+
+                console.log(event.target.id);
+                pvTable = document.getElementById( 'pv' );
+
+                if (pvTable != '') {
+                    document.getElementById('pv').innerHTML = "";
+                }
+                ws.send('ListPVID;' + idAffaire);
+                console.log('Confirme que : ' + idAffaire)
             } else {
                 console.log("annulation de la suppression");
             }
