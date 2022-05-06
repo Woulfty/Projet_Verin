@@ -101,42 +101,42 @@ const database = BDD_BASE;
                     }
                 }
                 // InfoAffaire
-                if(message.split(';')[0] == 'InfoAffaire'){
+                if((message.split(';')[0] == 'InfoAffaire') && (message.split(';')[1] > 0)){
                     console.log('InfoAffaires : %s', message);
                     idAffaire   = message.split(';')[1];
                     const[rows, fields] = await con.execute('SELECT * FROM `Affaire` WHERE `idAffaire` = ?', [idAffaire]);
                     ws.send('RepInfoAffaire' + ';' + idAffaire + ';' + JSON.stringify(rows));
                 }
                 // InfoEssai
-                if(message.split(';')[0] == 'InfoEssai'){
+                if((message.split(';')[0] == 'InfoEssai') && (message.split(';')[1] > 0)){
                     console.log('InfoEssai : %s', message);
                     idEssai     = message.split(';')[1];
                     const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idEssaie` = ?', [idEssai]);
                     ws.send('RepInfoEssai' + ';' + idEssai + ';' + JSON.stringify(rows));
                 }
                 // InfoUser
-                if(message.split(';')[0] == 'InfoUser'){
+                if((message.split(';')[0] == 'InfoUser') && (message.split(';')[1] > 0)){
                     console.log('InfoUser : %s', message);
                     idUser      = message.split(';')[1];
                     const[rows, fields] = await con.execute('SELECT * FROM `User` WHERE `idUser` = ?', [idUser]);
                     ws.send('RepInfoUser' + ';' + idUser + ';' + JSON.stringify(rows));
                 }
                 // InfoPV
-                if(message.split(';')[0] == 'InfoPV'){
+                if((message.split(';')[0] == 'InfoPV') && (message.split(';')[1] > 0)){
                     console.log('InfoPV : %s', message);
                     idPV        = message.split(';')[1];
                     const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idPV` = ?', [idPV]);
                     ws.send('RepInfoPV' + ';' + idPV + ';' + JSON.stringify(rows));
                 }
                 // DelPV
-                if(message.split(';')[0] == 'DelPV'){
+                if((message.split(';')[0] == 'DelPV') && (message.split(';')[1] > 0)){
                     console.log('DelPV : %s', message);
                     idPV = message.split(';')[1];
                     con.execute('DELETE FROM `PV` WHERE `PV`.`idPV` = ?', [idPV]);
                     ws.send('RepDelPV' + ';' + idPV + ';' + 'CONFIRM');
                 }
                 // AddPV
-                if(message.split(';')[0] == 'AddPV'){
+                if((message.split(';')[0] == 'AddPV') && (message.split(';')[1] > 0)){
                     console.log('AddPV : %s', message);
                     idUser      = message.split(';')[1];
                     idAffaire   = message.split(';')[2];
@@ -145,7 +145,7 @@ const database = BDD_BASE;
                     ws.send('RepAddPV' + ';' + 'CONFIRM');
                 }
                 // UpdPV
-                if(message.split(';')[0] == 'UpdPV'){
+                if((message.split(';')[0] == 'UpdPV') && (message.split(';')[1] > 0)){
                     console.log('UpdPV : %s', message);
                     idPV        = message.split(';')[1];
                     Texte       = message.split(';')[2];
