@@ -98,7 +98,6 @@ ws.addEventListener("message", async (event, isBinary ) => {
         //récupération du tableau
         var affaireTable = document.getElementById('affaire');
         //ajout des valeurs
-        console.log('banane');
         for (var i = 0; i < Datasize; ++i) {
             var tr = document.createElement('tr');
             var td1 = document.createElement('td');
@@ -120,6 +119,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             tr.appendChild( td1 );
             tr.appendChild( td2 );
             tr.appendChild( td3 );
+
             affaireTable.appendChild(tr);
         }
     }
@@ -161,41 +161,33 @@ ws.addEventListener("message", async (event, isBinary ) => {
     //affichage de la courbes de pression
     if(message.split(';')[0] == 'RepListEssaiID'){
         
-        //nombre de relever (essais)
-        var Datasize = message.split(';')[1];
-        //données
-        var Json = message.split(';')[2];
-        //découpage du dossier json
+        var Datasize = message.split(';')[2];
+        var Json = message.split(';')[3];
         var datacourbe = JSON.parse(Json);
-        
+        var arr = [];
+        var array = [];
+        console.log(datacourbe);
+        for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
+            arr.push( Startdata );
+        }
+        for (var i = 0; i < Datasize; ++i) {
+            array.push(datacourbe[ i ].Grandeur) ;
+        }
+
         //courbe
-        const labels = [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            '10',
-            '11',
-            '12',
-            '13',
-        ];
-        //console.log(datacourbe[ i ].Value);
+        const NUMBER_CFG = array;
+        const labels = arr;
         const data = {
             labels: labels,
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
-                //data: datacourbe,
+                //data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
+                data: NUMBER_CFG,
             }]
         };
-    
+        
         const config = {
             type: 'line',
             data: data,

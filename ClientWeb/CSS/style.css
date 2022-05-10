@@ -291,6 +291,10 @@ input[type=file]
 {
     display: none;
 }
+#dnewpv
+{
+    display: none;
+}
 .canvas
 {
     padding: 17%;
