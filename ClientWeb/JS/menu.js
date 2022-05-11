@@ -30,6 +30,7 @@ let ddoc = document.getElementById("ddoc");
 let dhelp = document.getElementById("dhelp");
 let dloader = document.getElementById("dloader");
 let dnewpv = document.getElementById("dnewpv");
+let dupdpv = document.getElementById("dupdpv");
 //connexion
 bconnexion.addEventListener("click", () => {
     dloader.style.display = "none";
@@ -40,6 +41,7 @@ bconnexion.addEventListener("click", () => {
     dhelp.style.display = "none";
     daffaire.style.display = "none";
     dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //pv
 bpv.addEventListener("click", () => {
@@ -51,6 +53,7 @@ bpv.addEventListener("click", () => {
     dhelp.style.display = "none";
     daffaire.style.display = "none";
     dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //deco
 bdeco.addEventListener("click", () => {
@@ -62,6 +65,7 @@ bdeco.addEventListener("click", () => {
     dhelp.style.display = "none";
     daffaire.style.display = "none";
     dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //doc
 bdoc.addEventListener("click", () => {
@@ -73,6 +77,7 @@ bdoc.addEventListener("click", () => {
     dhelp.style.display = "none";
     daffaire.style.display = "none";
     dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //aide
 bhelp.addEventListener("click", () => {
@@ -84,4 +89,5 @@ bhelp.addEventListener("click", () => {
     dhelp.style.display = "block";
     daffaire.style.display = "none";
     dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })

@@ -1,3 +1,5 @@
+//vérification du cookie
+checkCookie();
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
 //const ws = new WebSocket("ws://192.168.64.183:40510");
@@ -73,15 +75,14 @@ ws.addEventListener("message", async (event, isBinary ) => {
             //apparition de la div de visualisation des affaire
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";
-            
             //création du cookie
-            function setCookie(cname,cvalue,exdays) {
+            function setCookie(cvalue,exdays) {
                 const d = new Date();
                 d.setTime(d.getTime() + (exdays*24*60*60*1000));
                 let expires = "expires=" + d.toUTCString();
-                document.cookie = "username = " + cname + "=" + cvalue + ";" + expires + ";path=/";
-              }
-              setCookie( idUser, "user", "30" )
+                document.cookie = "username = " + cvalue + ";" + expires + ";path=/";
+            }
+            setCookie( idUser, "30" );
             
             //demande des affaires au serveur
             ws.send('ListAffaire');
@@ -155,7 +156,6 @@ ws.addEventListener("message", async (event, isBinary ) => {
         divinfo.id = "infothisaffaire";
         //ajout des informations
         h3title.innerHTML = "Affaire numéro : " + ID;
-         
         
     }
     //affichage de la courbes de pression
@@ -166,7 +166,6 @@ ws.addEventListener("message", async (event, isBinary ) => {
         var datacourbe = JSON.parse(Json);
         var arr = [];
         var array = [];
-        console.log(datacourbe);
         for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
             arr.push( Startdata );
         }
@@ -197,6 +196,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             document.getElementById('myCanvas'),
             config
         );
+
     }
     //récéption des Pv de l'affaire
     if(message.split(';')[0] == 'RepListPVID'){
@@ -225,8 +225,8 @@ ws.addEventListener("message", async (event, isBinary ) => {
             deletebutton.type = "button";
             updatebutton.value = "modifier";
             deletebutton.value = "supprimer";
-            //updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
-            //deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
+            updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
+            deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
 
             updatebutton.id = data[ i ].idPV;
             deletebutton.id = data[ i ].idPV;
@@ -378,16 +378,17 @@ ws.onopen = function () {
             navigation.style.display = "block"
         }
         //supression du pv
-        if (event.target.classList.value == "deletebutton" || event.target.id == "trash"){
-            console.log("kaboom");
+        if ( event.target.classList.value == "deletebutton" || event.target.id == "trash" ) {
+
+            const target = event.target.id == "trash" ? event.target.parentNode : event.target
 
             if (confirm("Tu est sur de vouloir supprimé ce pv ? Cette action est irréverssible !") == true) {
                 console.log("suppression du pv");
 
                 idAffaire = document.getElementById("h3title").innerHTML.slice(17);
-                ws.send("DelPV;" + event.target.id);
+                ws.send("DelPV;" + target.id);
 
-                console.log(event.target.id);
+                console.log(target.id);
                 pvTable = document.getElementById( 'pv' );
 
                 if (pvTable != '') {
@@ -401,7 +402,77 @@ ws.onopen = function () {
         }
         //modifiaction du pv
         if (event.target.classList.value == "updatebutton" || event.target.id == "create"){
+            
+            const target = event.target.id == "create" ? event.target.parentNode : event.target
+
             console.log("zuip");
+
+            dloader.style.display = "none";
+            dconnexion.style.display = "none";
+            dpv.style.display = "none";
+            ddeco.style.display = "none";
+            ddoc.style.display = "none";
+            dhelp.style.display = "none";
+            daffaire.style.display = "none";
+            dnewpv.style.display = "none";
+            dupdpv.style.display = "block";
         }
+        //ajout d'un pv
+        if (event.target.classList.value == "addbutton" || event.target.id == "newpv"){
+            
+            const target = event.target.id == "newpv" ? event.target.parentNode : event.target;
+
+            console.log("pouf");
+
+            dloader.style.display = "none";
+            dconnexion.style.display = "none";
+            dpv.style.display = "none";
+            ddeco.style.display = "none";
+            ddoc.style.display = "none";
+            dhelp.style.display = "none";
+            daffaire.style.display = "none";
+            dnewpv.style.display = "block";
+            dupdpv.style.display = "none";
+
+            idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+            console.log(idAffaire + "hello");
+            title = document.getElementById('titleaddpv');
+            title.innerHTML = "Ajouter un pv pour l'affaire n°" + idAffaire;
+        }
+        //ajouté en bdd
+        if (event.target.classList.value == "buttonaddBDD"){
+            idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+            var texteadd = document.getElementById('textefornewpv');
+            console.log(texteadd.value + idAffaire + getCookie("username"));
+        }
+        //retour
+        if (event.target.classList.value == "buttonlist"){
+            console.log('présent');
+        }
+
     });
+    //récupération du cookie
+    function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+    }
+    //vérification du cookie
+    function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+          alert("Bon retour " + user);
+        } else {
+            //redirection sur la page d'acceuil
+        }
+    }
 }
