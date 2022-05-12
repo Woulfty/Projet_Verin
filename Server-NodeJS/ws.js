@@ -63,7 +63,7 @@ const database = BDD_BASE;
                 if((message.split(';')[0] == 'ListPVID') && (message.split(';')[1] > 0)){
                     console.log('ListPVID : %s', message);
                     idAffaire  = message.split(';')[1];
-                    const[rows, fields] = await con.execute('SELECT * FROM `PV` WHERE `idAffaire` = ? ORDER BY `Date` DESC', [idAffaire]);
+                    const[rows, fields] = await con.execute('SELECT PV.idPV, PV.idAffaire, PV.Texte, PV.Date, User.Username FROM PV, User WHERE User.idUser = PV.idUser AND PV.idAffaire = ? ORDER BY `Date` DESC', [idAffaire]);
                     ws.send('RepListPVID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
                 }
                 // ListEssai
