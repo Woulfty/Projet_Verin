@@ -92,12 +92,12 @@ const database = BDD_BASE;
                     MdpUser     = message.split(';')[2];
                     const[rows, fields] = await con.execute('SELECT `Username`,`idUser` FROM `User` WHERE `Username` = ? AND `Mdp` = ?', [Username,MdpUser]);
                     if(rows.length > 0){
-                        console.log('RepUserConnexion' + ';' + JSON.stringify(rows) + ';' + 'true');
-                        ws.send('RepUserConnexion' + ';' + JSON.stringify(rows) + ';' + 'true');
+                        console.log('RepUserConnexion' + ';' + 'true' + ';' + JSON.stringify(rows));
+                        ws.send('RepUserConnexion' + ';' + 'true' + ';' + JSON.stringify(rows));
                     }
                     else{
-                        console.log('RepUserConnexion' + ';' + Username + ';' + 'false');
-                        ws.send('RepUserConnexion' + ';' + Username + ';' + 'false');
+                        console.log('RepUserConnexion' + ';' + 'false' + ';' + Username);
+                        ws.send('RepUserConnexion' + ';' + 'false' + ';' + Username);
                     }
                 }
                 // InfoAffaire
