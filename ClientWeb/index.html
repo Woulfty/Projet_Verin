@@ -76,8 +76,8 @@
             <div class="article" id="dconnexion">
                 <h3><u>Connexion</h3></h3>
                 <form id="form" action="">
-                    <input type="text" id="pseudo" autocomplete="off">
-                    <input type="password" id="mdp" autocomplete="off">
+                    <input type="text" id="pseudo" autocomplete="off" value="greg">
+                    <input type="password" id="mdp" autocomplete="off" value="greg">
                     <button class="button">Connexion</button>
                 </form>
             </div>
@@ -135,7 +135,12 @@
                                 <th>Procès-verbaux</th>
                                 <th>Dates</th>
                                 <th>Heures</th>
-                                <th>Actions</th>
+                                <th>
+                                    <button id="bnewpv" class="addbutton">
+                                        <ion-icon id="newpv" name="add-outline"></ion-icon>
+                                    </button>
+                                </th>
+                                <!--<th>Actions</th>-->
                             </tr>
                         </thead>
                         <tbody id="pv">
@@ -147,6 +152,25 @@
 
                 </div>
                 
+            </div>
+
+            <div class="article1" id="dnewpv">
+                <div class="bouttonreturn">
+                    <button id="backbutton" class="buttonlist">Retour</button>
+                </div>
+                <h3 id="titleaddpv" class="h3title"></h3>
+                <textarea name="uptpv" id="textefornewpv" rows="20" cols="200"></textarea>
+                <div class="buttonadd">
+                    <button id="addpvBDD" class="buttonaddBDD">Ajouté</button>
+                </div>
+            </div>
+
+            <div class="article1" id="dupdpv">
+                <div class="bouttonreturn">
+                    <button id="backbutton" class="buttonlist">Retour</button>
+                </div>
+                <h3 id="h3title" class="h3title"></h3>
+                <a>update pv</a>
             </div>
 
             <!--aide-->

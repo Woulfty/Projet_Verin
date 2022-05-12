@@ -1,3 +1,5 @@
+//vérification du cookie
+checkCookie();
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
 //const ws = new WebSocket("ws://192.168.64.183:40510");
@@ -73,15 +75,14 @@ ws.addEventListener("message", async (event, isBinary ) => {
             //apparition de la div de visualisation des affaire
             daffaire = document.getElementById('daffaire');
             daffaire.style.display = "none";
-            
             //création du cookie
-            function setCookie(cname,cvalue,exdays) {
+            function setCookie(cvalue,exdays) {
                 const d = new Date();
                 d.setTime(d.getTime() + (exdays*24*60*60*1000));
                 let expires = "expires=" + d.toUTCString();
-                document.cookie = "username = " + cname + "=" + cvalue + ";" + expires + ";path=/";
-              }
-              setCookie( idUser, "user", "30" )
+                document.cookie = "username = " + cvalue + ";" + expires + ";path=/";
+            }
+            setCookie( idUser, "30" );
             
             //demande des affaires au serveur
             ws.send('ListAffaire');
@@ -103,7 +104,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             var td1 = document.createElement('td');
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
-
+            
             tr.id = data[ i ].idAffaire;
             tr.classList.add("traffaire");
             td1.classList.add("traffaire");
@@ -119,6 +120,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             tr.appendChild( td1 );
             tr.appendChild( td2 );
             tr.appendChild( td3 );
+
             affaireTable.appendChild(tr);
         }
     }
@@ -154,47 +156,37 @@ ws.addEventListener("message", async (event, isBinary ) => {
         divinfo.id = "infothisaffaire";
         //ajout des informations
         h3title.innerHTML = "Affaire numéro : " + ID;
-         
         
     }
     //affichage de la courbes de pression
     if(message.split(';')[0] == 'RepListEssaiID'){
         
-        //nombre de relever (essais)
-        var Datasize = message.split(';')[1];
-        //données
-        var Json = message.split(';')[2];
-        //découpage du dossier json
+        var Datasize = message.split(';')[2];
+        var Json = message.split(';')[3];
         var datacourbe = JSON.parse(Json);
-        
+        var arr = [];
+        var array = [];
+        for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
+            arr.push( Startdata );
+        }
+        for (var i = 0; i < Datasize; ++i) {
+            array.push(datacourbe[ i ].Grandeur) ;
+        }
+
         //courbe
-        const labels = [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            '10',
-            '11',
-            '12',
-            '13',
-        ];
-        //console.log(datacourbe[ i ].Value);
+        const NUMBER_CFG = array;
+        const labels = arr;
         const data = {
             labels: labels,
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
-                //data: datacourbe,
+                //data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
+                data: NUMBER_CFG,
             }]
         };
-    
+        
         const config = {
             type: 'line',
             data: data,
@@ -204,6 +196,7 @@ ws.addEventListener("message", async (event, isBinary ) => {
             document.getElementById('myCanvas'),
             config
         );
+
     }
     //récéption des Pv de l'affaire
     if(message.split(';')[0] == 'RepListPVID'){
@@ -385,18 +378,101 @@ ws.onopen = function () {
             navigation.style.display = "block"
         }
         //supression du pv
-        if (event.target.classList.value == "deletebutton" || event.target.id == "trash"){
-            console.log("kaboom");
+        if ( event.target.classList.value == "deletebutton" || event.target.id == "trash" ) {
+
+            const target = event.target.id == "trash" ? event.target.parentNode : event.target
+
             if (confirm("Tu est sur de vouloir supprimé ce pv ? Cette action est irréverssible !") == true) {
                 console.log("suppression du pv");
-                //ws.send("ResBDD;")
+
+                idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+                ws.send("DelPV;" + target.id);
+
+                console.log(target.id);
+                pvTable = document.getElementById( 'pv' );
+
+                if (pvTable != '') {
+                    document.getElementById('pv').innerHTML = "";
+                }
+                ws.send('ListPVID;' + idAffaire);
+                console.log('Confirme que : ' + idAffaire)
             } else {
                 console.log("annulation de la suppression");
             }
         }
         //modifiaction du pv
         if (event.target.classList.value == "updatebutton" || event.target.id == "create"){
+            
+            const target = event.target.id == "create" ? event.target.parentNode : event.target
+
             console.log("zuip");
+
+            dloader.style.display = "none";
+            dconnexion.style.display = "none";
+            dpv.style.display = "none";
+            ddeco.style.display = "none";
+            ddoc.style.display = "none";
+            dhelp.style.display = "none";
+            daffaire.style.display = "none";
+            dnewpv.style.display = "none";
+            dupdpv.style.display = "block";
         }
+        //ajout d'un pv
+        if (event.target.classList.value == "addbutton" || event.target.id == "newpv"){
+            
+            const target = event.target.id == "newpv" ? event.target.parentNode : event.target;
+
+            console.log("pouf");
+
+            dloader.style.display = "none";
+            dconnexion.style.display = "none";
+            dpv.style.display = "none";
+            ddeco.style.display = "none";
+            ddoc.style.display = "none";
+            dhelp.style.display = "none";
+            daffaire.style.display = "none";
+            dnewpv.style.display = "block";
+            dupdpv.style.display = "none";
+
+            idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+            console.log(idAffaire + "hello");
+            title = document.getElementById('titleaddpv');
+            title.innerHTML = "Ajouter un pv pour l'affaire n°" + idAffaire;
+        }
+        //ajouté en bdd
+        if (event.target.classList.value == "buttonaddBDD"){
+            idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+            var texteadd = document.getElementById('textefornewpv');
+            console.log(texteadd.value + idAffaire + getCookie("username"));
+        }
+        //retour
+        if (event.target.classList.value == "buttonlist"){
+            console.log('présent');
+        }
+
     });
+    //récupération du cookie
+    function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+    }
+    //vérification du cookie
+    function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+          alert("Bon retour " + user);
+        } else {
+            //redirection sur la page d'acceuil
+        }
+    }
 }

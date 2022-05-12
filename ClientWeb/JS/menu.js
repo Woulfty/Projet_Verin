@@ -29,6 +29,8 @@ let ddeco = document.getElementById("ddeco");
 let ddoc = document.getElementById("ddoc");
 let dhelp = document.getElementById("dhelp");
 let dloader = document.getElementById("dloader");
+let dnewpv = document.getElementById("dnewpv");
+let dupdpv = document.getElementById("dupdpv");
 //connexion
 bconnexion.addEventListener("click", () => {
     dloader.style.display = "none";
@@ -38,6 +40,8 @@ bconnexion.addEventListener("click", () => {
     ddoc.style.display = "none";
     dhelp.style.display = "none";
     daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //pv
 bpv.addEventListener("click", () => {
@@ -48,6 +52,8 @@ bpv.addEventListener("click", () => {
     ddoc.style.display = "none";
     dhelp.style.display = "none";
     daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //deco
 bdeco.addEventListener("click", () => {
@@ -58,6 +64,8 @@ bdeco.addEventListener("click", () => {
     ddoc.style.display = "none";
     dhelp.style.display = "none";
     daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //doc
 bdoc.addEventListener("click", () => {
@@ -68,6 +76,8 @@ bdoc.addEventListener("click", () => {
     ddoc.style.display = "block";
     dhelp.style.display = "none";
     daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
 //aide
 bhelp.addEventListener("click", () => {
@@ -78,4 +88,6 @@ bhelp.addEventListener("click", () => {
     ddoc.style.display = "none";
     dhelp.style.display = "block";
     daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
 })
