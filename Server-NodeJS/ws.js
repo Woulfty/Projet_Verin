@@ -90,10 +90,10 @@ const database = BDD_BASE;
                     console.log('UserConnexion : %s', message);
                     Username    = message.split(';')[1];
                     MdpUser     = message.split(';')[2];
-                    const[rows, fields] = await con.execute('SELECT `Username` FROM `User` WHERE `Username` = ? AND `Mdp` = ?', [Username,MdpUser]);
+                    const[rows, fields] = await con.execute('SELECT `Username`,`idUser` FROM `User` WHERE `Username` = ? AND `Mdp` = ?', [Username,MdpUser]);
                     if(rows.length > 0){
-                        console.log('RepUserConnexion' + ';' + Username + ';' + 'true');
-                        ws.send('RepUserConnexion' + ';' + Username + ';' + 'true');
+                        console.log('RepUserConnexion' + ';' + JSON.stringify(rows) + ';' + 'true');
+                        ws.send('RepUserConnexion' + ';' + JSON.stringify(rows) + ';' + 'true');
                     }
                     else{
                         console.log('RepUserConnexion' + ';' + Username + ';' + 'false');
