@@ -25,6 +25,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	this->TCPConnected();
 }
 
+//--------------------------------------------------------------------------------A supprimer-------------------------------------------------------------------
 //quand on click sur le bouton pour se connecter au tcp serveur
 void QtWidgetsApplication1::connectTCP()
 {
@@ -60,6 +61,8 @@ void QtWidgetsApplication1::TCPdataread()
 	ui.labelAffiche->setText(str);
 
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 //quand on click sur le bouton pour selectionner une fichier
 void QtWidgetsApplication1::selectFileButtonclicked() {
