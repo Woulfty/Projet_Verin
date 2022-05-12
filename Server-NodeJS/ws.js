@@ -148,9 +148,31 @@ const database = BDD_BASE;
                 if((message.split(';')[0] == 'UpdPV') && (message.split(';')[1] > 0)){
                     console.log('UpdPV : %s', message);
                     idPV        = message.split(';')[1];
-                    Texte       = message.split(';')[2];
-                    con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
-                    ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
+                    Action      = message.split(';')[2];
+                    Mail        = message.split(';')[3];
+                    Texte       = message.split(';')[4];
+                    if(Action = '0'){ // Sans communication
+                        await con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
+                        ws.send('RepUpdPV' + ';' + idPV + ';' + Action + ';' + 'CONFIRM');
+                    }
+                    else if(Action = '1'){ // Mail
+                        if((Mail.length() > '10') && (Mail.indexOf(".") != '-1') && (Mail.indexOf("@") != '-1')){
+                            await con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
+                            ws.send('RepUpdPV' + ';' + idPV + ';' + Action + ';' + 'CONFIRM');
+                            // Envoyer un mail
+                        }
+                        else{
+                            ws.send('RepUpdPV' + ';' + idPV + ';' + 'REFUS : Champ(s) incomplet(s).');
+                        }
+                    }
+                    else if(Action = '2'){ // PDF - Impresion
+                        await con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
+                        ws.send('RepUpdPV' + ';' + idPV + ';' + Action + ';' + 'CONFIRM');
+                        // Envoie Fichier
+                    }
+                    else{ // Autre
+                        ws.send('RepUpdPV' + ';' + idPV + ';' + 'REFUS : Champ(s) incomplet(s).');
+                    }
                 }
                 // ExpBDD
                 if(message.split(';')[0] == 'ExpBDD'){
