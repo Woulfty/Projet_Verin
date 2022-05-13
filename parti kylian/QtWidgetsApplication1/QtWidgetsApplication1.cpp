@@ -11,6 +11,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	QString loginData = "admin";
 	QString MdpData = "admin";
 	ui.labelclientConnectToServer->setText("client connect : " + ClientConnectoServerToQString);
+	Essai = new essai(ip, nameDate, loginData, MdpData);
 	Affaire = new affaire(ip, nameDate, loginData, MdpData);
 	//---------------------------CLIENT------------------------------------------------------------------------------------------------
 	tcpSocket = new QTcpSocket(this);
@@ -284,12 +285,12 @@ void QtWidgetsApplication1::selectListAffaire()
 {
 	QVector<QString> liste_Affaire(50);
 	liste_Affaire = Affaire->selectListAffaire();
-	qDebug() << "il y a " + liste_Affaire.at(0) + " essai";
+	qDebug() << "il y a " + liste_Affaire.at(0) + " affaire";
 	int nb = liste_Affaire.at(0).toInt();
 	nb++;
 	QString IdAffaire;
 	for (int i = 1; i != nb; i++) {
-		qDebug() << "essai nb " + liste_Affaire[i];
+		qDebug() << "affaire nb " + liste_Affaire[i];
 		IdAffaire = liste_Affaire[i];
 		ui.affaire->addItem("Affaire:" + IdAffaire);
 	}

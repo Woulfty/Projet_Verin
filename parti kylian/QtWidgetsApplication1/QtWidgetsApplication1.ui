@@ -436,11 +436,96 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButtonNew</sender>
+   <signal>clicked()</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>creatEssai()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonModif</sender>
+   <signal>clicked()</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>updateEssai()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>397</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>essai</sender>
+   <signal>itemClicked(QListWidgetItem*)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>selectEssai()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>480</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>essai</sender>
+   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>suppEssai()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>480</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>affaire</sender>
+   <signal>itemClicked(QListWidgetItem*)</signal>
+   <receiver>QtWidgetsApplication1Class</receiver>
+   <slot>test()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>580</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectFileButtonclicked()</slot>
   <slot>confDecodageFichier()</slot>
   <slot>connectTCP()</slot>
   <slot>TCPdisconnected()</slot>
+  <slot>test()</slot>
+  <slot>selectEssai()</slot>
+  <slot>suppEssai()</slot>
+  <slot>creatEssai()</slot>
+  <slot>updateEssai()</slot>
  </slots>
 </ui>
