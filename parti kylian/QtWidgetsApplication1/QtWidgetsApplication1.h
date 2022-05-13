@@ -10,6 +10,7 @@
 #include <qtcpsocket.h>
 #include "affaire.h"
 #include <qtcpserver.h>
+#include "essai.h"
 
 class QtWidgetsApplication1 : public QMainWindow
 {
@@ -26,6 +27,7 @@ private:
 	QTcpSocket * tcpSocket;
 	QTcpServer * server;
 	affaire  *Affaire;
+	essai  * Essai;
 	QString IdAffaire;
 	QString TypeAffaire;
 	QString IDCapteur;
