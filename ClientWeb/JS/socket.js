@@ -233,7 +233,7 @@ ws.addEventListener("message", async(event, isBinary) => {
 
             updatebutton.id = data[i].idPV;
             deletebutton.id = data[i].idPV;
-
+            td1.id = data[i].idPV;
             var date = data[i].Date;
             date.split('T')[10];
 
@@ -415,8 +415,10 @@ ws.onopen = function() {
         if (event.target.classList.value == "updatebutton" || event.target.id == "create") {
 
             const target = event.target.id == "create" ? event.target.parentNode : event.target
-
+            //const targettext = event.target.id == "create" ? event.target.parentNode.parentNode : event.target;
             console.log("zuip");
+            targettext = document.getElementById(target.id).innerHTML;
+            console.log(targettext);
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -427,13 +429,21 @@ ws.onopen = function() {
             daffaire.style.display = "none";
             dnewpv.style.display = "none";
             dupdpv.style.display = "block";
+
+            idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+            title = document.getElementById('titleupdpv');
+            
+            title.innerHTML = "Modifier le pv n°" + target.id + " de l'affaire n°" + idAffaire;
+
+            var texteadd = document.getElementById('texteforupdpv').value = targettext;
+            /*
+            texteadd.innerHTML = targettext;
+            */
         }
         //ajout d'un pv
         if (event.target.classList.value == "addbutton" || event.target.id == "newpv") {
 
             const target = event.target.id == "newpv" ? event.target.parentNode : event.target;
-
-            console.log("pouf");
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -446,7 +456,6 @@ ws.onopen = function() {
             dupdpv.style.display = "none";
 
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
-            console.log(idAffaire + "hello");
             title = document.getElementById('titleaddpv');
             title.innerHTML = "Ajouter un pv pour l'affaire n°" + idAffaire;
         }
@@ -462,10 +471,11 @@ ws.onopen = function() {
                 alert("veuillez remplir le champ");
             }
         }
-        //modifier
-        if (event.target.classList.value == "buttonaddBDD") {
+        //modifier en bdd
+        if (event.target.classList.value == "buttonupdBDD") {
             var texteadd = document.getElementById('textefornewpv');
             var textcontent = document.getElementById('');
+
             //ws.send(UpdPv; idpv; action; MediaList; text)
         }
         //retour
