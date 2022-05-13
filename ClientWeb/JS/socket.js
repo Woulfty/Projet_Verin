@@ -433,12 +433,9 @@ ws.onopen = function() {
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
             title = document.getElementById('titleupdpv');
             
-            title.innerHTML = "Modifier le pv n°" + target.id + " de l'affaire n°" + idAffaire;
+            title.innerHTML = "Modifier le pv n°" + target.id;
 
             var texteadd = document.getElementById('texteforupdpv').value = targettext;
-            /*
-            texteadd.innerHTML = targettext;
-            */
         }
         //ajout d'un pv
         if (event.target.classList.value == "addbutton" || event.target.id == "newpv") {
@@ -467,16 +464,18 @@ ws.onopen = function() {
             if (texteadd.value) {
                 console.log(texteadd.value + idAffaire + getCookie("username"));
                 ws.send("AddPV;" + getCookie("username") + ";" + idAffaire + ";" + texteadd.value);
-            } else {
-                alert("veuillez remplir le champ");
             }
         }
         //modifier en bdd
         if (event.target.classList.value == "buttonupdBDD") {
-            var texteadd = document.getElementById('textefornewpv');
-            var textcontent = document.getElementById('');
-
-            //ws.send(UpdPv; idpv; action; MediaList; text)
+            idPv = document.getElementById("h3title").innerHTML.slice(17);
+            var texteupd = document.getElementById('texteforupdpv');
+            var mail = document.getElementById('addmail');
+            if(mail != "" || texteupd != ""){
+                console.log(ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value));
+            }else{
+                alert('veuillez remplir les champs !');
+            }
         }
         //retour
         if (event.target.classList.value == "buttonlist") {
@@ -503,7 +502,6 @@ ws.onopen = function() {
 
             console.log('présent');
         }
-
     });
     //récupération du cookie
     function getCookie(cname) {

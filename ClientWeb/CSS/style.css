@@ -437,8 +437,26 @@ tr:hover
     width: 120px;
     transform: translateY(-50%);
 }
+.buttonupdBDD
+{
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #04AA6D;
+    color: white;
+    position:relative;
+    width: 120px;
+    transform: translateY(-50%);
+}
 .buttonadd
 {
     height: 5%;
+    padding-top: 5%;
+    padding-right: 50px;
+}
+.mailzone
+{
+    height: 2%;
     padding-right: 50px;
 }
