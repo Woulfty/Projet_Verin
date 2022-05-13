@@ -11,6 +11,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	QString loginData = "admin";
 	QString MdpData = "admin";
 	ui.labelclientConnectToServer->setText("client connect : " + ClientConnectoServerToQString);
+	Essai = new essai(ip, nameDate, loginData, MdpData);
 	Affaire = new affaire(ip, nameDate, loginData, MdpData);
 	//---------------------------CLIENT------------------------------------------------------------------------------------------------
 	tcpSocket = new QTcpSocket(this);
@@ -23,6 +24,7 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	server->listen(QHostAddress::AnyIPv4, 4000);
 
 	this->TCPConnected();
+	this->selectListAffaire();
 }
 
 //--------------------------------------------------------------------------------A supprimer-------------------------------------------------------------------
@@ -196,5 +198,105 @@ void QtWidgetsApplication1::onclientReadyRead()
 	}
 	
 }
+
+
+
+
+void QtWidgetsApplication1::test() {
+	// Get the pointer to the currently selected item.
+	QListWidgetItem *item = ui.affaire->currentItem();
+
+
+	this->reset();
+
+	// Set the text color and its background color using the pointer to the item.
+	//item->setTextColor(Qt::white);
+	//item->setBackgroundColor(Qt::black);
+	//qDebug() << item->text();
+	QString id = item->text();
+	id = id.section(':', 1, 1);
+	qDebug() << id;
+	QVector<QString> liste_essais(50);
+	liste_essais = Essai->selectAffaire(id);
+	qDebug() << "il y a " + liste_essais.at(0) + " essai";
+	int nb = liste_essais.at(0).toInt();
+	nb++;
+	QString Idessai;
+	for (int i = 1; i != nb; i++) {
+		qDebug() << "essai nb " + liste_essais[i];
+		Idessai = liste_essais[i];
+		ui.essai->addItem("essai:" + Idessai);
+	}
+
+}
+void QtWidgetsApplication1::selectEssai()
+{
+	QListWidgetItem *item = ui.essai->currentItem();
+	QString id = item->text();
+	id = id.section(':', 1, 1);
+	QVector<QString> selectEssai(5);
+	selectEssai = Essai->selectEssaiID(id);
+	ui.label_selcEssai->setText("id de l'essais selectionnais: " + selectEssai[0]);
+	ui.lineEdit_idAffaire->setText(selectEssai[1]);
+	ui.lineEdit_frequence->setText(selectEssai[2]);
+	ui.lineEdit_tempAqui->setText(selectEssai[3]);
+	ui.lineEdit_grandeur->setText(selectEssai[4]);
+}
+void QtWidgetsApplication1::suppEssai()
+{
+	ui.label_selcEssai->setText("");
+	ui.lineEdit_idAffaire->setText("");
+	ui.lineEdit_frequence->setText("");
+	ui.lineEdit_tempAqui->setText("");
+	ui.lineEdit_grandeur->setText("");
+	QListWidgetItem *item = ui.essai->currentItem();
+	QString id = item->text();
+	id = id.section(':', 1, 1);
+	Essai->supprimeEssai(id);
+	ui.essai->takeItem(ui.essai->row(item));
+	qDebug() << "supprime l'essai numero" + id;
+}
+void QtWidgetsApplication1::updateEssai()
+{
+	QListWidgetItem *item = ui.essai->currentItem();
+	QString id = item->text();
+	id = id.section(':', 1, 1);
+	Essai->updateEssai(id, ui.lineEdit_idAffaire->text(), ui.lineEdit_frequence->text(), ui.lineEdit_tempAqui->text(), ui.lineEdit_grandeur->text());
+	qDebug() << "modification de l'essai " + id;
+}
+void QtWidgetsApplication1::creatEssai()
+{
+	Essai->creatEssai(ui.lineEdit_idAffaire->text(), ui.lineEdit_frequence->text(), ui.lineEdit_tempAqui->text(), ui.lineEdit_grandeur->text());
+	qDebug() << "creation de l'essai ";
+}
+void QtWidgetsApplication1::reset() {
+	while (ui.essai->count() > 0)
+	{
+		ui.essai->takeItem(0);
+	}
+	while (ui.affaire->count() > 0)
+	{
+		ui.affaire->takeItem(0);
+	}
+	this->selectListAffaire();
+}
+
+void QtWidgetsApplication1::selectListAffaire()
+{
+	QVector<QString> liste_Affaire(50);
+	liste_Affaire = Affaire->selectListAffaire();
+	qDebug() << "il y a " + liste_Affaire.at(0) + " affaire";
+	int nb = liste_Affaire.at(0).toInt();
+	nb++;
+	QString IdAffaire;
+	for (int i = 1; i != nb; i++) {
+		qDebug() << "affaire nb " + liste_Affaire[i];
+		IdAffaire = liste_Affaire[i];
+		ui.affaire->addItem("Affaire:" + IdAffaire);
+	}
+}
+
+
+
 
 

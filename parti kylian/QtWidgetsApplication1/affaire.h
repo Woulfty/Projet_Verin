@@ -24,6 +24,7 @@ public:
 	int selectAffaire();
 	int updateAffaire(QString, QString, QString, QString);
 	int deleteAffaire(QString Id);
+	QVector<QString> selectListAffaire();
 
 
 };

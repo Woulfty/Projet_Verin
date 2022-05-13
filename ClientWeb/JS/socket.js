@@ -117,7 +117,7 @@ ws.addEventListener("message", async(event, isBinary) => {
             td2.id = data[i].idAffaire;
             td3.id = data[i].idAffaire;
             td1.innerHTML = "Affaire n°" + data[i].idAffaire;
-            td3.innerHTML = data[i].Date[11] + data[i].Date[12] + ":" + data[i].Date[14] + data[i].Date[15] + ":" + data[i].Date[17] + data[i].Date[18];
+            td3.innerHTML = data[i].Date[11] + data[i].Date[12] + ":" + data[i].Date[14] + data[i].Date[15];
             td2.innerHTML = data[i].Date[8] + data[i].Date[9] + "/" + data[i].Date[5] + data[i].Date[6] + "/" + data[i].Date[0] + data[i].Date[1] + data[i].Date[2] + data[i].Date[3];
 
             tr.appendChild(td1);
@@ -233,13 +233,13 @@ ws.addEventListener("message", async(event, isBinary) => {
 
             updatebutton.id = data[i].idPV;
             deletebutton.id = data[i].idPV;
-
+            td1.id = data[i].idPV;
             var date = data[i].Date;
             date.split('T')[10];
 
             td1.innerHTML = data[i].Texte;
             td2.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
-            td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + date[19];
+            td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15];
             td4.appendChild(updatebutton)
             td4.appendChild(deletebutton)
                 // Définition de l'enfant
@@ -415,8 +415,10 @@ ws.onopen = function() {
         if (event.target.classList.value == "updatebutton" || event.target.id == "create") {
 
             const target = event.target.id == "create" ? event.target.parentNode : event.target
-
+            //const targettext = event.target.id == "create" ? event.target.parentNode.parentNode : event.target;
             console.log("zuip");
+            targettext = document.getElementById(target.id).innerHTML;
+            console.log(targettext);
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -427,13 +429,18 @@ ws.onopen = function() {
             daffaire.style.display = "none";
             dnewpv.style.display = "none";
             dupdpv.style.display = "block";
+
+            idAffaire = document.getElementById("h3title").innerHTML.slice(17);
+            title = document.getElementById('titleupdpv');
+            
+            title.innerHTML = "Modifier le pv n°" + target.id;
+
+            var texteadd = document.getElementById('texteforupdpv').value = targettext;
         }
         //ajout d'un pv
         if (event.target.classList.value == "addbutton" || event.target.id == "newpv") {
 
             const target = event.target.id == "newpv" ? event.target.parentNode : event.target;
-
-            console.log("pouf");
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -446,7 +453,6 @@ ws.onopen = function() {
             dupdpv.style.display = "none";
 
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
-            console.log(idAffaire + "hello");
             title = document.getElementById('titleaddpv');
             title.innerHTML = "Ajouter un pv pour l'affaire n°" + idAffaire;
         }
@@ -458,15 +464,18 @@ ws.onopen = function() {
             if (texteadd.value) {
                 console.log(texteadd.value + idAffaire + getCookie("username"));
                 ws.send("AddPV;" + getCookie("username") + ";" + idAffaire + ";" + texteadd.value);
-            } else {
-                alert("veuillez remplir le champ");
             }
         }
-        //modifier
-        if (event.target.classList.value == "buttonaddBDD") {
-            var texteadd = document.getElementById('textefornewpv');
-            var textcontent = document.getElementById('');
-            //ws.send(UpdPv; idpv; action; MediaList; text)
+        //modifier en bdd
+        if (event.target.classList.value == "buttonupdBDD") {
+            idPv = document.getElementById("h3title").innerHTML.slice(17);
+            var texteupd = document.getElementById('texteforupdpv');
+            var mail = document.getElementById('addmail');
+            if(mail != "" || texteupd != ""){
+                console.log(ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value));
+            }else{
+                alert('veuillez remplir les champs !');
+            }
         }
         //retour
         if (event.target.classList.value == "buttonlist") {
@@ -493,7 +502,6 @@ ws.onopen = function() {
 
             console.log('présent');
         }
-
     });
     //récupération du cookie
     function getCookie(cname) {
