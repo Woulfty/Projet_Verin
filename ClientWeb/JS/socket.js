@@ -117,7 +117,7 @@ ws.addEventListener("message", async(event, isBinary) => {
             td2.id = data[i].idAffaire;
             td3.id = data[i].idAffaire;
             td1.innerHTML = "Affaire n°" + data[i].idAffaire;
-            td3.innerHTML = data[i].Date[11] + data[i].Date[12] + ":" + data[i].Date[14] + data[i].Date[15] + ":" + data[i].Date[17] + data[i].Date[18];
+            td3.innerHTML = data[i].Date[11] + data[i].Date[12] + ":" + data[i].Date[14] + data[i].Date[15];
             td2.innerHTML = data[i].Date[8] + data[i].Date[9] + "/" + data[i].Date[5] + data[i].Date[6] + "/" + data[i].Date[0] + data[i].Date[1] + data[i].Date[2] + data[i].Date[3];
 
             tr.appendChild(td1);
@@ -239,7 +239,7 @@ ws.addEventListener("message", async(event, isBinary) => {
 
             td1.innerHTML = data[i].Texte;
             td2.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
-            td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15] + date[16] + date[17] + date[18] + date[19];
+            td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15];
             td4.appendChild(updatebutton)
             td4.appendChild(deletebutton)
                 // Définition de l'enfant
