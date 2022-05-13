@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `Essaie` (
   PRIMARY KEY (`idEssaie`),
   KEY `Affaire` (`idAffaire`),
   CONSTRAINT `Essaie_ibfk_1` FOREIGN KEY (`idAffaire`) REFERENCES `Affaire` (`idAffaire`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: PV
@@ -169,6 +169,26 @@ INSERT INTO
   )
 VALUES
   (3, 7, 800, 1, 20);
+INSERT INTO
+  `Essaie` (
+    `idEssaie`,
+    `idAffaire`,
+    `Frequence`,
+    `TempAcquisition`,
+    `Value`
+  )
+VALUES
+  (4, 7, 500, 1, 8);
+INSERT INTO
+  `Essaie` (
+    `idEssaie`,
+    `idAffaire`,
+    `Frequence`,
+    `TempAcquisition`,
+    `Value`
+  )
+VALUES
+  (5, 8, 500, 1, 8);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: PV
