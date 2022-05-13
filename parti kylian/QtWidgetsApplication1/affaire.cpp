@@ -93,3 +93,21 @@ int affaire::deleteAffaire(QString Id) {
 	}
 	return 0;
 }
+
+QVector<QString> affaire::selectListAffaire() {
+	QSqlQuery requetes(db);
+	if (db.open()) {
+		requetes.prepare("SELECT `idAffaire` FROM `Affaire`");
+		requetes.exec();
+		int ID = 0;
+		QVector<QString> affairelist(50);
+
+		for (int i = 1; requetes.next(); i++) {
+			ID++;
+			affairelist[i] = requetes.value(0).toString();
+			qDebug() << "les valeur du tableau affaire" + affairelist.at(i);
+		}
+		affairelist[0] = QString::number(ID);
+		return affairelist;
+	}
+}

@@ -36,10 +36,18 @@ private:
 	QString Pv;
 	int ClientConnectoServerToInt = 0;
 	QString ClientConnectoServerToQString = QString::number(ClientConnectoServerToInt);;
+	void reset();
+	void selectListAffaire();
 
 private slots:
 	void selectFileButtonclicked();
 	void confDecodageFichier();
+	void test();
+	void selectEssai();
+	void suppEssai();
+	void updateEssai();
+	void creatEssai();
+
 	//----------------------Client--------------------------------------------
 	void connectTCP();
 	void TCPConnected();
