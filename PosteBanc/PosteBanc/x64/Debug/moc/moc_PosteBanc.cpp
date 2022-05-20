@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_PosteBanc_t {
-    QByteArrayData data[10];
-    char stringdata0[160];
+    QByteArrayData data[13];
+    char stringdata0[169];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,13 +41,17 @@ QT_MOC_LITERAL(5, 64, 17), // "onSocketReadyRead"
 QT_MOC_LITERAL(6, 82, 17), // "EnableChangeValue"
 QT_MOC_LITERAL(7, 100, 18), // "ChangeValueAffaire"
 QT_MOC_LITERAL(8, 119, 13), // "DeleteAffaire"
-QT_MOC_LITERAL(9, 133, 26) // "onButtonClickedSendMessage"
+QT_MOC_LITERAL(9, 133, 9), // "StartRead"
+QT_MOC_LITERAL(10, 143, 6), // "Mesure"
+QT_MOC_LITERAL(11, 150, 8), // "SendData"
+QT_MOC_LITERAL(12, 159, 9) // "StopTimer"
 
     },
     "PosteBanc\0ConnectServeur\0\0onSocketConnected\0"
     "onSocketDeconnected\0onSocketReadyRead\0"
     "EnableChangeValue\0ChangeValueAffaire\0"
-    "DeleteAffaire\0onButtonClickedSendMessage"
+    "DeleteAffaire\0StartRead\0Mesure\0SendData\0"
+    "StopTimer"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +61,7 @@ static const uint qt_meta_data_PosteBanc[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,16 +69,22 @@ static const uint qt_meta_data_PosteBanc[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x0a /* Public */,
-       3,    0,   55,    2, 0x0a /* Public */,
-       4,    0,   56,    2, 0x0a /* Public */,
-       5,    0,   57,    2, 0x0a /* Public */,
-       6,    0,   58,    2, 0x0a /* Public */,
-       7,    0,   59,    2, 0x0a /* Public */,
-       8,    0,   60,    2, 0x0a /* Public */,
-       9,    0,   61,    2, 0x0a /* Public */,
+       1,    0,   69,    2, 0x0a /* Public */,
+       3,    0,   70,    2, 0x0a /* Public */,
+       4,    0,   71,    2, 0x0a /* Public */,
+       5,    0,   72,    2, 0x0a /* Public */,
+       6,    0,   73,    2, 0x0a /* Public */,
+       7,    0,   74,    2, 0x0a /* Public */,
+       8,    0,   75,    2, 0x0a /* Public */,
+       9,    0,   76,    2, 0x0a /* Public */,
+      10,    0,   77,    2, 0x0a /* Public */,
+      11,    0,   78,    2, 0x0a /* Public */,
+      12,    0,   79,    2, 0x0a /* Public */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -100,7 +110,10 @@ void PosteBanc::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 4: _t->EnableChangeValue(); break;
         case 5: _t->ChangeValueAffaire(); break;
         case 6: _t->DeleteAffaire(); break;
-        case 7: _t->onButtonClickedSendMessage(); break;
+        case 7: _t->StartRead(); break;
+        case 8: _t->Mesure(); break;
+        case 9: _t->SendData(); break;
+        case 10: _t->StopTimer(); break;
         default: ;
         }
     }
@@ -136,13 +149,13 @@ int PosteBanc::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 11;
     }
     return _id;
 }

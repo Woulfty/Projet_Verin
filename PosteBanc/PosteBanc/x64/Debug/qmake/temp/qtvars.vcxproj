@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|x64&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\Febvin\source\repos\Woulfty\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;C:\Qt\5.14.2\msvc2017_64\include;C:\Qt\5.14.2\msvc2017_64\include\QtWidgets;C:\Qt\5.14.2\msvc2017_64\include\QtGui;C:\Qt\5.14.2\msvc2017_64\include\QtANGLE;C:\Qt\5.14.2\msvc2017_64\include\QtNetwork;C:\Qt\5.14.2\msvc2017_64\include\QtCore;C:\Users\Febvin\source\repos\Woulfty\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;/include;C:\Qt\5.14.2\msvc2017_64\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Febvin\source\repos\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;C:\Qt\5.14.2\msvc2017_64\include;C:\Qt\5.14.2\msvc2017_64\include\QtWidgets;C:\Qt\5.14.2\msvc2017_64\include\QtGui;C:\Qt\5.14.2\msvc2017_64\include\QtANGLE;C:\Qt\5.14.2\msvc2017_64\include\QtNetwork;C:\Qt\5.14.2\msvc2017_64\include\QtCore;C:\Users\Febvin\source\repos\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;/include;C:\Qt\5.14.2\msvc2017_64\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>.\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>

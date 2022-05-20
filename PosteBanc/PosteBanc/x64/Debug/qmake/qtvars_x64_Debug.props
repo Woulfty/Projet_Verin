@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
 <Qt_DEFINES_>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB</Qt_DEFINES_>
-<Qt_INCLUDEPATH_>C:\Users\Febvin\source\repos\Woulfty\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;C:\Qt\5.14.2\msvc2017_64\include;C:\Qt\5.14.2\msvc2017_64\include\QtWidgets;C:\Qt\5.14.2\msvc2017_64\include\QtGui;C:\Qt\5.14.2\msvc2017_64\include\QtANGLE;C:\Qt\5.14.2\msvc2017_64\include\QtNetwork;C:\Qt\5.14.2\msvc2017_64\include\QtCore;C:\Users\Febvin\source\repos\Woulfty\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;/include;C:\Qt\5.14.2\msvc2017_64\mkspecs\win32-msvc</Qt_INCLUDEPATH_>
+<Qt_INCLUDEPATH_>C:\Users\Febvin\source\repos\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;C:\Qt\5.14.2\msvc2017_64\include;C:\Qt\5.14.2\msvc2017_64\include\QtWidgets;C:\Qt\5.14.2\msvc2017_64\include\QtGui;C:\Qt\5.14.2\msvc2017_64\include\QtANGLE;C:\Qt\5.14.2\msvc2017_64\include\QtNetwork;C:\Qt\5.14.2\msvc2017_64\include\QtCore;C:\Users\Febvin\source\repos\Projet_Verin\PosteBanc\PosteBanc\x64\Debug\qmake\temp;/include;C:\Qt\5.14.2\msvc2017_64\mkspecs\win32-msvc</Qt_INCLUDEPATH_>
 <Qt_STDCPP_></Qt_STDCPP_>
 <Qt_CL_OPTIONS_>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus</Qt_CL_OPTIONS_>
 <Qt_LIBS_>C:\Qt\5.14.2\msvc2017_64\lib\Qt5Widgetsd.lib;C:\Qt\5.14.2\msvc2017_64\lib\Qt5Guid.lib;C:\Qt\5.14.2\msvc2017_64\lib\Qt5Networkd.lib;C:\Qt\5.14.2\msvc2017_64\lib\Qt5Cored.lib;C:\Qt\5.14.2\msvc2017_64\lib\qtmaind.lib;shell32.lib</Qt_LIBS_>
