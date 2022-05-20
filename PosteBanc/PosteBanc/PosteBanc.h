@@ -7,10 +7,13 @@
 #include <QJsonObject>
 #include <QString>
 #include <string>
+#include <QMap>
+#include <QTimer>
 
 
 #include "ui_PosteBanc.h"
 #include "Affaire.h"
+#include "Arduino.h"
 
 class PosteBanc : public QMainWindow
 {
@@ -18,9 +21,14 @@ class PosteBanc : public QMainWindow
 
 public:
     PosteBanc(QWidget *parent = Q_NULLPTR);
-	Affaire * affaire = new Affaire(1, 1, 10, 100);
+	Affaire * affaire = new Affaire(0, 1, 0, 0);
+	Arduino arduino;
 	
 	void ChangeValueIHM();
+
+
+	QTimer * Frequence;
+	QTimer * TempAcquisition;
 	
 
 private:
@@ -41,6 +49,10 @@ public slots:
 	void ChangeValueAffaire();
 	void DeleteAffaire();
 	
-	void onButtonClickedSendMessage();
+	void StartRead();
+	void Mesure();
+	void SendData();
+	void StopTimer();
+
 	
 };
