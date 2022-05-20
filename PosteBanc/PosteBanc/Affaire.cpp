@@ -20,13 +20,27 @@ void Affaire::setValueAffaire(int NumAffaire, int Capteur, int Frequence, int Te
 	this->Capteur = Capteur;
 	this->TempAcquisition = TempAcquisition;
 	this->Frequence = Frequence;
-	qDebug() << NumAffaire << Capteur << TempAcquisition << Frequence ;
+	//qDebug() << NumAffaire << Capteur << TempAcquisition << Frequence ;
 
 }
 
 QString Affaire::CreateJSON()
 {
-	QString AffaireJSON = "{\"affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + "}";
+	QString AffaireJSON = "{\"Methode\":1,\"Affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + "}";
+
+	return AffaireJSON;
+}
+
+QString Affaire::JSONdelete(int NumAffaireDelete)
+{
+	QString AffaireJSON = "{\"Methode\":2,\"affaire\":" + QString::number(NumAffaireDelete) + "}";
+
+	return AffaireJSON;
+}
+
+QString Affaire::JSONupdate(int NumAffaire, int Capteur, int Frequence, int TempAcquisition)
+{
+	QString AffaireJSON = "{\"Methode\":3,\"Affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + "}";
 
 	return AffaireJSON;
 }

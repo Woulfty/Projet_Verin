@@ -9,6 +9,7 @@ class Affaire : public QObject
 	int TempAcquisition;
 	int Frequence;
 
+	
 public:
 	Affaire(int, int, int, int);
 	~Affaire();
@@ -20,6 +21,8 @@ public:
 
 	void setValueAffaire(int, int, int, int);
 	QString CreateJSON();
+	QString JSONdelete(int);
+	QString JSONupdate(int, int, int, int);
 
 
 private:
