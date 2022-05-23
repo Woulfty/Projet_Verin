@@ -24,7 +24,7 @@ public:
 	Affaire * affaire = new Affaire(0, 1, 0, 0);
 	Arduino arduino;
 	
-	void ChangeValueIHM();
+	
 
 
 	QTimer * Frequence;
@@ -43,7 +43,7 @@ public slots:
 	void onSocketDeconnected();
 	void onSocketReadyRead();
 
-	
+	void ChangeValueIHM();
 	
 	void EnableChangeValue();
 	void ChangeValueAffaire();

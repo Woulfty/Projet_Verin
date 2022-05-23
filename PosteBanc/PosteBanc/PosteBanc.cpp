@@ -157,7 +157,7 @@ void PosteBanc::StartRead()
 	int TempAcquisitionLectureSecond = TempAcquisitionLecture * 1000;
 
 	arduino.ArduinoConnexion();
-	
+	/*
 	Frequence = new QTimer(this);
 	QObject::connect(Frequence, SIGNAL(timeout()), this, SLOT(Mesure()));
 	Frequence->start(FrequenceLecture);
@@ -165,7 +165,7 @@ void PosteBanc::StartRead()
 	TempAcquisition = new QTimer(this);
 	QObject::connect(TempAcquisition, SIGNAL(timeout()), this, SLOT(StopTimer()));
 	TempAcquisition->start(TempAcquisitionLectureSecond);
-	
+	*/
 }
 
 void PosteBanc::Mesure()
@@ -177,6 +177,7 @@ void PosteBanc::Mesure()
 
 void PosteBanc::SendData()
 {
+	/*
 	int TailleTableau = arduino.getMapSize();
 
 	for(int i = 0; i < TailleTableau; i++)
@@ -192,6 +193,7 @@ void PosteBanc::SendData()
 
 		}
 	}
+	*/
 }
 
 void PosteBanc::StopTimer()
@@ -200,9 +202,8 @@ void PosteBanc::StopTimer()
 	TempAcquisition->stop();
 	qDebug() << "End Timer";
 
-	arduino.getMapSize();
 	arduino.StopConnection();
-	SendData();
+	//SendData();
 
 	ui.ConnexionServeur->setEnabled(true);
 	ui.InformationTest->setEnabled(true);
