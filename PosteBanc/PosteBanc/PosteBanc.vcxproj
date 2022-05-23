@@ -56,11 +56,13 @@
     <QtUic Include="PosteBanc.ui" />
     <QtMoc Include="PosteBanc.h" />
     <ClCompile Include="Affaire.cpp" />
+    <ClCompile Include="Arduino.cpp" />
     <ClCompile Include="PosteBanc.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Affaire.h" />
+    <QtMoc Include="Arduino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
