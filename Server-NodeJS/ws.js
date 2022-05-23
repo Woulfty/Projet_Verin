@@ -37,7 +37,7 @@ const database = BDD_BASE;
         // News Connexion
         console.log("Nouvelle connexion.");
         ws.send("Connexion établie.");
-        // Lancement Date loop for 10 Secondes
+        // Lancement Date loop for 60 Secondes
         setInterval(() =>
             ws.send(`Temps : ${new Date()}`)
         ,60 * 1000)
