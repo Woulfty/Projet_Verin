@@ -16,7 +16,8 @@ public:
 	Arduino(QObject *parent = Q_NULLPTR);
 	~Arduino();
 
-	QMap<float, float> Value;
+	QList<float> ListValueEntre;
+	QList<float> ListValueSortie;
 
 private:
 	QTcpSocket * ArduinoSocket = new QTcpSocket( this );
@@ -31,8 +32,10 @@ public slots:
 
 	void ArduinoReceiveData();
 
+	
 	float getValueEntre(int);
 	float getValueSortie(int);
-	int	  getMapSize();
+	int	  getListSize();
+	
 };
 

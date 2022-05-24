@@ -1,4 +1,5 @@
 #include "Arduino.h"
+
 Arduino::Arduino(QObject *parent)
 	: QObject(parent)
 {
@@ -19,7 +20,7 @@ void Arduino::ArduinoConnected() {
 void Arduino::ArduinoConnexion()
 {
 	QString ipArduino = "192.168.65.249";
-	int portArduino = 50660;
+	int portArduino = 50630;
 	ArduinoSocket->connectToHost(ipArduino, portArduino);
 
 	connect(ArduinoSocket, SIGNAL(connected()), this, SLOT(ArduinoConnected()));
@@ -35,18 +36,16 @@ void Arduino::ArduinoDisconnected()
 
 void Arduino::ArduinoSendRequest()
 {
-	if (ArduinoSocket->state() == QTcpSocket::ConnectedState) {
 
-		ArduinoSocket->write("1");
+	ArduinoSocket->write("1");
 
-	}
 }
 
 void Arduino::StopConnection()
 {
-	ArduinoSocket->write(0);
+	ArduinoSocket->write("0");
 
-	QTcpSocket * ArduinoSocket = new QTcpSocket(this);
+	//QTcpSocket * ArduinoSocket = new QTcpSocket(this);
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
@@ -55,32 +54,37 @@ void Arduino::ArduinoReceiveData()
 {
 	
 	QString Data = ArduinoSocket->read(ArduinoSocket->bytesAvailable());
-	QStringList ArduinoValue = Data.split(QLatin1Char(';'), Qt::SkipEmptyParts);
+	QStringList ArduinoValue = Data.split(QLatin1Char(','), Qt::SkipEmptyParts);
 
 
 	float ValueEntre = ArduinoValue[0].toFloat();
 	float ValueSortie = ArduinoValue[1].toFloat();
 
-	Value.insert(ValueEntre, ValueSortie);
+	qDebug() << ValueEntre;
+	qDebug() << ValueSortie;
+
+	ListValueEntre.push_back(ValueEntre);
+	ListValueSortie.push_back(ValueSortie);
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
 
+
 float Arduino::getValueEntre(int NumValeurEntre)
 {
-	float ValueEntre = Value.key(0);
+	float ValueEntre = ListValueEntre.at(NumValeurEntre);
 	return ValueEntre;
 }
 
 float Arduino::getValueSortie(int NumValeurSortie)
 {
-	float ValueSortie = Value.key(0);
+	float ValueSortie = ListValueSortie.at(NumValeurSortie);
 	return ValueSortie;
 }
 
-int Arduino::getMapSize()
+int Arduino::getListSize()
 {
-	int MapSize = Value.size();
-	qDebug() << MapSize;
-	return MapSize;
+	int ListSize = ListValueEntre.size();
+	qDebug() << ListSize;
+	return ListSize;
 }
