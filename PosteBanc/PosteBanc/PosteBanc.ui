@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>864</width>
+    <width>910</width>
     <height>512</height>
    </rect>
   </property>
@@ -94,7 +94,7 @@
      <rect>
       <x>330</x>
       <y>30</y>
-      <width>561</width>
+      <width>531</width>
       <height>251</height>
      </rect>
     </property>
@@ -203,19 +203,6 @@
      </property>
      <property name="text">
       <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>200</y>
-       <width>171</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Envoie message Serveur</string>
      </property>
     </widget>
     <widget class="QPushButton" name="CancelAffaire">
@@ -344,19 +331,22 @@
       <string>Valider nouveau paramètre Affaire</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>260</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test Affaire</string>
-    </property>
+    <widget class="QPushButton" name="BouttonAffaire">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>200</y>
+       <width>171</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Lancer l'affaire</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -364,7 +354,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>864</width>
+     <width>910</width>
      <height>21</height>
     </rect>
    </property>
@@ -401,10 +391,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>BouttonAffaire</sender>
    <signal>clicked(bool)</signal>
    <receiver>PosteBancClass</receiver>
-   <slot>SendData()</slot>
+   <slot>StartRead()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>685</x>
@@ -460,22 +450,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>453</x>
-     <y>255</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>PosteBancClass</receiver>
-   <slot>StartRead()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>87</x>
-     <y>304</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>431</x>
      <y>255</y>
     </hint>
    </hints>
