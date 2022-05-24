@@ -19,6 +19,7 @@ void Arduino::ArduinoConnected() {
 
 void Arduino::ArduinoConnexion()
 {
+	//Conexion a l'arduino
 	QString ipArduino = "192.168.65.249";
 	int portArduino = 50630;
 	ArduinoSocket->connectToHost(ipArduino, portArduino);
@@ -36,7 +37,7 @@ void Arduino::ArduinoDisconnected()
 
 void Arduino::ArduinoSendRequest()
 {
-
+	// Request d'envoie des valeur
 	ArduinoSocket->write("1");
 
 }
@@ -52,7 +53,7 @@ void Arduino::StopConnection()
 
 void Arduino::ArduinoReceiveData()
 {
-	
+	// Parsing des valeur d'entré et sortie
 	QString Data = ArduinoSocket->read(ArduinoSocket->bytesAvailable());
 	QStringList ArduinoValue = Data.split(QLatin1Char(','), Qt::SkipEmptyParts);
 
@@ -63,6 +64,7 @@ void Arduino::ArduinoReceiveData()
 	qDebug() << ValueEntre;
 	qDebug() << ValueSortie;
 
+	// Valeur placer dans une liste chacune
 	ListValueEntre.push_back(ValueEntre);
 	ListValueSortie.push_back(ValueSortie);
 }
@@ -72,18 +74,21 @@ void Arduino::ArduinoReceiveData()
 
 float Arduino::getValueEntre(int NumValeurEntre)
 {
+	//Acceseur Valeur
 	float ValueEntre = ListValueEntre.at(NumValeurEntre);
 	return ValueEntre;
 }
 
 float Arduino::getValueSortie(int NumValeurSortie)
 {
+	//Acceseur Valeur
 	float ValueSortie = ListValueSortie.at(NumValeurSortie);
 	return ValueSortie;
 }
 
 int Arduino::getListSize()
 {
+	//Acceseur Taile du Tableaux
 	int ListSize = ListValueEntre.size();
 	qDebug() << ListSize;
 	return ListSize;
