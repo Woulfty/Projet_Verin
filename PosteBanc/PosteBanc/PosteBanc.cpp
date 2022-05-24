@@ -20,9 +20,13 @@ void PosteBanc::ConnectServeur()
 
 	bool ok;
 	int portAsInt = port.toInt(&ok);
-	if (ok)
+	
+	socket->connectToHost(ip, portAsInt);
+
+	// Si le serveur ne répond pas on affiche un message d'érreur
+	if (!socket->waitForConnected(5000))
 	{
-		socket->connectToHost(ip, portAsInt);
+		ui.ErreurServeur->setText("Can't connect to server");
 	}
 }
 
@@ -30,6 +34,7 @@ void PosteBanc::onSocketConnected()
 {
 	ui.ConnexionServeur->setEnabled(false);
 	ui.InformationTest->setEnabled(true);
+	ui.ErreurServeur->setText("");
 
 	QObject::connect(socket, SIGNAL(disconnected()), this, SLOT(onSocketDeconnected()));
 	QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(onSocketReadyRead()));
