@@ -24,7 +24,7 @@ void Affaire::setValueAffaire(int NumAffaire, int Capteur, int Frequence, int Te
 QString Affaire::CreateJSON(int NumEssaie, float ValueEntre, float ValueSortie)
 {
 
-	QString AffaireJSON = "{\"Methode\":1,\"Affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + ", \"ValueEntre\":" + QString::number(ValueEntre) + ",\"ValueSortie\":" + QString::number(ValueSortie) + "}";
+	QString AffaireJSON = "{\"Methode\":1,\"Affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + ", \"NumEssaie\":" + QString::number(NumEssaie) + ", \"ValueEntre\":" + QString::number(ValueEntre) + ",\"ValueSortie\":" + QString::number(ValueSortie) + "}";
 
 	return AffaireJSON;
 }

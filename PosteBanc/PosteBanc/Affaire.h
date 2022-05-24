@@ -1,5 +1,6 @@
 #pragma once
 #include <qDebug>
+
 #include "ui_PosteBanc.h"
 
 class Affaire : public QObject
