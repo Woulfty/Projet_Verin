@@ -42,7 +42,6 @@ public:
     QLabel *LabelFrequence;
     QLabel *LabelCapteur;
     QLabel *LabelAffaire;
-    QPushButton *pushButton;
     QPushButton *CancelAffaire;
     QLineEdit *CapteurLine;
     QLineEdit *FrequenceLine;
@@ -52,7 +51,7 @@ public:
     QLabel *LabelTempAcquisitionNew;
     QPushButton *ChangeValueAffaire;
     QPushButton *ValideNewParemetre;
-    QPushButton *pushButton_2;
+    QPushButton *BouttonAffaire;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -61,7 +60,7 @@ public:
     {
         if (PosteBancClass->objectName().isEmpty())
             PosteBancClass->setObjectName(QString::fromUtf8("PosteBancClass"));
-        PosteBancClass->resize(864, 512);
+        PosteBancClass->resize(910, 512);
         centralWidget = new QWidget(PosteBancClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         ConnexionServeur = new QGroupBox(centralWidget);
@@ -85,7 +84,7 @@ public:
         InformationTest = new QGroupBox(centralWidget);
         InformationTest->setObjectName(QString::fromUtf8("InformationTest"));
         InformationTest->setEnabled(false);
-        InformationTest->setGeometry(QRect(330, 30, 561, 251));
+        InformationTest->setGeometry(QRect(330, 30, 531, 251));
         TextAffaire = new QLabel(InformationTest);
         TextAffaire->setObjectName(QString::fromUtf8("TextAffaire"));
         TextAffaire->setGeometry(QRect(20, 30, 71, 21));
@@ -110,9 +109,6 @@ public:
         LabelAffaire = new QLabel(InformationTest);
         LabelAffaire->setObjectName(QString::fromUtf8("LabelAffaire"));
         LabelAffaire->setGeometry(QRect(130, 30, 55, 21));
-        pushButton = new QPushButton(InformationTest);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(30, 200, 171, 28));
         CancelAffaire = new QPushButton(InformationTest);
         CancelAffaire->setObjectName(QString::fromUtf8("CancelAffaire"));
         CancelAffaire->setEnabled(false);
@@ -146,13 +142,14 @@ public:
         ValideNewParemetre->setObjectName(QString::fromUtf8("ValideNewParemetre"));
         ValideNewParemetre->setEnabled(false);
         ValideNewParemetre->setGeometry(QRect(290, 200, 211, 28));
-        pushButton_2 = new QPushButton(centralWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(50, 260, 75, 23));
+        BouttonAffaire = new QPushButton(InformationTest);
+        BouttonAffaire->setObjectName(QString::fromUtf8("BouttonAffaire"));
+        BouttonAffaire->setEnabled(false);
+        BouttonAffaire->setGeometry(QRect(30, 200, 171, 28));
         PosteBancClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(PosteBancClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 864, 21));
+        menuBar->setGeometry(QRect(0, 0, 910, 21));
         PosteBancClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(PosteBancClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -163,11 +160,10 @@ public:
 
         retranslateUi(PosteBancClass);
         QObject::connect(ButtonConnect, SIGNAL(clicked(bool)), PosteBancClass, SLOT(ConnectServeur()));
-        QObject::connect(pushButton, SIGNAL(clicked(bool)), PosteBancClass, SLOT(SendData()));
+        QObject::connect(BouttonAffaire, SIGNAL(clicked(bool)), PosteBancClass, SLOT(StartRead()));
         QObject::connect(CancelAffaire, SIGNAL(clicked(bool)), PosteBancClass, SLOT(DeleteAffaire()));
         QObject::connect(ValideNewParemetre, SIGNAL(clicked(bool)), PosteBancClass, SLOT(ChangeValueAffaire()));
         QObject::connect(ChangeValueAffaire, SIGNAL(clicked(bool)), PosteBancClass, SLOT(EnableChangeValue()));
-        QObject::connect(pushButton_2, SIGNAL(clicked(bool)), PosteBancClass, SLOT(StartRead()));
 
         QMetaObject::connectSlotsByName(PosteBancClass);
     } // setupUi
@@ -188,14 +184,13 @@ public:
         LabelFrequence->setText(QString());
         LabelCapteur->setText(QString());
         LabelAffaire->setText(QString());
-        pushButton->setText(QCoreApplication::translate("PosteBancClass", "Envoie message Serveur", nullptr));
         CancelAffaire->setText(QCoreApplication::translate("PosteBancClass", "Annuler Affaire", nullptr));
         LabelCapteurNew->setText(QCoreApplication::translate("PosteBancClass", "Nouveau Capteur :", nullptr));
         LabelFrequenceNew->setText(QCoreApplication::translate("PosteBancClass", "Nouvelle Fr\303\251quence :", nullptr));
         LabelTempAcquisitionNew->setText(QCoreApplication::translate("PosteBancClass", "Nouveau Temp acquisition :", nullptr));
         ChangeValueAffaire->setText(QCoreApplication::translate("PosteBancClass", "Changer Param\303\250tre affaire", nullptr));
         ValideNewParemetre->setText(QCoreApplication::translate("PosteBancClass", "Valider nouveau param\303\250tre Affaire", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("PosteBancClass", "Test Affaire", nullptr));
+        BouttonAffaire->setText(QCoreApplication::translate("PosteBancClass", "Lancer l'affaire", nullptr));
     } // retranslateUi
 
 };
