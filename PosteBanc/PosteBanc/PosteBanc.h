@@ -7,7 +7,7 @@
 #include <QJsonObject>
 #include <QString>
 #include <string>
-#include <QMap>
+#include <QList>
 #include <QTimer>
 
 

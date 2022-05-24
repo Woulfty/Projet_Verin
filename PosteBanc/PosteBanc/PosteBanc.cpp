@@ -61,6 +61,7 @@ void PosteBanc::onSocketReadyRead()
 
 	ui.CancelAffaire->setEnabled(true);
 	ui.ChangeValueAffaire->setEnabled(true);
+	ui.BouttonAffaire->setEnabled(true);
 
 	ui.CapteurLine->setEnabled(false);
 	ui.FrequenceLine->setEnabled(false);
@@ -73,6 +74,7 @@ void PosteBanc::EnableChangeValue()
 {
 	ui.CancelAffaire->setEnabled(false);
 	ui.ChangeValueAffaire->setEnabled(false);
+	ui.BouttonAffaire->setEnabled(false);
 	ui.CapteurLine->setEnabled(true);
 	ui.FrequenceLine->setEnabled(true);
 	ui.tempAcquisitionLine->setEnabled(true);
@@ -81,8 +83,6 @@ void PosteBanc::EnableChangeValue()
 
 void PosteBanc::ChangeValueAffaire()
 {
-
-	//int NewValueAffaire = ui.AffaireLine->text().toInt();
 	int NewValueCapteur = ui.CapteurLine->text().toInt();
 	int NewValueFrequence = ui.FrequenceLine->text().toInt();
 	int NewValueTempAcquisition = ui.tempAcquisitionLine->text().toInt();
@@ -103,6 +103,7 @@ void PosteBanc::ChangeValueAffaire()
 
 	ui.CancelAffaire->setEnabled(true);
 	ui.ChangeValueAffaire->setEnabled(true);
+	ui.BouttonAffaire->setEnabled(true);
 	ui.CapteurLine->setEnabled(false);
 	ui.FrequenceLine->setEnabled(false);
 	ui.tempAcquisitionLine->setEnabled(false);
@@ -141,6 +142,7 @@ void PosteBanc::DeleteAffaire()
 
 	ui.CancelAffaire->setEnabled(false);
 	ui.ChangeValueAffaire->setEnabled(false);
+	ui.BouttonAffaire->setEnabled(false);
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
@@ -157,7 +159,7 @@ void PosteBanc::StartRead()
 	int TempAcquisitionLectureSecond = TempAcquisitionLecture * 1000;
 
 	arduino.ArduinoConnexion();
-	/*
+	
 	Frequence = new QTimer(this);
 	QObject::connect(Frequence, SIGNAL(timeout()), this, SLOT(Mesure()));
 	Frequence->start(FrequenceLecture);
@@ -165,7 +167,7 @@ void PosteBanc::StartRead()
 	TempAcquisition = new QTimer(this);
 	QObject::connect(TempAcquisition, SIGNAL(timeout()), this, SLOT(StopTimer()));
 	TempAcquisition->start(TempAcquisitionLectureSecond);
-	*/
+	
 }
 
 void PosteBanc::Mesure()
@@ -177,23 +179,25 @@ void PosteBanc::Mesure()
 
 void PosteBanc::SendData()
 {
-	/*
-	int TailleTableau = arduino.getMapSize();
+	
+	int TailleTableau = arduino.getListSize();
 
 	for(int i = 0; i < TailleTableau; i++)
 	{ 
 		float	ValueEntre = arduino.getValueEntre(i);
 		float	ValueSortie = arduino.getValueSortie(i);
-
-		QString Affaire = affaire->CreateJSON(i, ValueEntre, ValueSortie);
+		
+		int NumeroEssaieBase = i + 1;
+		QString Affaire = affaire->CreateJSON(NumeroEssaieBase, ValueEntre, ValueSortie);
 
 		if (socket->state() == QTcpSocket::ConnectedState) {
 
 			socket->write(Affaire.toLatin1());
 
 		}
+		
 	}
-	*/
+	
 }
 
 void PosteBanc::StopTimer()
@@ -203,9 +207,15 @@ void PosteBanc::StopTimer()
 	qDebug() << "End Timer";
 
 	arduino.StopConnection();
-	//SendData();
+	SendData();
 
-	ui.ConnexionServeur->setEnabled(true);
 	ui.InformationTest->setEnabled(true);
+	
+	this->affaire = new Affaire(0, 0, 0, 0);
+	ChangeValueIHM();
+
+	ui.CancelAffaire->setEnabled(false);
+	ui.ChangeValueAffaire->setEnabled(false);
+	ui.BouttonAffaire->setEnabled(false);
 }
 
