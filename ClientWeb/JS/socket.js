@@ -489,7 +489,8 @@ ws.onopen = function() {
         }
         //modifier en bdd
         if (event.target.classList.value == "buttonupdBDD") {
-            idPv = document.getElementById("h3title").innerHTML.slice(17);
+            idPv = document.getElementById("titleupdpv").innerHTML.slice(17);
+            console.log(idPv);
             var texteupd = document.getElementById('texteforupdpv');
             var mail = document.getElementById('addmail');
             if(mail != "" || texteupd != ""){
