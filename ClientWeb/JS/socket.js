@@ -219,9 +219,9 @@ ws.addEventListener("message", async(event, isBinary) => {
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
 
-            td1.innerHTML = "Numéro : " + (i + 1);
-            td2.innerHTML = datacourbe[i].Frequence + "s";
-            td3.innerHTML = datacourbe[i].Value + " kpa";
+            td1.innerHTML = "Test n°" + (i + 1);
+            td2.innerHTML = datacourbe[i].Debit + " m3/s";
+            td3.innerHTML = datacourbe[i].Value + " %";
 
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -574,5 +574,4 @@ ws.onopen = function() {
         }
         return "";
     }
-    
 }
