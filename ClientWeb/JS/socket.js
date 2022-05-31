@@ -1,6 +1,6 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
-//const ws = new WebSocket("ws://192.168.65.31:3006");
+
 //boutton de la barre
 var toggle = document.getElementById('toggle');
 //récupération de la barre de navigation
@@ -254,7 +254,7 @@ ws.addEventListener("message", async(event, isBinary) => {
             td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15];
             td4.appendChild(updatebutton)
             td4.appendChild(deletebutton)
-                // Définition de l'enfant
+            // Définition de l'enfant
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -269,14 +269,6 @@ ws.addEventListener("message", async(event, isBinary) => {
 
         var blob = new Blob([BDD], { type: "text/plain;charset=utf-8" });
         saveAs(blob, "dynamic.txt");
-
-    }
-    //récéption des information du Pv
-    if (message.split(';')[0] == 'RepInfoPV') {
-
-    }
-    //récéption des essais de l'affaire
-    if (message.split(';')[0] == 'RepListEssai') {
 
     }
     if (message.split(";")[0] == 'RepAddPV'){
@@ -298,7 +290,7 @@ ws.addEventListener('error', function(event) {
 //Quand le Websocket c'est connecter
 ws.onopen = function() {
     //vérification du cookie
-    //checkCookie();
+    checkCookie();
     console.log('websocket is connected ...');
 
     ws.send('connected');
@@ -312,7 +304,40 @@ ws.onopen = function() {
     toggle.style.display = "block";
     //affichage de la page de connexion
     dconnexion = document.getElementById('dconnexion');
-    dconnexion.style.display = "block";
+
+    //vérification du cookie
+    function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+            alert("Bon retour");
+            
+            dconnexion = document.getElementById('dconnexion');
+            dconnexion.style.display = "none";
+            //on cache le bouton de connexion
+            bconnexion = document.getElementById('bconnexion');
+            bconnexion.style.display = "none";
+            //apparition de la div de déconnexion
+            var bdeco = document.getElementById('bdeco');
+            bdeco.style.display = "block";
+            //apparition du bouton de visualisation des Affaires
+            var bpv = document.getElementById('bpv');
+            bpv.style.display = "block"; 
+            //apparition de la div de téléverement de fichier
+            var bdoc = document.getElementById('bdoc');
+            bdoc.style.display = "block";
+            //apparition de la div de visualisation des affaire
+            var dpv = document.getElementById('dpv');
+            dpv.style.display = "block";
+            //apparition de la div de visualisation des affaire
+            daffaire = document.getElementById('daffaire');
+            daffaire.style.display = "none";
+
+            ws.send('ListAffaire');
+
+        } else {
+            dconnexion.style.display = "block";
+        }
+    }
 
     //récupération des valeurs dans les champs de connexion
     var form = document.getElementById('form');
@@ -334,6 +359,7 @@ ws.onopen = function() {
     formdeco.addEventListener('submit', function(e) {
         e.preventDefault();
         location.reload();
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     });
 
     //Quand un utilisateur clique
@@ -367,10 +393,7 @@ ws.onopen = function() {
         }
         //suppression de la div de l'affaire
 
-        
         if (event.target.classList.value == "littlebutton") {
-
-            
 
             h3title = document.getElementById('h3title');
             canvas = document.getElementById('myCanvas');
@@ -490,12 +513,11 @@ ws.onopen = function() {
         //modifier en bdd
         if (event.target.classList.value == "buttonupdBDD") {
             idPv = document.getElementById("titleupdpv").innerHTML.slice(17);
-            console.log(idPv);
             var texteupd = document.getElementById('texteforupdpv');
             var mail = document.getElementById('addmail');
+            console.log(cname + "ban,ane");
             if(mail != "" || texteupd != ""){
                 ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value);
-                console.log("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value);
             }else{
                 alert('veuillez remplir les champs !');
             }
@@ -505,11 +527,9 @@ ws.onopen = function() {
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
             pvTable = document.getElementById('pv');
             essaistable = document.getElementById('essaistable');
-
             if (pvTable != '') {
                 document.getElementById('pv').innerHTML = "";
             }
-
             ws.send('InfoAffaire;' + idAffaire);
             ws.send('ListEssaiID;' + idAffaire);
             ws.send('ListPVID;' + idAffaire);
@@ -542,36 +562,5 @@ ws.onopen = function() {
         }
         return "";
     }
-    //vérification du cookie
-    /*
-    function checkCookie() {
-        let user = getCookie("username");
-        if (user != "") {
-            alert("Bon retour");
-            //redirection sur la page d'acceuil
-            dconnexion = document.getElementById('dconnexion');
-            dconnexion.style.display = "none";
-            //on cache le bouton de connexion
-            bconnexion = document.getElementById('bconnexion');
-            bconnexion.style.display = "none";
-            //apparition de la div de déconnexion
-            var bdeco = document.getElementById('bdeco');
-            bdeco.style.display = "block";
-            //apparition du bouton de visualisation des Affaires
-            var bpv = document.getElementById('bpv');
-            bpv.style.display = "block"; 
-            //apparition de la div de téléverement de fichier
-            var bdoc = document.getElementById('bdoc');
-            bdoc.style.display = "block";
-            //apparition de la div de visualisation des affaire
-            var dpv = document.getElementById('dpv');
-            dpv.style.display = "block";
-            //apparition de la div de visualisation des affaire
-            daffaire = document.getElementById('daffaire');
-            daffaire.style.display = "none";
-        } else {
-            //redirection sur la page d'acceuil
-        }
-    }
-    */
+    
 }
