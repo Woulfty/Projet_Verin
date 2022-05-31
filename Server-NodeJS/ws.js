@@ -157,11 +157,12 @@ var transporter = nodemailer.createTransport({
                     ws.send('RepAddPV' + ';' + 'CONFIRM');
                 }
                 // UpdPV
-                if((message.split(';')[0] == 'UpdPV') && (message.split(';')[1] > 0) && (message.split(';')[2] != "") && (message.split(';')[3] != "")){
+                if((message.split(';')[0] == 'UpdPV') && (message.split(';')[1] > 0) && (message.split(';')[2] != "") && (message.split(';')[3] != "") && (message.split(';')[4] != "")){
                     console.log('UpdPV : %s', message);
                     idPV        = message.split(';')[1];
                     Mail        = message.split(';')[2];
-                    Texte       = message.split(';')[3];
+                    UserName    = message.split(';')[3];
+                    Texte       = message.split(';')[4];
                     if((Mail.length > '10') && (Mail.indexOf(".") != '-1') && (Mail.indexOf("@") != '-1')){
                         await con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
                         ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
@@ -171,7 +172,7 @@ var transporter = nodemailer.createTransport({
                             from: MAIL_USER, 
                             to: Mail, 
                             subject: "Update PV " + idPV, 
-                            text: "MESSAGE AUTOMATIQUE\n\nLe PV " + idPV + "a été mise à été modifié :\n" + Texte
+                            text: "MESSAGE AUTOMATIQUE\n\nLe PV " + idPV + " a été modifié par l'utilisateur " + UserName + " :\n" + Texte
                         };
                         transporter.sendMail(mailOptions, function(error, info){
                             if(error){
