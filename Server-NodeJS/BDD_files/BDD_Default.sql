@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 02 mai 2022 à 16:30
+-- Généré le : lun. 30 mai 2022 à 09:37
 -- Version du serveur :  10.3.29-MariaDB-0+deb10u1
 -- Version de PHP : 7.3.27-1~deb10u1
 
@@ -46,7 +46,10 @@ INSERT INTO `Affaire` (`idAffaire`, `Capteur`, `Frequence`, `TempAcquisition`, `
 (9, 2, 4, 500, 2, '2022-04-29 16:28:43'),
 (10, 2, 4, 500, 2, '2022-04-30 16:28:43'),
 (11, 2, 4, 500, 2, '2022-05-01 16:28:43'),
-(13, 2, 4, 500, 2, '2022-05-02 16:28:42');
+(13, 2, 4, 500, 2, '2022-05-02 16:28:42'),
+(14, 2, 4, 500, 2, '2022-05-24 09:02:33'),
+(15, 1, 6, 500, 2, '2022-05-24 14:53:08'),
+(16, 1, 4, 1, 0, '2022-05-25 09:09:32');
 
 -- --------------------------------------------------------
 
@@ -69,7 +72,36 @@ CREATE TABLE `Essaie` (
 INSERT INTO `Essaie` (`idEssaie`, `idAffaire`, `Frequence`, `TempAcquisition`, `Value`) VALUES
 (1, 7, 500, 6, 8),
 (2, 7, 500, 1, 12),
-(3, 7, 800, 1, 20);
+(3, 7, 800, 1, 20),
+(4, 8, 500, 6, 33),
+(5, 8, 500, 7, 55),
+(50, 7, 546, 786, 12),
+(51, 8, 453, 78, 5),
+(52, 8, 786, 7869, 20),
+(53, 8, 45, 78, 26),
+(54, 8, 78, 45, 14),
+(55, 9, 45, 786, 98),
+(56, 9, 56, 78, 50),
+(57, 9, 487, 789, 64),
+(58, 9, 45, 86, 25),
+(59, 10, 45, 12, 65),
+(60, 10, 45, 78, 80),
+(61, 10, 48, 78, 54),
+(62, 11, 45, 78, 45),
+(63, 11, 88, 45, 65),
+(64, 11, 45, 16, 87),
+(65, 13, 48, 45, 0),
+(66, 13, 45, 12, 0),
+(67, 13, 45, 78, 0),
+(68, 13, 45, 15, 45),
+(69, 7, 45, 45, 84),
+(70, 7, 45, 45, 75),
+(71, 7, 45, 45, 46),
+(92, 16, 45, 78, 5),
+(93, 16, 45, 78, 15),
+(94, 16, 48, 87, 30),
+(95, 16, 45, 86, 50),
+(96, 16, 457, 87, 80);
 
 -- --------------------------------------------------------
 
@@ -90,12 +122,13 @@ CREATE TABLE `PV` (
 --
 
 INSERT INTO `PV` (`idPV`, `idAffaire`, `idUser`, `Texte`, `Date`) VALUES
-(1, 7, 1, 'Le vérin à été testé avec succés. Il est conforme a la norme NF42.', '2022-05-02 12:17:34'),
-(2, 7, 1, 'Erreur lors du deuxièmes test. le verin présente une défaillance lors du test.', '2022-05-02 12:17:34'),
+(1, 7, 1, 'Rien à dire.', '2022-05-30 07:37:21'),
+(2, 7, 1, 'Erreur lors du deuxièmes test. Le vérin présente une défaillance lors du test.', '2022-05-30 07:37:16'),
 (3, 8, 1, 'Test Numéro 3', '2022-04-26 11:54:39'),
-(4, 7, 1, 'Résolution erreur, le verin avait une fuite lors de la pressurisation.', '2022-05-02 12:17:34'),
+(4, 7, 1, 'Résolution erreur, le vérin avait une fuite lors de la pressurisation.', '2022-05-30 07:37:07'),
 (5, 7, 1, 'Sur le graphique il y a une grosse perte de pression, est-ce normal ?', '2022-05-02 12:19:17'),
-(6, 7, 1, 'Oui, j ai accidentellement relâché la pression lors du test.', '2022-05-02 12:19:17');
+(7, 10, 1, 'Test du jour.', '2022-05-30 07:37:00'),
+(9, 13, 1, 'Bonjour je suis un test.', '2022-05-30 07:36:52');
 
 -- --------------------------------------------------------
 
@@ -158,19 +191,19 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT pour la table `Affaire`
 --
 ALTER TABLE `Affaire`
-  MODIFY `idAffaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idAffaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `Essaie`
 --
 ALTER TABLE `Essaie`
-  MODIFY `idEssaie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEssaie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT pour la table `PV`
 --
 ALTER TABLE `PV`
-  MODIFY `idPV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idPV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `User`
