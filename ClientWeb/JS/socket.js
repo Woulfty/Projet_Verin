@@ -1,19 +1,14 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
-//const ws = new WebSocket("ws://192.168.64.183:40510");
-
-//récupération de la barre de navigation
-navigation = document.getElementById('navigation');
-
-//récupération du loarder
-dloader = document.getElementById('dloader');
-
+//const ws = new WebSocket("ws://192.168.65.31:3006");
 //boutton de la barre
 var toggle = document.getElementById('toggle');
-
+//récupération de la barre de navigation
+navigation = document.getElementById('navigation');
+//récupération du loarder
+dloader = document.getElementById('dloader');
 //affichage de la page de connexion
 dconnexion = document.getElementById('dconnexion');
-
 //affichage de l'affaire
 daffaire = document.getElementById('daffaire');
 
@@ -39,7 +34,7 @@ ws.addEventListener("message", async(event, isBinary) => {
 
     // Définition String Message
     message = String(event.data);
-    //alert('poopy');
+
     //récéption de la connexion
     if (message.split(';')[0] == 'RepUserConnexion') {
         //découpage du message
@@ -117,8 +112,8 @@ ws.addEventListener("message", async(event, isBinary) => {
             td2.id = data[i].idAffaire;
             td3.id = data[i].idAffaire;
             td1.innerHTML = "Affaire n°" + data[i].idAffaire;
-            td3.innerHTML = data[i].Date[11] + data[i].Date[12] + ":" + data[i].Date[14] + data[i].Date[15];
-            td2.innerHTML = data[i].Date[8] + data[i].Date[9] + "/" + data[i].Date[5] + data[i].Date[6] + "/" + data[i].Date[0] + data[i].Date[1] + data[i].Date[2] + data[i].Date[3];
+            td3.innerHTML = data[i].Date[11]+data[i].Date[12]+":"+data[i].Date[14]+data[i].Date[15];
+            td2.innerHTML = data[i].Date[8]+data[i].Date[9]+"/"+data[i].Date[5]+data[i].Date[6]+"/"+data[i].Date[0]+data[i].Date[1]+data[i].Date[2]+data[i].Date[3];
 
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -129,6 +124,7 @@ ws.addEventListener("message", async(event, isBinary) => {
     }
     //récéption des information de l'affaire
     if (message.split(';')[0] == 'RepInfoAffaire') {
+
         //apparition de la div de visualisation des affaire
         dpv = document.getElementById('dpv');
         dpv.style.display = "none";
@@ -159,7 +155,6 @@ ws.addEventListener("message", async(event, isBinary) => {
         divinfo.id = "infothisaffaire";
         //ajout des informations
         h3title.innerHTML = "Affaire numéro : " + ID;
-
     }
     //affichage de la courbes de pression
     if (message.split(';')[0] == 'RepListEssaiID') {
@@ -170,10 +165,10 @@ ws.addEventListener("message", async(event, isBinary) => {
         var arr = [];
         var array = [];
         for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
-            arr.push(Startdata);
+            arr.push(Startdata + "s");
         }
         for (var i = 0; i < Datasize; ++i) {
-            array.push(datacourbe[i].Grandeur);
+            array.push(datacourbe[i].Value);
         }
 
         //courbe
@@ -185,7 +180,6 @@ ws.addEventListener("message", async(event, isBinary) => {
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                //data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
                 data: NUMBER_CFG,
             }]
         };
@@ -199,7 +193,25 @@ ws.addEventListener("message", async(event, isBinary) => {
             document.getElementById('myCanvas'),
             config
         );
+        
+        //création du tableau des essais
+        var essaistable = document.getElementById("essais");
+        for (var i = 0; i < Datasize; ++i) {
 
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+
+            td1.innerHTML = "Numéro : " + (i + 1);
+            td2.innerHTML = datacourbe[i].Frequence + "s";
+            td3.innerHTML = datacourbe[i].Value + " kpa";
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            essaistable.appendChild(tr);
+        }
     }
     //récéption des Pv de l'affaire
     if (message.split(';')[0] == 'RepListPVID') {
@@ -280,10 +292,10 @@ ws.addEventListener("message", async(event, isBinary) => {
 ws.addEventListener('error', function(event) {
     navigation.style.display = "none";
     dloader.style.display = "block";
-    console.log('WebSocket error: ', event);
+    console.log('WebSocket error: ', event); 
 });
 
-//Quand le socket c'est connecter
+//Quand le Websocket c'est connecter
 ws.onopen = function() {
     //vérification du cookie
     //checkCookie();
@@ -294,7 +306,6 @@ ws.onopen = function() {
     dloader = document.getElementById('dloader');
     dloader.style.display = "none";
     //barre de navigation
-    //navigation = document.getElementById('navigation');
     navigation.style.display = "block";
     //boutton de la barre
     toggle = document.getElementById('toggle');
@@ -325,8 +336,9 @@ ws.onopen = function() {
         location.reload();
     });
 
-    //Quand un utilisateur clique sur une affaire
+    //Quand un utilisateur clique
     document.addEventListener("click", (event) => {
+
         if (event.target.classList.value == "traffaire") {
             //event.target.id
             ws.send('InfoAffaire;' + event.target.id);
@@ -355,11 +367,15 @@ ws.onopen = function() {
         }
         //suppression de la div de l'affaire
 
+        
         if (event.target.classList.value == "littlebutton") {
+
+            
 
             h3title = document.getElementById('h3title');
             canvas = document.getElementById('myCanvas');
             pvTable = document.getElementById('pv');
+            essaistable = document.getElementById('essaistable')
 
             if (h3title != '') {
                 document.getElementById('h3title').innerHTML = "";
@@ -373,10 +389,13 @@ ws.onopen = function() {
             newCanvas.classList.add("canvas");
             newCanvas.id = "myCanvas";
 
-            divaffaire.insertBefore(newCanvas, document.getElementById("pvtable"));
+            divaffaire.insertBefore( newCanvas, essaistable );
 
             if (pvTable != '') {
                 document.getElementById('pv').innerHTML = "";
+            }
+            if (essaistable != '') {
+                document.getElementById('essais').innerHTML = "";
             }
 
             daffaire = document.getElementById('daffaire');
@@ -401,10 +420,15 @@ ws.onopen = function() {
 
                 console.log(target.id);
                 pvTable = document.getElementById('pv');
+                essaistable = document.getElementById('essais');
 
                 if (pvTable != '') {
                     document.getElementById('pv').innerHTML = "";
                 }
+                if (essaistable != '') {
+                    document.getElementById('essais').innerHTML = "";
+                }
+
                 ws.send('ListPVID;' + idAffaire);
                 console.log('Confirme que : ' + idAffaire)
             } else {
@@ -414,11 +438,8 @@ ws.onopen = function() {
         //modifiaction du pv
         if (event.target.classList.value == "updatebutton" || event.target.id == "create") {
 
-            const target = event.target.id == "create" ? event.target.parentNode : event.target
-            //const targettext = event.target.id == "create" ? event.target.parentNode.parentNode : event.target;
-            console.log("zuip");
+            const target = event.target.id == "create" ? event.target.parentNode : event.target;
             targettext = document.getElementById(target.id).innerHTML;
-            console.log(targettext);
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -472,7 +493,8 @@ ws.onopen = function() {
             var texteupd = document.getElementById('texteforupdpv');
             var mail = document.getElementById('addmail');
             if(mail != "" || texteupd != ""){
-                console.log(ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value));
+                ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value);
+                console.log("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value);
             }else{
                 alert('veuillez remplir les champs !');
             }
@@ -481,6 +503,7 @@ ws.onopen = function() {
         if (event.target.classList.value == "buttonlist") {
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
             pvTable = document.getElementById('pv');
+            essaistable = document.getElementById('essaistable');
 
             if (pvTable != '') {
                 document.getElementById('pv').innerHTML = "";
