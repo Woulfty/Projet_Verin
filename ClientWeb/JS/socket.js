@@ -12,11 +12,27 @@ dconnexion = document.getElementById('dconnexion');
 //affichage de l'affaire
 daffaire = document.getElementById('daffaire');
 
-dloader.style.display = "block"
-toggle.style.display = "none"
-dconnexion.style.display = "none"
-navigation.style.display = "none"
+dloader.style.display = "block";
+toggle.style.display = "none";
+dconnexion.style.display = "none";
+navigation.style.display = "none";
 daffaire.style.display = "none";
+
+ws.onclose = function(event){
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    dloader.style.display = "block";
+    dconnexion.style.display = "none";
+    dpv.style.display = "none";
+    ddeco.style.display = "none";
+    ddoc.style.display = "none";
+    dhelp.style.display = "none";
+    daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
+    navigation.style.display = "none"
+    toggle.style.display = "none";
+    console.log("connexion perdu");
+}
 
 //erreur
 ws.addEventListener('error', function(event) {
@@ -309,7 +325,7 @@ ws.onopen = function() {
     function checkCookie() {
         let user = getCookie("username");
         if (user != "") {
-            alert("Bon retour");
+            console.log("Bon retour");
             
             dconnexion = document.getElementById('dconnexion');
             dconnexion.style.display = "none";
@@ -392,7 +408,6 @@ ws.onopen = function() {
             ws.send("ExpBDD;");
         }
         //suppression de la div de l'affaire
-
         if (event.target.classList.value == "littlebutton") {
 
             h3title = document.getElementById('h3title');
@@ -447,9 +462,6 @@ ws.onopen = function() {
 
                 if (pvTable != '') {
                     document.getElementById('pv').innerHTML = "";
-                }
-                if (essaistable != '') {
-                    document.getElementById('essais').innerHTML = "";
                 }
 
                 ws.send('ListPVID;' + idAffaire);
