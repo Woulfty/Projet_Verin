@@ -1,14 +1,14 @@
 #pragma once
 
+
 #include <QtWidgets/QMainWindow>
 #include <iostream>
 #include <QTcpSocket>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
-#include <string>
-#include <QList>
 #include <QTimer>
+#include <Windows.h>
 
 
 #include "ui_PosteBanc.h"
@@ -24,15 +24,13 @@ public:
 	Affaire * affaire = new Affaire(0, 1, 0, 0);
 	Arduino arduino;
 	
-	
-
 
 	QTimer * Frequence;
 	QTimer * TempAcquisition;
-	
+
+	Ui::PosteBancClass ui;
 
 private:
-    Ui::PosteBancClass ui;
 	QTcpSocket * socket;
 
 
@@ -42,6 +40,7 @@ public slots:
 	void onSocketConnected();
 	void onSocketDeconnected();
 	void onSocketReadyRead();
+
 
 	void ChangeValueIHM();
 	
@@ -54,5 +53,4 @@ public slots:
 	void SendData();
 	void StopTimer();
 
-	
 };

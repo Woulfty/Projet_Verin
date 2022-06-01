@@ -10,7 +10,6 @@ PosteBanc::PosteBanc(QWidget *parent)
 
 	QObject::connect(socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
 
-	
 }
 
 void PosteBanc::ConnectServeur()
@@ -169,7 +168,7 @@ void PosteBanc::StartRead()
 	//Récupération paramètres
 	int FrequenceLecture = this->affaire->getFrequence();
 	int TempAcquisitionLecture = this->affaire->getTempAcquisition();
-	int TempAcquisitionLectureSecond = TempAcquisitionLecture * 1000;
+	int TempAcquisitionLectureSecond = TempAcquisitionLecture * 1000 + FrequenceLecture;
 
 	arduino.ArduinoConnexion();
 	
@@ -197,13 +196,14 @@ void PosteBanc::SendData()
 	// Boucle qui parcourt le tableaux de donnée pour tous les envoyer
 	int TailleTableau = arduino.getListSize();
 
-	for(int i = 0; i < TailleTableau; i++)
+	for(int i = 1; i < TailleTableau; i++)
 	{ 
 		float	ValueEntre = arduino.getValueEntre(i);
 		float	ValueSortie = arduino.getValueSortie(i);
+		float	ValueDebit = arduino.getDebit(i);
 		
-		int NumeroEssaieBase = i + 1;
-		QString Affaire = affaire->CreateJSON(NumeroEssaieBase, ValueEntre, ValueSortie);
+		int NumeroEssaieBase = i;
+		QString Affaire = affaire->CreateJSON(NumeroEssaieBase, ValueEntre, ValueSortie, ValueDebit);
 
 		if (socket->state() == QTcpSocket::ConnectedState) {
 
@@ -226,13 +226,16 @@ void PosteBanc::StopTimer()
 	arduino.StopConnection();
 	SendData();
 
-	ui.InformationTest->setEnabled(true);
+	
 	
 	this->affaire = new Affaire(0, 0, 0, 0);
 	ChangeValueIHM();
 
+	ui.InformationTest->setEnabled(true);
+
 	ui.CancelAffaire->setEnabled(false);
 	ui.ChangeValueAffaire->setEnabled(false);
 	ui.BouttonAffaire->setEnabled(false);
-}
 
+
+}
