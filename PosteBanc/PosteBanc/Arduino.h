@@ -3,9 +3,10 @@
 #include <QObject>
 #include <iostream>
 #include <QTcpSocket>
+#include <QList>
+#include <QTimer>
 
-#include <QJsonDocument>
-#include <QJsonObject>
+#include <windows.h>
 #include "Arduino.h"
 
 class Arduino : public QObject
@@ -18,6 +19,9 @@ public:
 
 	QList<float> ListValueEntre;
 	QList<float> ListValueSortie;
+	QList<float> ListDebit;
+
+	QTimer * TimerNewSocket;
 
 private:
 	QTcpSocket * ArduinoSocket = new QTcpSocket( this );
@@ -29,12 +33,14 @@ public slots:
 
 	void ArduinoSendRequest();
 	void StopConnection();
+	void CreateNewSocket();
 
 	void ArduinoReceiveData();
 
 	
 	float getValueEntre(int);
 	float getValueSortie(int);
+	float getDebit(int);
 	int	  getListSize();
 	
 };
