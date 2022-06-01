@@ -1,5 +1,6 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
+var $ = jQuery;
 
 //boutton de la barre
 var toggle = document.getElementById('toggle');
@@ -574,4 +575,27 @@ ws.onopen = function() {
         }
         return "";
     }
+    //Compteur de caractére
+    function update() {
+        input = $("textarea").val();
+
+        $("#rc").text((size - input.length));
+
+        if(size - input.length <= 600 && size - input.length >= 301){
+            document.getElementById("rc").style.color = 'black';
+        }
+        if(size - input.length <= 300 && size - input.length >= 101){
+            document.getElementById("rc").style.color = 'orange';
+        }
+        if(size - input.length <= 100 && size - input.length >= 0){
+            document.getElementById("rc").style.color = 'red';
+        }
+    };
+
+    var size = "600";
+
+    $("textarea").bind("input propertychange", function() {
+        update();
+    });
 }
+

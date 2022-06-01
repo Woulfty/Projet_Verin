@@ -489,5 +489,7 @@ tr:hover
 #rc
 {
     color: #000000;
-    
+    font-size: 20px;
+    padding-left: 162vh;
+    text-align: revert;
 }
