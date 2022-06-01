@@ -21,7 +21,7 @@ public:
 	int getTempAcquisition();
 
 	void setValueAffaire(int, int, int, int);
-	QString CreateJSON(int, float, float);
+	QString CreateJSON(int, float, float, float);
 	QString JSONdelete(int);
 	QString JSONupdate(int, int, int, int);
 
