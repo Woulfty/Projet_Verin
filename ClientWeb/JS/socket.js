@@ -172,6 +172,11 @@ ws.addEventListener("message", async(event, isBinary) => {
         divinfo.id = "infothisaffaire";
         //ajout des informations
         h3title.innerHTML = "Affaire numéro : " + ID;
+
+        var destroytable = document.getElementById('Affairetable');
+        if (destroytable != '') {
+            document.getElementById('affaire').innerHTML = "";
+        }
     }
     //affichage de la courbes de pression
     if (message.split(';')[0] == 'RepListEssaiID') {
@@ -299,11 +304,18 @@ ws.addEventListener("message", async(event, isBinary) => {
         download(filename, BDD);
 
     }
+    //réponce du serveur lors de l'ajout de pv
     if (message.split(";")[0] == 'RepAddPV'){
         if(message.split(";")[1] == 'CONFIRM'){
             var texteadd = document.getElementById('textefornewpv');
             texteadd.value = '';
             alert('Le Pv a été ajouté');
+        }
+    }
+    //réponce su serveur lors de la modification d'un pv
+    if (message.split(";")[0] == 'RepUpdPV'){
+        if(message.split(";")[2] == 'CONFIRM'){
+            alert('le Pv a été modifié');
         }
     }
 })
@@ -456,6 +468,8 @@ ws.onopen = function() {
             toggle.style.display = "block"
             navigation = document.getElementById('navigation');
             navigation.style.display = "block"
+
+            ws.send('ListAffaire');
         }
         //supression du pv
         if (event.target.classList.value == "deletebutton" || event.target.id == "trash") {
@@ -486,7 +500,14 @@ ws.onopen = function() {
         if (event.target.classList.value == "updatebutton" || event.target.id == "create") {
 
             const target = event.target.id == "create" ? event.target.parentNode : event.target;
-            targettext = document.getElementById(target.id).innerHTML;
+
+            console.log( target.id )
+
+            targettext = document.getElementById(target.id).innerText;
+
+            console.log( targettext )
+
+            console.log("dzejzfiozze", targettext);
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -539,7 +560,6 @@ ws.onopen = function() {
             idPv = document.getElementById("titleupdpv").innerHTML.slice(17);
             var texteupd = document.getElementById('texteforupdpv');
             var mail = document.getElementById('addmail');
-            console.log(cname + "ban,ane");
             if(mail != "" || texteupd != ""){
                 ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value);
             }else{
