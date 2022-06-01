@@ -1,27 +1,39 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
-//const ws = new WebSocket("ws://192.168.64.183:40510");
-
-//récupération de la barre de navigation
-navigation = document.getElementById('navigation');
-
-//récupération du loarder
-dloader = document.getElementById('dloader');
+var $ = jQuery;
 
 //boutton de la barre
 var toggle = document.getElementById('toggle');
-
+//récupération de la barre de navigation
+navigation = document.getElementById('navigation');
+//récupération du loarder
+dloader = document.getElementById('dloader');
 //affichage de la page de connexion
 dconnexion = document.getElementById('dconnexion');
-
 //affichage de l'affaire
 daffaire = document.getElementById('daffaire');
 
-dloader.style.display = "block"
-toggle.style.display = "none"
-dconnexion.style.display = "none"
-navigation.style.display = "none"
+dloader.style.display = "block";
+toggle.style.display = "none";
+dconnexion.style.display = "none";
+navigation.style.display = "none";
 daffaire.style.display = "none";
+
+ws.onclose = function(event){
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    dloader.style.display = "block";
+    dconnexion.style.display = "none";
+    dpv.style.display = "none";
+    ddeco.style.display = "none";
+    ddoc.style.display = "none";
+    dhelp.style.display = "none";
+    daffaire.style.display = "none";
+    dnewpv.style.display = "none";
+    dupdpv.style.display = "none";
+    navigation.style.display = "none"
+    toggle.style.display = "none";
+    console.log("connexion perdu");
+}
 
 //erreur
 ws.addEventListener('error', function(event) {
@@ -39,7 +51,7 @@ ws.addEventListener("message", async(event, isBinary) => {
 
     // Définition String Message
     message = String(event.data);
-    //alert('poopy');
+
     //récéption de la connexion
     if (message.split(';')[0] == 'RepUserConnexion') {
         //découpage du message
@@ -117,8 +129,8 @@ ws.addEventListener("message", async(event, isBinary) => {
             td2.id = data[i].idAffaire;
             td3.id = data[i].idAffaire;
             td1.innerHTML = "Affaire n°" + data[i].idAffaire;
-            td3.innerHTML = data[i].Date[11] + data[i].Date[12] + ":" + data[i].Date[14] + data[i].Date[15];
-            td2.innerHTML = data[i].Date[8] + data[i].Date[9] + "/" + data[i].Date[5] + data[i].Date[6] + "/" + data[i].Date[0] + data[i].Date[1] + data[i].Date[2] + data[i].Date[3];
+            td3.innerHTML = data[i].Date[11]+data[i].Date[12]+":"+data[i].Date[14]+data[i].Date[15];
+            td2.innerHTML = data[i].Date[8]+data[i].Date[9]+"/"+data[i].Date[5]+data[i].Date[6]+"/"+data[i].Date[0]+data[i].Date[1]+data[i].Date[2]+data[i].Date[3];
 
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -129,6 +141,7 @@ ws.addEventListener("message", async(event, isBinary) => {
     }
     //récéption des information de l'affaire
     if (message.split(';')[0] == 'RepInfoAffaire') {
+
         //apparition de la div de visualisation des affaire
         dpv = document.getElementById('dpv');
         dpv.style.display = "none";
@@ -160,6 +173,10 @@ ws.addEventListener("message", async(event, isBinary) => {
         //ajout des informations
         h3title.innerHTML = "Affaire numéro : " + ID;
 
+        var destroytable = document.getElementById('Affairetable');
+        if (destroytable != '') {
+            document.getElementById('affaire').innerHTML = "";
+        }
     }
     //affichage de la courbes de pression
     if (message.split(';')[0] == 'RepListEssaiID') {
@@ -170,10 +187,10 @@ ws.addEventListener("message", async(event, isBinary) => {
         var arr = [];
         var array = [];
         for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
-            arr.push(Startdata);
+            arr.push(Startdata + "s");
         }
         for (var i = 0; i < Datasize; ++i) {
-            array.push(datacourbe[i].Grandeur);
+            array.push(datacourbe[i].Value);
         }
 
         //courbe
@@ -185,7 +202,6 @@ ws.addEventListener("message", async(event, isBinary) => {
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                //data: [0, 10, 5, 2, 20, 30, 45, 26, 35, 21, 12, 37, 4],
                 data: NUMBER_CFG,
             }]
         };
@@ -199,7 +215,25 @@ ws.addEventListener("message", async(event, isBinary) => {
             document.getElementById('myCanvas'),
             config
         );
+        
+        //création du tableau des essais
+        var essaistable = document.getElementById("essais");
+        for (var i = 0; i < Datasize; ++i) {
 
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+
+            td1.innerHTML = "Test n°" + (i + 1);
+            td2.innerHTML = datacourbe[i].Debit + " m3/s";
+            td3.innerHTML = datacourbe[i].Value + " %";
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            essaistable.appendChild(tr);
+        }
     }
     //récéption des Pv de l'affaire
     if (message.split(';')[0] == 'RepListPVID') {
@@ -242,7 +276,7 @@ ws.addEventListener("message", async(event, isBinary) => {
             td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15];
             td4.appendChild(updatebutton)
             td4.appendChild(deletebutton)
-                // Définition de l'enfant
+            // Définition de l'enfant
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -255,23 +289,33 @@ ws.addEventListener("message", async(event, isBinary) => {
     if (message.split(';')[0] == 'RepExpBDD') {
         var BDD = message.slice(13);
 
-        var blob = new Blob([BDD], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "dynamic.txt");
+        function download(filename, textInput) {
+
+            var element = document.createElement('a');
+            element.setAttribute('href','data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+            element.setAttribute('download', filename);
+            document.body.appendChild(element);
+            element.click();
+            //document.body.removeChild(element);
+            console.log("donload");
+        }
+
+        var filename = "BDD.sql";
+        download(filename, BDD);
 
     }
-    //récéption des information du Pv
-    if (message.split(';')[0] == 'RepInfoPV') {
-
-    }
-    //récéption des essais de l'affaire
-    if (message.split(';')[0] == 'RepListEssai') {
-
-    }
+    //réponce du serveur lors de l'ajout de pv
     if (message.split(";")[0] == 'RepAddPV'){
         if(message.split(";")[1] == 'CONFIRM'){
             var texteadd = document.getElementById('textefornewpv');
             texteadd.value = '';
             alert('Le Pv a été ajouté');
+        }
+    }
+    //réponce su serveur lors de la modification d'un pv
+    if (message.split(";")[0] == 'RepUpdPV'){
+        if(message.split(";")[2] == 'CONFIRM'){
+            alert('le Pv a été modifié');
         }
     }
 })
@@ -280,13 +324,13 @@ ws.addEventListener("message", async(event, isBinary) => {
 ws.addEventListener('error', function(event) {
     navigation.style.display = "none";
     dloader.style.display = "block";
-    console.log('WebSocket error: ', event);
+    console.log('WebSocket error: ', event); 
 });
 
-//Quand le socket c'est connecter
+//Quand le Websocket c'est connecter
 ws.onopen = function() {
     //vérification du cookie
-    //checkCookie();
+    checkCookie();
     console.log('websocket is connected ...');
 
     ws.send('connected');
@@ -294,14 +338,46 @@ ws.onopen = function() {
     dloader = document.getElementById('dloader');
     dloader.style.display = "none";
     //barre de navigation
-    //navigation = document.getElementById('navigation');
     navigation.style.display = "block";
     //boutton de la barre
     toggle = document.getElementById('toggle');
     toggle.style.display = "block";
     //affichage de la page de connexion
     dconnexion = document.getElementById('dconnexion');
-    dconnexion.style.display = "block";
+
+    //vérification du cookie
+    function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+            console.log("Bon retour");
+            
+            dconnexion = document.getElementById('dconnexion');
+            dconnexion.style.display = "none";
+            //on cache le bouton de connexion
+            bconnexion = document.getElementById('bconnexion');
+            bconnexion.style.display = "none";
+            //apparition de la div de déconnexion
+            var bdeco = document.getElementById('bdeco');
+            bdeco.style.display = "block";
+            //apparition du bouton de visualisation des Affaires
+            var bpv = document.getElementById('bpv');
+            bpv.style.display = "block"; 
+            //apparition de la div de téléverement de fichier
+            var bdoc = document.getElementById('bdoc');
+            bdoc.style.display = "block";
+            //apparition de la div de visualisation des affaire
+            var dpv = document.getElementById('dpv');
+            dpv.style.display = "block";
+            //apparition de la div de visualisation des affaire
+            daffaire = document.getElementById('daffaire');
+            daffaire.style.display = "none";
+
+            ws.send('ListAffaire');
+
+        } else {
+            dconnexion.style.display = "block";
+        }
+    }
 
     //récupération des valeurs dans les champs de connexion
     var form = document.getElementById('form');
@@ -323,10 +399,12 @@ ws.onopen = function() {
     formdeco.addEventListener('submit', function(e) {
         e.preventDefault();
         location.reload();
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     });
 
-    //Quand un utilisateur clique sur une affaire
+    //Quand un utilisateur clique
     document.addEventListener("click", (event) => {
+
         if (event.target.classList.value == "traffaire") {
             //event.target.id
             ws.send('InfoAffaire;' + event.target.id);
@@ -354,12 +432,12 @@ ws.onopen = function() {
             ws.send("ExpBDD;");
         }
         //suppression de la div de l'affaire
-
         if (event.target.classList.value == "littlebutton") {
 
             h3title = document.getElementById('h3title');
             canvas = document.getElementById('myCanvas');
             pvTable = document.getElementById('pv');
+            essaistable = document.getElementById('essaistable')
 
             if (h3title != '') {
                 document.getElementById('h3title').innerHTML = "";
@@ -373,10 +451,13 @@ ws.onopen = function() {
             newCanvas.classList.add("canvas");
             newCanvas.id = "myCanvas";
 
-            divaffaire.insertBefore(newCanvas, document.getElementById("pvtable"));
+            divaffaire.insertBefore( newCanvas, essaistable );
 
             if (pvTable != '') {
                 document.getElementById('pv').innerHTML = "";
+            }
+            if (essaistable != '') {
+                document.getElementById('essais').innerHTML = "";
             }
 
             daffaire = document.getElementById('daffaire');
@@ -387,6 +468,8 @@ ws.onopen = function() {
             toggle.style.display = "block"
             navigation = document.getElementById('navigation');
             navigation.style.display = "block"
+
+            ws.send('ListAffaire');
         }
         //supression du pv
         if (event.target.classList.value == "deletebutton" || event.target.id == "trash") {
@@ -401,10 +484,12 @@ ws.onopen = function() {
 
                 console.log(target.id);
                 pvTable = document.getElementById('pv');
+                essaistable = document.getElementById('essais');
 
                 if (pvTable != '') {
                     document.getElementById('pv').innerHTML = "";
                 }
+
                 ws.send('ListPVID;' + idAffaire);
                 console.log('Confirme que : ' + idAffaire)
             } else {
@@ -414,11 +499,15 @@ ws.onopen = function() {
         //modifiaction du pv
         if (event.target.classList.value == "updatebutton" || event.target.id == "create") {
 
-            const target = event.target.id == "create" ? event.target.parentNode : event.target
-            //const targettext = event.target.id == "create" ? event.target.parentNode.parentNode : event.target;
-            console.log("zuip");
-            targettext = document.getElementById(target.id).innerHTML;
-            console.log(targettext);
+            const target = event.target.id == "create" ? event.target.parentNode : event.target;
+
+            console.log( target.id )
+
+            targettext = document.getElementById(target.id).innerText;
+
+            console.log( targettext )
+
+            console.log("dzejzfiozze", targettext);
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
@@ -468,11 +557,11 @@ ws.onopen = function() {
         }
         //modifier en bdd
         if (event.target.classList.value == "buttonupdBDD") {
-            idPv = document.getElementById("h3title").innerHTML.slice(17);
+            idPv = document.getElementById("titleupdpv").innerHTML.slice(17);
             var texteupd = document.getElementById('texteforupdpv');
             var mail = document.getElementById('addmail');
             if(mail != "" || texteupd != ""){
-                console.log(ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value));
+                ws.send("UpdPV;" + idPv + ";" + mail.value + ";" + texteupd.value);
             }else{
                 alert('veuillez remplir les champs !');
             }
@@ -481,11 +570,10 @@ ws.onopen = function() {
         if (event.target.classList.value == "buttonlist") {
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
             pvTable = document.getElementById('pv');
-
+            essaistable = document.getElementById('essaistable');
             if (pvTable != '') {
                 document.getElementById('pv').innerHTML = "";
             }
-
             ws.send('InfoAffaire;' + idAffaire);
             ws.send('ListEssaiID;' + idAffaire);
             ws.send('ListPVID;' + idAffaire);
@@ -518,36 +606,27 @@ ws.onopen = function() {
         }
         return "";
     }
-    //vérification du cookie
-    /*
-    function checkCookie() {
-        let user = getCookie("username");
-        if (user != "") {
-            alert("Bon retour");
-            //redirection sur la page d'acceuil
-            dconnexion = document.getElementById('dconnexion');
-            dconnexion.style.display = "none";
-            //on cache le bouton de connexion
-            bconnexion = document.getElementById('bconnexion');
-            bconnexion.style.display = "none";
-            //apparition de la div de déconnexion
-            var bdeco = document.getElementById('bdeco');
-            bdeco.style.display = "block";
-            //apparition du bouton de visualisation des Affaires
-            var bpv = document.getElementById('bpv');
-            bpv.style.display = "block"; 
-            //apparition de la div de téléverement de fichier
-            var bdoc = document.getElementById('bdoc');
-            bdoc.style.display = "block";
-            //apparition de la div de visualisation des affaire
-            var dpv = document.getElementById('dpv');
-            dpv.style.display = "block";
-            //apparition de la div de visualisation des affaire
-            daffaire = document.getElementById('daffaire');
-            daffaire.style.display = "none";
-        } else {
-            //redirection sur la page d'acceuil
+    //Compteur de caractére
+    function update() {
+        input = $("textarea").val();
+
+        $("#rc").text((size - input.length));
+
+        if(size - input.length <= 600 && size - input.length >= 301){
+            document.getElementById("rc").style.color = 'black';
         }
-    }
-    */
+        if(size - input.length <= 300 && size - input.length >= 101){
+            document.getElementById("rc").style.color = 'orange';
+        }
+        if(size - input.length <= 100 && size - input.length >= 0){
+            document.getElementById("rc").style.color = 'red';
+        }
+    };
+
+    var size = "600";
+
+    $("textarea").bind("input propertychange", function() {
+        update();
+    });
 }
+

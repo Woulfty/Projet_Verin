@@ -4,6 +4,7 @@ const mysql = require('mysql2/promise');
 const mysqldump = require('mysqldump');
 const fs = require('fs');
 const Importer = require('mysql-import');
+const nodemailer = require('nodemailer');
 
 //  Déclaration BDD
 const BDD_IP = "192.168.65.20";
@@ -14,6 +15,17 @@ const host = BDD_IP;
 const user = BDD_USER;
 const password = BDD_PWD;
 const database = BDD_BASE;
+
+//  Déclaration Mail
+const MAIL_USER = "mailverinprovidence@gmail.com";
+const MAIL_PASS = "49USHX3iWPnWxF4";
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+        user: MAIL_USER,
+        pass: MAIL_PASS
+    },
+});
 
 //  WebSocket
 (async() => {
@@ -155,6 +167,20 @@ const database = BDD_BASE;
                         ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
                         console.log('UpdPV : ACCEPT');
                         // Envoyer un mail
+                        var mailOptions = {
+                            from: MAIL_USER, 
+                            to: Mail, 
+                            subject: "Update PV " + idPV, 
+                            text: "MESSAGE AUTOMATIQUE\n\nLe PV " + idPV + "a été mise à été modifié :\n" + Texte
+                        };
+                        transporter.sendMail(mailOptions, function(error, info){
+                            if(error){
+                                console.log(error);
+                            }
+                            else{
+                                console.log('Email envoyé : ' + info.response);
+                            }
+                        })
                     }
                     else{ // Autre
                         ws.send('RepUpdPV' + ';' + idPV + ';' + 'REFUS : Champ(s) incomplet(s).');

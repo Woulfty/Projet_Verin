@@ -80,6 +80,7 @@ bdoc.addEventListener("click", () => {
     dupdpv.style.display = "none";
 })
 //aide
+/*
 bhelp.addEventListener("click", () => {
     dloader.style.display = "none";
     dconnexion.style.display = "none";
@@ -91,3 +92,4 @@ bhelp.addEventListener("click", () => {
     dnewpv.style.display = "none";
     dupdpv.style.display = "none";
 })
+*/
