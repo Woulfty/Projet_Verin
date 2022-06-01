@@ -284,8 +284,19 @@ ws.addEventListener("message", async(event, isBinary) => {
     if (message.split(';')[0] == 'RepExpBDD') {
         var BDD = message.slice(13);
 
-        var blob = new Blob([BDD], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "dynamic.txt");
+        function download(filename, textInput) {
+
+            var element = document.createElement('a');
+            element.setAttribute('href','data:text/plain;charset=utf-8, ' + encodeURIComponent(textInput));
+            element.setAttribute('download', filename);
+            document.body.appendChild(element);
+            element.click();
+            //document.body.removeChild(element);
+            console.log("donload");
+        }
+
+        var filename = "BDD.sql";
+        download(filename, BDD);
 
     }
     if (message.split(";")[0] == 'RepAddPV'){
