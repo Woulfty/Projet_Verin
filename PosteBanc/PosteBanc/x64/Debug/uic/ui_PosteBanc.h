@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -57,6 +58,8 @@ public:
     QLabel *ErreurArduino;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -65,12 +68,12 @@ public:
     {
         if (PosteBancClass->objectName().isEmpty())
             PosteBancClass->setObjectName(QString::fromUtf8("PosteBancClass"));
-        PosteBancClass->resize(894, 754);
+        PosteBancClass->resize(1153, 774);
         centralWidget = new QWidget(PosteBancClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         ConnexionServeur = new QGroupBox(centralWidget);
         ConnexionServeur->setObjectName(QString::fromUtf8("ConnexionServeur"));
-        ConnexionServeur->setGeometry(QRect(20, 30, 241, 161));
+        ConnexionServeur->setGeometry(QRect(20, 20, 241, 161));
         label = new QLabel(ConnexionServeur);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 20, 110, 20));
@@ -92,7 +95,7 @@ public:
         InformationTest = new QGroupBox(centralWidget);
         InformationTest->setObjectName(QString::fromUtf8("InformationTest"));
         InformationTest->setEnabled(false);
-        InformationTest->setGeometry(QRect(330, 30, 531, 271));
+        InformationTest->setGeometry(QRect(330, 20, 531, 271));
         TextAffaire = new QLabel(InformationTest);
         TextAffaire->setObjectName(QString::fromUtf8("TextAffaire"));
         TextAffaire->setGeometry(QRect(20, 30, 71, 21));
@@ -159,16 +162,24 @@ public:
         ErreurArduino->setGeometry(QRect(30, 240, 181, 21));
         scrollArea = new QScrollArea(centralWidget);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        scrollArea->setGeometry(QRect(20, 310, 841, 381));
+        scrollArea->setGeometry(QRect(0, 299, 1161, 425));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 839, 379));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1159, 423));
+        gridLayoutWidget = new QWidget(scrollAreaWidgetContents);
+        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 1151, 421));
+        gridLayout = new QGridLayout(gridLayoutWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
         scrollArea->setWidget(scrollAreaWidgetContents);
         PosteBancClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(PosteBancClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 894, 21));
+        menuBar->setGeometry(QRect(0, 0, 1153, 21));
         PosteBancClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(PosteBancClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));

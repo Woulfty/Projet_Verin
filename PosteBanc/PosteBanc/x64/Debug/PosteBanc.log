@@ -1,8 +1,3 @@
 ﻿  Reading Qt configuration (C:/Qt/5.14.2/msvc2017_64/bin/qmake)
-  moc PosteBanc.h
   PosteBanc.cpp
-  main.cpp
-  qrc_PosteBanc.cpp
-  moc_Arduino.cpp
-  moc_PosteBanc.cpp
   PosteBanc.vcxproj -> C:\Users\Febvin\Source\Repos\Projet_Verin\PosteBanc\x64\Debug\PosteBanc.exe
