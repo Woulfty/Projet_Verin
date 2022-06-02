@@ -7,9 +7,14 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
+#include <string>
 #include <QTimer>
+#include <QPen>
 #include <Windows.h>
 
+#include <QtCharts>
+#include <QtCharts/QLineSeries>
+#include <qchartview.h>
 
 #include "ui_PosteBanc.h"
 #include "Affaire.h"
@@ -28,11 +33,20 @@ public:
 	QTimer * Frequence;
 	QTimer * TempAcquisition;
 
+	
+
 	Ui::PosteBancClass ui;
 
 private:
 	QTcpSocket * socket;
 
+	QChart * chart;
+	QChartView * Graph;
+
+	QLineSeries * series;
+
+	QCategoryAxis * axisY;
+	QCategoryAxis * axisX;
 
 public slots:
 
@@ -53,4 +67,5 @@ public slots:
 	void SendData();
 	void StopTimer();
 
+	void CreateGraph(int);
 };
