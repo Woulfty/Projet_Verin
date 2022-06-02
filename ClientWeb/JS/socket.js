@@ -107,36 +107,51 @@ ws.addEventListener("message", async(event, isBinary) => {
     if (message.split(';')[0] == 'RepListAffaire') {
         //taille du message
         var Datasize = message.split(';')[1];
-        //données
-        var Json = message.split(';')[2];
-        //découpage du dossier json
-        var data = JSON.parse(Json);
         //récupération du tableau
         var affaireTable = document.getElementById('affaire');
-        //ajout des valeurs
-        for (var i = 0; i < Datasize; ++i) {
+        
+        if (Datasize == 0){
+            //création des lignes du tableau
             var tr = document.createElement('tr');
+            //création du champs
             var td1 = document.createElement('td');
-            var td2 = document.createElement('td');
-            var td3 = document.createElement('td');
-
-            tr.id = data[i].idAffaire;
-            tr.classList.add("traffaire");
-            td1.classList.add("traffaire");
-            td2.classList.add("traffaire");
-            td3.classList.add("traffaire");
-            td1.id = data[i].idAffaire;
-            td2.id = data[i].idAffaire;
-            td3.id = data[i].idAffaire;
-            td1.innerHTML = "Affaire n°" + data[i].idAffaire;
-            td3.innerHTML = data[i].Date[11]+data[i].Date[12]+":"+data[i].Date[14]+data[i].Date[15];
-            td2.innerHTML = data[i].Date[8]+data[i].Date[9]+"/"+data[i].Date[5]+data[i].Date[6]+"/"+data[i].Date[0]+data[i].Date[1]+data[i].Date[2]+data[i].Date[3];
-
+            td1.colSpan = "3";
+            td1.innerHTML = "Il n'y a aucune affaires pour le moment.";
+            td1.classList.add("warning");
+            // Définition de l'enfant
             tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-
             affaireTable.appendChild(tr);
+            
+        }else{
+            //données
+            var Json = message.split(';')[2];
+            //découpage du dossier json
+            var data = JSON.parse(Json);
+            //ajout des valeurs
+            for (var i = 0; i < Datasize; ++i) {
+                var tr = document.createElement('tr');
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
+
+                tr.id = data[i].idAffaire;
+                tr.classList.add("traffaire");
+                td1.classList.add("traffaire");
+                td2.classList.add("traffaire");
+                td3.classList.add("traffaire");
+                td1.id = data[i].idAffaire;
+                td2.id = data[i].idAffaire;
+                td3.id = data[i].idAffaire;
+                td1.innerHTML = "Affaire n°" + data[i].idAffaire;
+                td3.innerHTML = data[i].Date[11]+data[i].Date[12]+":"+data[i].Date[14]+data[i].Date[15];
+                td2.innerHTML = data[i].Date[8]+data[i].Date[9]+"/"+data[i].Date[5]+data[i].Date[6]+"/"+data[i].Date[0]+data[i].Date[1]+data[i].Date[2]+data[i].Date[3];
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+
+                affaireTable.appendChild(tr);
+            }
         }
     }
     //récéption des information de l'affaire
@@ -182,107 +197,139 @@ ws.addEventListener("message", async(event, isBinary) => {
     if (message.split(';')[0] == 'RepListEssaiID') {
 
         var Datasize = message.split(';')[2];
-        var Json = message.split(';')[3];
-        var datacourbe = JSON.parse(Json);
-        var arr = [];
-        var array = [];
-        for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
-            arr.push(Startdata + "s");
-        }
-        for (var i = 0; i < Datasize; ++i) {
-            array.push(datacourbe[i].Value);
-        }
-
-        //courbe
-        const NUMBER_CFG = array;
-        const labels = arr;
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: NUMBER_CFG,
-            }]
-        };
-
-        const config = {
-            type: 'line',
-            data: data,
-            options: {}
-        };
-        myCanvas = new Chart(
-            document.getElementById('myCanvas'),
-            config
-        );
-        
-        //création du tableau des essais
         var essaistable = document.getElementById("essais");
-        for (var i = 0; i < Datasize; ++i) {
 
+        if (Datasize == 0){
+            //création des lignes du tableau
             var tr = document.createElement('tr');
+            //création du champs
             var td1 = document.createElement('td');
-            var td2 = document.createElement('td');
-            var td3 = document.createElement('td');
-
-            td1.innerHTML = "Test n°" + (i + 1);
-            td2.innerHTML = datacourbe[i].Debit + " m3/s";
-            td3.innerHTML = datacourbe[i].Value + " %";
-
+            td1.colSpan = "4";
+            td1.innerHTML = "Il n'y a aucun essais pour le moment.";
+            td1.classList.add("warning");
+            // Définition de l'enfant
             tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
             essaistable.appendChild(tr);
+            
+        }else{
+            //découpage du message
+            var Json = message.split(';')[3];
+            var datacourbe = JSON.parse(Json);
+            var arr = [];
+            var array = [];
+            for (let Startdata = 1; Startdata <= Datasize; Startdata++) {
+                arr.push(Startdata + "s");
+            }
+            for (var i = 0; i < Datasize; ++i) {
+                array.push(datacourbe[i].Value);
+            }
+
+            //courbe
+            const NUMBER_CFG = array;
+            const labels = arr;
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: NUMBER_CFG,
+                }]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            myCanvas = new Chart(
+                document.getElementById('myCanvas'),
+                config
+            );
+            
+            //création du tableau des essais
+            for (var i = 0; i < Datasize; ++i) {
+
+                var tr = document.createElement('tr');
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
+
+                td1.innerHTML = "Test n°" + (i + 1);
+                td2.innerHTML = datacourbe[i].Debit + " m3/s";
+                td3.innerHTML = datacourbe[i].Value + " %";
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                essaistable.appendChild(tr);
+            }
         }
     }
     //récéption des Pv de l'affaire
     if (message.split(';')[0] == 'RepListPVID') {
         //taille du message
         var Datasize = message.split(';')[2];
-        //données
-        var Json = message.split(';')[3];
-        //découpage du dossier json
-        var data = JSON.parse(Json);
         //récupération du tableau
         var pvTable = document.getElementById('pv');
-        //création des données
-        for (var i = 0; i < Datasize; ++i) {
 
+        if (Datasize == 0){
+            //création des lignes du tableau
             var tr = document.createElement('tr');
+            //création du champs
             var td1 = document.createElement('td');
-            var td2 = document.createElement('td');
-            var td3 = document.createElement('td');
-            var td4 = document.createElement('td');
-
-            var updatebutton = document.createElement('button');
-            var deletebutton = document.createElement('button');
-            updatebutton.classList.add('updatebutton');
-            deletebutton.classList.add('deletebutton');
-            updatebutton.type = "button";
-            deletebutton.type = "button";
-            updatebutton.value = "modifier";
-            deletebutton.value = "supprimer";
-            updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
-            deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
-
-            updatebutton.id = data[i].idPV;
-            deletebutton.id = data[i].idPV;
-            td1.id = data[i].idPV;
-            var date = data[i].Date;
-            date.split('T')[10];
-
-            td1.innerHTML = data[i].Texte;
-            td2.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
-            td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15];
-            td4.appendChild(updatebutton)
-            td4.appendChild(deletebutton)
+            td1.colSpan = "4";
+            td1.innerHTML = "Il n'y a aucun pv pour le moment, ajouté en un !";
+            td1.classList.add("warning");
             // Définition de l'enfant
             tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-            tr.appendChild(td4);
             pvTable.appendChild(tr);
+            
+        }else{
+            //données
+            var Json = message.split(';')[3];
+            //découpage du dossier json
+            var data = JSON.parse(Json);
+            //création des données
+            for (var i = 0; i < Datasize; ++i) {
+                //création des lignes du tableau
+                var tr = document.createElement('tr');
+                //création des champs
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
+                var td4 = document.createElement('td');
 
+                var updatebutton = document.createElement('button');
+                var deletebutton = document.createElement('button');
+                updatebutton.classList.add('updatebutton');
+                deletebutton.classList.add('deletebutton');
+                updatebutton.type = "button";
+                deletebutton.type = "button";
+                updatebutton.value = "modifier";
+                deletebutton.value = "supprimer";
+                updatebutton.innerHTML = `<ion-icon id="create" name="create-outline"></ion-icon>`;
+                deletebutton.innerHTML = `<ion-icon id="trash" name="trash-outline"></ion-icon>`;
+
+                updatebutton.id = data[i].idPV;
+                deletebutton.id = data[i].idPV;
+                td1.id = data[i].idPV;
+                var date = data[i].Date;
+                date.split('T')[10];
+
+                td1.innerHTML = data[i].Texte;
+                td2.innerHTML = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
+                td3.innerHTML = date[11] + date[12] + date[13] + date[14] + date[15];
+                td4.appendChild(updatebutton)
+                td4.appendChild(deletebutton)
+                // Définition de l'enfant
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                pvTable.appendChild(tr);
+
+            }
         }
     }
     //récéption de la base
@@ -318,6 +365,29 @@ ws.addEventListener("message", async(event, isBinary) => {
             alert('le Pv a été modifié');
         }
     }
+    //réponce du serveur a la réinitialisation
+    if (message.split(";")[0] == 'RepResBDD'){
+        let log = message.split(";")[1];
+        alert("La base a été réinitialiser à " + log);
+        //on vide le tableau des essais 
+        Table = document.getElementById('affaire')
+        if (Table != '') {
+            document.getElementById('affaire').innerHTML = "";
+        }
+        //demande des affaires au serveur
+        ws.send('ListAffaire');
+    }
+    //réponce du serveur a l'importation de la BDD
+    if (message.split(";")[0] == 'RepImpBDD'){
+        let log = message.split(";")[1];
+        alert("La base a été importé à " + log);
+        Table = document.getElementById('affaire')
+        if (Table != '') {
+            document.getElementById('affaire').innerHTML = "";
+        }
+        //demande des affaires au serveur
+        ws.send('ListAffaire');
+    }   
 })
 
 //Erreur du socket
@@ -427,7 +497,6 @@ ws.onopen = function() {
         }
         //exportation de la BDD (recevoir le fichier)
         if (event.target.classList.value == "export") {
-            alert('export');
             console.log("exportation de la bdd");
             ws.send("ExpBDD;");
         }
@@ -501,13 +570,7 @@ ws.onopen = function() {
 
             const target = event.target.id == "create" ? event.target.parentNode : event.target;
 
-            console.log( target.id )
-
             targettext = document.getElementById(target.id).innerText;
-
-            console.log( targettext )
-
-            console.log("dzejzfiozze", targettext);
 
             dloader.style.display = "none";
             dconnexion.style.display = "none";
