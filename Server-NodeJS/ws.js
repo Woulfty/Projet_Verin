@@ -81,14 +81,14 @@ var transporter = nodemailer.createTransport({
                 // ListEssai
                 if(message.split(';')[0] == 'ListEssai'){
                     console.log('ListEssai : %s', message);
-                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` ORDER BY `idEssaie` ASC', []);
+                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` ORDER BY `NumEssaie` ASC', []);
                     ws.send('RepListEssai' + ';' + rows.length + ';' + JSON.stringify(rows));
                 }
                 // ListEssaiID
                 if((message.split(';')[0] == 'ListEssaiID') && (message.split(';')[1] > 0)){
                     console.log('ListEssaiID : %s', message);
                     idAffaire  = message.split(';')[1];
-                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idAffaire` = ? ORDER BY `idEssaie` ASC', [idAffaire]);
+                    const[rows, fields] = await con.execute('SELECT * FROM `Essaie` WHERE `idAffaire` = ? ORDER BY `NumEssaie` ASC', [idAffaire]);
                     ws.send('RepListEssaiID' + ';ID=' + idAffaire + ';' + rows.length + ';' + JSON.stringify(rows));
                 }
                 // ListUser
@@ -157,12 +157,11 @@ var transporter = nodemailer.createTransport({
                     ws.send('RepAddPV' + ';' + 'CONFIRM');
                 }
                 // UpdPV
-                if((message.split(';')[0] == 'UpdPV') && (message.split(';')[1] > 0) && (message.split(';')[2] != "") && (message.split(';')[3] != "") && (message.split(';')[4] != "")){
+                if((message.split(';')[0] == 'UpdPV') && (message.split(';')[1] > 0) && (message.split(';')[2] != "") && (message.split(';')[3] != "")){
                     console.log('UpdPV : %s', message);
                     idPV        = message.split(';')[1];
                     Mail        = message.split(';')[2];
-                    UserName    = message.split(';')[3];
-                    Texte       = message.split(';')[4];
+                    Texte       = message.split(';')[3];
                     if((Mail.length > '10') && (Mail.indexOf(".") != '-1') && (Mail.indexOf("@") != '-1')){
                         await con.execute('UPDATE `PV` SET `Texte` = ? WHERE `PV`.`idPV` = ?', [Texte, idPV]);
                         ws.send('RepUpdPV' + ';' + idPV + ';' + 'CONFIRM');
@@ -172,7 +171,7 @@ var transporter = nodemailer.createTransport({
                             from: MAIL_USER, 
                             to: Mail, 
                             subject: "Update PV " + idPV, 
-                            text: "MESSAGE AUTOMATIQUE\n\nLe PV " + idPV + " a été modifié par l'utilisateur " + UserName + " :\n" + Texte
+                            text: "MESSAGE AUTOMATIQUE\n\nLe PV " + idPV + " a été modifié :\n" + Texte
                         };
                         transporter.sendMail(mailOptions, function(error, info){
                             if(error){
