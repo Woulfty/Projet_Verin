@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 30 mai 2022 à 09:37
+-- Généré le : jeu. 02 juin 2022 à 09:50
 -- Version du serveur :  10.3.29-MariaDB-0+deb10u1
 -- Version de PHP : 7.3.27-1~deb10u1
 
@@ -60,48 +60,47 @@ INSERT INTO `Affaire` (`idAffaire`, `Capteur`, `Frequence`, `TempAcquisition`, `
 CREATE TABLE `Essaie` (
   `idEssaie` int(11) NOT NULL,
   `idAffaire` int(11) NOT NULL,
-  `Frequence` int(11) NOT NULL,
-  `TempAcquisition` int(11) NOT NULL,
-  `Value` int(11) NOT NULL
+  `NumEssaie` int(11) NOT NULL,
+  `Debit` float NOT NULL,
+  `Value` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `Essaie`
 --
 
-INSERT INTO `Essaie` (`idEssaie`, `idAffaire`, `Frequence`, `TempAcquisition`, `Value`) VALUES
-(1, 7, 500, 6, 8),
-(2, 7, 500, 1, 12),
-(3, 7, 800, 1, 20),
-(4, 8, 500, 6, 33),
-(5, 8, 500, 7, 55),
-(50, 7, 546, 786, 12),
-(51, 8, 453, 78, 5),
-(52, 8, 786, 7869, 20),
-(53, 8, 45, 78, 26),
-(54, 8, 78, 45, 14),
-(55, 9, 45, 786, 98),
-(56, 9, 56, 78, 50),
-(57, 9, 487, 789, 64),
-(58, 9, 45, 86, 25),
-(59, 10, 45, 12, 65),
-(60, 10, 45, 78, 80),
-(61, 10, 48, 78, 54),
-(62, 11, 45, 78, 45),
-(63, 11, 88, 45, 65),
-(64, 11, 45, 16, 87),
-(65, 13, 48, 45, 0),
-(66, 13, 45, 12, 0),
-(67, 13, 45, 78, 0),
-(68, 13, 45, 15, 45),
-(69, 7, 45, 45, 84),
-(70, 7, 45, 45, 75),
-(71, 7, 45, 45, 46),
-(92, 16, 45, 78, 5),
-(93, 16, 45, 78, 15),
-(94, 16, 48, 87, 30),
-(95, 16, 45, 86, 50),
-(96, 16, 457, 87, 80);
+INSERT INTO `Essaie` (`idEssaie`, `idAffaire`, `NumEssaie`, `Debit`, `Value`) VALUES
+(1, 7, 1, 0, 8),
+(2, 7, 6, 0, 12),
+(3, 7, 7, 0, 20),
+(4, 8, 6, 0, 33),
+(5, 8, 1, 0, 55),
+(50, 7, 5, 0, 12),
+(51, 8, 2, 0, 5),
+(52, 8, 3, 0, 20),
+(53, 8, 4, 0, 26),
+(54, 8, 5, 0, 14),
+(55, 9, 4, 0, 98),
+(56, 9, 2, 0, 50),
+(57, 9, 3, 0, 64),
+(58, 9, 1, 0, 25),
+(59, 10, 5, 0, 65),
+(60, 10, 0, 0, 80),
+(61, 10, 0, 0, 54),
+(62, 11, 0, 0, 45),
+(63, 11, 0, 0, 65),
+(64, 11, 0, 0, 87),
+(65, 13, 0, 0, 0),
+(66, 13, 0, 0, 0),
+(67, 13, 0, 0, 0),
+(68, 13, 0, 0, 45),
+(69, 7, 2, 0, 84),
+(70, 7, 4, 0, 75),
+(71, 7, 3, 0, 46),
+(92, 16, 0, 0, 5),
+(93, 16, 0, 0, 15),
+(94, 16, 0, 0, 30),
+(95, 16, 0, 0, 50);
 
 -- --------------------------------------------------------
 
@@ -113,7 +112,7 @@ CREATE TABLE `PV` (
   `idPV` int(11) NOT NULL,
   `idAffaire` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
-  `Texte` varchar(280) NOT NULL,
+  `Texte` varchar(1000) NOT NULL,
   `Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -122,13 +121,7 @@ CREATE TABLE `PV` (
 --
 
 INSERT INTO `PV` (`idPV`, `idAffaire`, `idUser`, `Texte`, `Date`) VALUES
-(1, 7, 1, 'Rien à dire.', '2022-05-30 07:37:21'),
-(2, 7, 1, 'Erreur lors du deuxièmes test. Le vérin présente une défaillance lors du test.', '2022-05-30 07:37:16'),
-(3, 8, 1, 'Test Numéro 3', '2022-04-26 11:54:39'),
-(4, 7, 1, 'Résolution erreur, le vérin avait une fuite lors de la pressurisation.', '2022-05-30 07:37:07'),
-(5, 7, 1, 'Sur le graphique il y a une grosse perte de pression, est-ce normal ?', '2022-05-02 12:19:17'),
-(7, 10, 1, 'Test du jour.', '2022-05-30 07:37:00'),
-(9, 13, 1, 'Bonjour je suis un test.', '2022-05-30 07:36:52');
+(25, 16, 8, 'Affaire rondement mener, le rendement est plus qu\'acceptable. Je contact Véolia pour qu\'il récupère leur camion demain au plus tard. Je donne la suite au coordo technique. ', '2022-06-02 07:33:41');
 
 -- --------------------------------------------------------
 
@@ -147,9 +140,11 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`idUser`, `Username`, `Mdp`) VALUES
-(0, 'root', 'root'),
-(1, 'greg', 'greg'),
-(2, 'User', 'User');
+(7, 'root', 'root'),
+(8, 'greg', 'greg'),
+(9, 'kylian', 'kiki'),
+(10, 'nico', 'nico'),
+(11, 'alex', 'alex');
 
 --
 -- Index pour les tables déchargées
@@ -197,19 +192,19 @@ ALTER TABLE `Affaire`
 -- AUTO_INCREMENT pour la table `Essaie`
 --
 ALTER TABLE `Essaie`
-  MODIFY `idEssaie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `idEssaie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT pour la table `PV`
 --
 ALTER TABLE `PV`
-  MODIFY `idPV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idPV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `User`
 --
 ALTER TABLE `User`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Contraintes pour les tables déchargées
