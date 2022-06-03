@@ -283,7 +283,7 @@ var transporter = nodemailer.createTransport({
                     }
                 }
                 // ImpBDD
-                if(message.slice(0, 22) == '-- phpMyAdmin SQL Dump'){
+                if((message.slice(0, 22) == '-- phpMyAdmin SQL Dump') || (message.slice(0, 22) == '/*!40101 SET @OLD_CHAR')){
                     console.log('ImpBDD : %s', message);
                     // Définition BDD_Temps
                     fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
