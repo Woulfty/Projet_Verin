@@ -293,6 +293,8 @@ var transporter = nodemailer.createTransport({
                         }
                     })
                     try{
+                        // Importation BDD
+                        const BDD_Import = new Importer({host, user, password, database});
                         // Suppresion ancienne BDD
                         await con.execute('DROP TABLE `Essaie`');
                         await con.execute('DROP TABLE `PV`');
@@ -323,13 +325,14 @@ var transporter = nodemailer.createTransport({
                 if(message.split(';')[0] == 'ResBDD'){
                     console.log('ResBDD : %s', message);
                     try{
+                        // Importation BDD
+                        const BDD_Import = new Importer({host, user, password, database});
                         // Suppresion ancienne BDD
                         await con.execute('DROP TABLE `Essaie`');
                         await con.execute('DROP TABLE `PV`');
                         await con.execute('DROP TABLE `Affaire`');
                         await con.execute('DROP TABLE `User`');
                         // Importation BDD
-                        const BDD_Import = new Importer({host, user, password, database});
                         BDD_Import.onProgress(progress=>{
                             var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
                             // Réponse
