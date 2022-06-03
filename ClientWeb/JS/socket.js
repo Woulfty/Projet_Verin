@@ -1,6 +1,10 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
 var $ = jQuery;
+//message d'avertisement en console
+console.log(
+    "%cStop!" + "%cVous ne trouverez rien d'intéressant ici, qu'importe ce qu'il vous a été dit.", "color:red;font-family:system-ui;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold", "color:black;font-family:system-ui;font-size:2rem;-webkit-text-stroke: 1px black;font-weight:bold",
+);
 
 //boutton de la barre
 var toggle = document.getElementById('toggle');
@@ -47,7 +51,6 @@ ws.addEventListener('error', function(event) {
 
 //reception d'un message
 ws.addEventListener("message", async(event, isBinary) => {
-    console.log(event.data)
 
     // Définition String Message
     message = String(event.data);
@@ -343,8 +346,6 @@ ws.addEventListener("message", async(event, isBinary) => {
             element.setAttribute('download', filename);
             document.body.appendChild(element);
             element.click();
-            //document.body.removeChild(element);
-            console.log("donload");
         }
 
         var filename = "BDD.sql";
@@ -401,7 +402,6 @@ ws.addEventListener('error', function(event) {
 ws.onopen = function() {
     //vérification du cookie
     checkCookie();
-    console.log('websocket is connected ...');
 
     ws.send('connected');
     //loader
@@ -485,19 +485,14 @@ ws.onopen = function() {
         if (event.target.classList.value == "reset") {
             //confirmation de l'action
             if (confirm("Veuillez confirmer la réinitialisation") == true) {
-                console.log("réinitialisation de la bdd");
                 ws.send("ResBDD;")
-            } else {
-                console.log("annulation de la réinitialisation");
             }
         }
         //importation de la BDD (ajouté un fichier)
         if (event.target.classList.value == "import") {
-            console.log("importation de la bdd");
         }
         //exportation de la BDD (recevoir le fichier)
         if (event.target.classList.value == "export") {
-            console.log("exportation de la bdd");
             ws.send("ExpBDD;");
         }
         //suppression de la div de l'affaire
@@ -546,12 +541,10 @@ ws.onopen = function() {
             const target = event.target.id == "trash" ? event.target.parentNode : event.target
 
             if (confirm("Tu est sur de vouloir supprimé ce pv ? Cette action est irréverssible !") == true) {
-                console.log("suppression du pv");
 
                 idAffaire = document.getElementById("h3title").innerHTML.slice(17);
                 ws.send("DelPV;" + target.id);
 
-                console.log(target.id);
                 pvTable = document.getElementById('pv');
                 essaistable = document.getElementById('essais');
 
@@ -560,9 +553,6 @@ ws.onopen = function() {
                 }
 
                 ws.send('ListPVID;' + idAffaire);
-                console.log('Confirme que : ' + idAffaire)
-            } else {
-                console.log("annulation de la suppression");
             }
         }
         //modifiaction du pv
@@ -614,7 +604,6 @@ ws.onopen = function() {
             var texteadd = document.getElementById('textefornewpv');
 
             if (texteadd.value) {
-                console.log(texteadd.value + idAffaire + getCookie("username"));
                 ws.send("AddPV;" + getCookie("username") + ";" + idAffaire + ";" + texteadd.value);
             }
         }
@@ -650,8 +639,6 @@ ws.onopen = function() {
             daffaire.style.display = "block";
             dnewpv.style.display = "none";
             dupdpv.style.display = "none";
-
-            console.log('présent');
         }
     });
     //récupération du cookie
