@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <QtWidgets/QMainWindow>
 #include <iostream>
 #include <QTcpSocket>
@@ -7,9 +8,13 @@
 #include <QJsonObject>
 #include <QString>
 #include <string>
-#include <QList>
 #include <QTimer>
+#include <QPen>
+#include <Windows.h>
 
+#include <QtCharts>
+#include <QtCharts/QLineSeries>
+#include <qchartview.h>
 
 #include "ui_PosteBanc.h"
 #include "Affaire.h"
@@ -24,17 +29,24 @@ public:
 	Affaire * affaire = new Affaire(0, 1, 0, 0);
 	Arduino arduino;
 	
-	
-
 
 	QTimer * Frequence;
 	QTimer * TempAcquisition;
+
 	
 
+	Ui::PosteBancClass ui;
+
 private:
-    Ui::PosteBancClass ui;
 	QTcpSocket * socket;
 
+	QChart * chart;
+	QChartView * Graph;
+
+	QLineSeries * series;
+
+	QCategoryAxis * axisY;
+	QCategoryAxis * axisX;
 
 public slots:
 
@@ -42,6 +54,7 @@ public slots:
 	void onSocketConnected();
 	void onSocketDeconnected();
 	void onSocketReadyRead();
+
 
 	void ChangeValueIHM();
 	
@@ -54,5 +67,5 @@ public slots:
 	void SendData();
 	void StopTimer();
 
-	
+	void CreateGraph(int);
 };

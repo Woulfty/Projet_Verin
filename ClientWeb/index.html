@@ -4,7 +4,8 @@
         <title>Poste de supervision</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="IMG/gears.ico"/>
+        <link rel="shortcut icon" href="/favicon.ico" type="IMG/gears.ico">
         <link rel="stylesheet" type="text/css" href="CSS/style.css">
         <link rel="stylesheet" type="text/css" href="CSS/menu.css">
         <link rel="stylesheet" type="text/css" href="CSS/loader.css">
@@ -56,6 +57,7 @@
                         <span class="title">Action BDD</span>
                     </a>
                 </li>
+                <!---
                 <li class="list" id="bhelp">
                     <b></b>
                     <b></b>
@@ -66,6 +68,7 @@
                         <span class="title">Aide</span>
                     </a>
                 </li>
+                -->
             </ul>
         </div>
 
@@ -129,6 +132,19 @@
                 <h3 id="h3title" class="h3title"></h3>
                 <div id="infothisaffaire" class="affaire">
                     <canvas id="myCanvas" class="canvas"></canvas>
+                    
+                    <table id="essaistable">
+                        <thead>
+                            <tr>
+                                <th>Numéro d'essais</th>
+                                <th>Débit</th>
+                                <th>Rendement</th>
+                            </tr>
+                        </thead>
+                        <tbody id="essais">
+
+                        </tbody>
+                    </table>
                     <table id="pvtable">
                         <thead>
                             <tr>
@@ -140,18 +156,13 @@
                                         <ion-icon id="newpv" name="add-outline"></ion-icon>
                                     </button>
                                 </th>
-                                <!--<th>Actions</th>-->
                             </tr>
                         </thead>
                         <tbody id="pv">
 
-
                         </tbody>
-                        
                     </table>
-
                 </div>
-                
             </div>
             <!--ajouté-->
             <div class="article1" id="dnewpv">
@@ -159,7 +170,8 @@
                     <button id="backbutton" class="buttonlist">Retour</button>
                 </div>
                 <h3 id="titleaddpv" class="h3title"></h3>
-                <textarea name="uptpv" id="textefornewpv" rows="20" cols="200"></textarea>
+                <textarea name="uptpv" id="textefornewpv" rows="20" cols="200" maxlength="600" required></textarea>
+                <strong><p id="rc">600</p></strong>
                 <div class="buttonadd">
                     <button id="addpvBDD" class="buttonaddBDD">Ajouter</button>
                 </div>
@@ -170,9 +182,9 @@
                     <button id="backbutton" class="buttonlist">Retour</button>
                 </div>
                 <h3 id="titleupdpv" class="h3title"></h3>
-                <textarea name="uptpv" id="texteforupdpv" rows="20" cols="200"></textarea>
+                <textarea name="uptpv" id="texteforupdpv" rows="20" cols="200" maxlength="600" required></textarea>
                 <div class="mailzone">
-                    <input type="text" class="mailbar" id="addmail" placeholder="Entrez votre Email" required> 
+                    <input type="text" class="mailbar" id="addmail" placeholder="Entrez votre Email" required > 
                 </div>
                 <div class="buttonadd">
                     <button id="updpvBDD" class="buttonupdBDD">Ajouter</button>
@@ -198,6 +210,7 @@
         <!--API-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js" integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!--Script js-->
         <script type="text/javascript" src="JS/menu.js"></script>
         <script src="JS/socket.js"></script>

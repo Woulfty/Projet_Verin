@@ -11,12 +11,14 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -33,6 +35,7 @@ public:
     QLineEdit *AdresseServ;
     QLineEdit *PortServ;
     QPushButton *ButtonConnect;
+    QLabel *ErreurServeur;
     QGroupBox *InformationTest;
     QLabel *TextAffaire;
     QLabel *TextCapteur;
@@ -52,6 +55,11 @@ public:
     QPushButton *ChangeValueAffaire;
     QPushButton *ValideNewParemetre;
     QPushButton *BouttonAffaire;
+    QLabel *ErreurArduino;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -60,12 +68,12 @@ public:
     {
         if (PosteBancClass->objectName().isEmpty())
             PosteBancClass->setObjectName(QString::fromUtf8("PosteBancClass"));
-        PosteBancClass->resize(910, 512);
+        PosteBancClass->resize(1153, 774);
         centralWidget = new QWidget(PosteBancClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         ConnexionServeur = new QGroupBox(centralWidget);
         ConnexionServeur->setObjectName(QString::fromUtf8("ConnexionServeur"));
-        ConnexionServeur->setGeometry(QRect(20, 30, 241, 141));
+        ConnexionServeur->setGeometry(QRect(20, 20, 241, 161));
         label = new QLabel(ConnexionServeur);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 20, 110, 20));
@@ -81,10 +89,13 @@ public:
         ButtonConnect = new QPushButton(ConnexionServeur);
         ButtonConnect->setObjectName(QString::fromUtf8("ButtonConnect"));
         ButtonConnect->setGeometry(QRect(60, 90, 120, 30));
+        ErreurServeur = new QLabel(ConnexionServeur);
+        ErreurServeur->setObjectName(QString::fromUtf8("ErreurServeur"));
+        ErreurServeur->setGeometry(QRect(50, 130, 181, 21));
         InformationTest = new QGroupBox(centralWidget);
         InformationTest->setObjectName(QString::fromUtf8("InformationTest"));
         InformationTest->setEnabled(false);
-        InformationTest->setGeometry(QRect(330, 30, 531, 251));
+        InformationTest->setGeometry(QRect(330, 20, 531, 271));
         TextAffaire = new QLabel(InformationTest);
         TextAffaire->setObjectName(QString::fromUtf8("TextAffaire"));
         TextAffaire->setGeometry(QRect(20, 30, 71, 21));
@@ -146,10 +157,29 @@ public:
         BouttonAffaire->setObjectName(QString::fromUtf8("BouttonAffaire"));
         BouttonAffaire->setEnabled(false);
         BouttonAffaire->setGeometry(QRect(30, 200, 171, 28));
+        ErreurArduino = new QLabel(InformationTest);
+        ErreurArduino->setObjectName(QString::fromUtf8("ErreurArduino"));
+        ErreurArduino->setGeometry(QRect(30, 240, 181, 21));
+        scrollArea = new QScrollArea(centralWidget);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setGeometry(QRect(0, 299, 1161, 425));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1159, 423));
+        gridLayoutWidget = new QWidget(scrollAreaWidgetContents);
+        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(0, 0, 1151, 421));
+        gridLayout = new QGridLayout(gridLayoutWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        scrollArea->setWidget(scrollAreaWidgetContents);
         PosteBancClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(PosteBancClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 910, 21));
+        menuBar->setGeometry(QRect(0, 0, 1153, 21));
         PosteBancClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(PosteBancClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -175,6 +205,7 @@ public:
         label->setText(QCoreApplication::translate("PosteBancClass", "Adresse Serveur : ", nullptr));
         label_2->setText(QCoreApplication::translate("PosteBancClass", "Port serveur : ", nullptr));
         ButtonConnect->setText(QCoreApplication::translate("PosteBancClass", "Connexion Serveur", nullptr));
+        ErreurServeur->setText(QString());
         InformationTest->setTitle(QCoreApplication::translate("PosteBancClass", "Information Test", nullptr));
         TextAffaire->setText(QCoreApplication::translate("PosteBancClass", "Affaire :", nullptr));
         TextCapteur->setText(QCoreApplication::translate("PosteBancClass", "Capteur :", nullptr));
@@ -191,6 +222,7 @@ public:
         ChangeValueAffaire->setText(QCoreApplication::translate("PosteBancClass", "Changer Param\303\250tre affaire", nullptr));
         ValideNewParemetre->setText(QCoreApplication::translate("PosteBancClass", "Valider nouveau param\303\250tre Affaire", nullptr));
         BouttonAffaire->setText(QCoreApplication::translate("PosteBancClass", "Lancer l'affaire", nullptr));
+        ErreurArduino->setText(QString());
     } // retranslateUi
 
 };

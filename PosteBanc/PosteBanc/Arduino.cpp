@@ -1,8 +1,6 @@
 #include "Arduino.h"
 
-Arduino::Arduino(QObject *parent)
-	: QObject(parent)
-{
+Arduino::Arduino(QObject *parent) : QObject( parent ) {
 
 }
 
@@ -10,6 +8,7 @@ Arduino::~Arduino()
 {
 
 }
+
 
 void Arduino::ArduinoConnected() {
 	connect(ArduinoSocket, SIGNAL(readyRead()), this, SLOT(ArduinoReceiveData()));
@@ -30,6 +29,7 @@ void Arduino::ArduinoConnexion()
 void Arduino::ArduinoDisconnected()
 {
 	ArduinoSocket->deleteLater();
+	ArduinoSocket = new QTcpSocket(this);
 	qDebug() << "Arduino Deconnectee";
 }
 
@@ -46,7 +46,17 @@ void Arduino::StopConnection()
 {
 	ArduinoSocket->write("0");
 
-	//QTcpSocket * ArduinoSocket = new QTcpSocket(this);
+	TimerNewSocket = new QTimer(this);
+	QObject::connect(TimerNewSocket, SIGNAL(timeout()), this, SLOT(CreateNewSocket()));
+	TimerNewSocket->start(1000);
+}
+
+void Arduino::CreateNewSocket()
+{
+	TimerNewSocket->stop();
+
+	ArduinoSocket->deleteLater();
+	ArduinoSocket = new QTcpSocket(this);
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
@@ -60,13 +70,18 @@ void Arduino::ArduinoReceiveData()
 
 	float ValueEntre = ArduinoValue[0].toFloat();
 	float ValueSortie = ArduinoValue[1].toFloat();
+	float Debit = ArduinoValue[2].toFloat();
 
 	qDebug() << ValueEntre;
 	qDebug() << ValueSortie;
+	qDebug() << Debit;
+
+	// postebanc->updateGraph(ValueEntre, ValueSortie);
 
 	// Valeur placer dans une liste chacune
 	ListValueEntre.push_back(ValueEntre);
 	ListValueSortie.push_back(ValueSortie);
+	ListDebit.push_back(Debit);
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
@@ -84,6 +99,13 @@ float Arduino::getValueSortie(int NumValeurSortie)
 	//Acceseur Valeur
 	float ValueSortie = ListValueSortie.at(NumValeurSortie);
 	return ValueSortie;
+}
+
+float Arduino::getDebit(int NumDebit)
+{
+	//Acceseur Debit
+	float ValueDebit = ListDebit.at(NumDebit);
+	return ValueDebit;
 }
 
 int Arduino::getListSize()

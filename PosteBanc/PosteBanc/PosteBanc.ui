@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>910</width>
-    <height>512</height>
+    <width>1153</width>
+    <height>774</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>30</y>
+      <y>20</y>
       <width>241</width>
-      <height>141</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
@@ -85,6 +85,19 @@
       <string>Connexion Serveur</string>
      </property>
     </widget>
+    <widget class="QLabel" name="ErreurServeur">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>130</y>
+       <width>181</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="InformationTest">
     <property name="enabled">
@@ -93,9 +106,9 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>30</y>
+      <y>20</y>
       <width>531</width>
-      <height>251</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="title">
@@ -347,6 +360,53 @@
       <string>Lancer l'affaire</string>
      </property>
     </widget>
+    <widget class="QLabel" name="ErreurArduino">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>240</y>
+       <width>181</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>299</y>
+      <width>1161</width>
+      <height>425</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1159</width>
+       <height>423</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1151</width>
+        <height>421</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout"/>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -354,7 +414,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>910</width>
+     <width>1153</width>
      <height>21</height>
     </rect>
    </property>

@@ -329,7 +329,7 @@ table
     margin-left: auto;
     margin-right: auto;
 }
-tr :last-child
+tr :last-child:not(.warning)
 {
     display: flex;
 }
@@ -459,4 +459,43 @@ tr:hover
 {
     height: 2%;
     padding-right: 50px;
+}
+#pvtable
+{
+    margin-top: 1%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    color: #000000;
+    padding: 5%;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+#essaistable
+{
+    margin-top: -8%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    color: #000000;
+    padding: 5%;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+#rc
+{
+    color: #000000;
+    font-size: 20px;
+    padding-left: 162vh;
+    text-align: revert;
+}
+.warning
+{
+    background-color: red;
+    text-decoration: none;
+    color: #fff;
 }

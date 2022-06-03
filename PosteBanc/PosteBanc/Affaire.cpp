@@ -21,10 +21,12 @@ void Affaire::setValueAffaire(int NumAffaire, int Capteur, int Frequence, int Te
 	this->Frequence = Frequence;
 }
 
-QString Affaire::CreateJSON(int NumEssaie, float ValueEntre, float ValueSortie)
+QString Affaire::CreateJSON(int NumEssaie, float ValueEntre, float ValueSortie, float ValueDebit)
 {
+	float rendement = ValueSortie / ValueEntre;
+
 	//Json de fin d'une affaire : Envoie des valeurs
-	QString AffaireJSON = "{\"Methode\":1,\"Affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + ", \"NumEssaie\":" + QString::number(NumEssaie) + ", \"ValueEntre\":" + QString::number(ValueEntre) + ",\"ValueSortie\":" + QString::number(ValueSortie) + "}";
+	QString AffaireJSON = "{\"Methode\":1,\"Affaire\":" + QString::number(NumAffaire) + ",\"NumEssaie\":" + QString::number(NumEssaie) + ", \"Value\":" + QString::number(rendement) + ",\"Debit\":" + QString::number(ValueDebit) + "}";
 
 	return AffaireJSON;
 }
@@ -39,7 +41,7 @@ QString Affaire::JSONdelete(int NumAffaireDelete)
 
 QString Affaire::JSONupdate(int NumAffaire, int Capteur, int Frequence, int TempAcquisition)
 {
-	//JSON modification d'affaire
+	//JSON modification d'affaire	
 	QString AffaireJSON = "{\"Methode\":3,\"Affaire\":" + QString::number(NumAffaire) + ",\"capteur\":" + QString::number(Capteur) + ",\"frequence\":" + QString::number(Frequence) + ",\"temp\":" + QString::number(TempAcquisition) + "}";
 
 	return AffaireJSON;
