@@ -127,7 +127,7 @@ var transporter = nodemailer.createTransport({
                     Username    = message.split(';')[1];
                     MdpUser     = message.split(';')[2];
                     try{
-                        const[rows, fields] = await con.execute('SELECT `Username`,`idUser` FROM `User` WHERE `Username` = ? AND `Mdp` = ?', [Username,MdpUser]);
+                        const[rows, fields] = await con.execute('SELECT `Username`,`idUser` FROM `User` WHERE `Username` = ? AND `Mdp` = MD5(?)', [Username,MdpUser]);
                         if(rows.length > 0){
                             console.log('RepUserConnexion' + ';' + 'true' + ';' + JSON.stringify(rows));
                             ws.send('RepUserConnexion' + ';' + 'true' + ';' + JSON.stringify(rows));
@@ -278,40 +278,43 @@ var transporter = nodemailer.createTransport({
                     }
                 }
                 // ImpBDD
-                if(message.slice(0, 22) == '-- phpMyAdmin SQL Dump'){
-                    console.log('ImpBDD : %s', message);
-                    // Définition BDD_Temps
-                    fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
-                        if (err) {
-                            console.error(err)
-                            return
+                if((message.slice(0, 22) == '-- phpMyAdmin SQL Dump') || (message.slice(0, 22) == '/*!40101 SET @OLD_CHAR')){
+                    if((message.indexOf("Affaire") != '-1') && (message.indexOf("Essaie") != '-1') && (message.indexOf("PV") != '-1') && (message.indexOf("User") != '-1')){
+                        console.log('ImpBDD : %s', message);
+                        // Définition BDD_Temps
+                        fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        })
+                        try{
+                            // Importation BDD
+                            const BDD_Import = new Importer({host, user, password, database});
+                            // Suppresion ancienne BDD
+                            await con.execute('DROP TABLE `Essaie`, `PV`, `Affaire`, `User`');
+                            BDD_Import.onProgress(progress=>{
+                                var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
+                                // Réponse
+                                console.log(`${percent}% Completé`);
+                                ws.send('RepImpBDD' + ';' + `${percent}%`);
+                            });
+                            BDD_Import.import('./BDD_files/BDD_Temps.sql').then(()=>{
+                                var files_imported = BDD_Import.getImported();
+                                console.log(`${files_imported.length} SQL file(s) imported.`);
+                            }).catch(err=>{
+                                // Réponse
+                                ws.send('RepImpBDD' + ';' + 'ERREUR' + ';' + err);
+                                console.error(err);
+                            });
+                        }catch(error){
+                            console.log("Erreur de connexion à la base de données", error);
+                            ws.send('RepImpBDD' + ';' + error);
                         }
-                    })
-                    try{
-                        // Importation BDD
-                        const BDD_Import = new Importer({host, user, password, database});
-                        // Suppresion ancienne BDD
-                        await con.execute('DROP TABLE `Essaie`');
-                        await con.execute('DROP TABLE `PV`');
-                        await con.execute('DROP TABLE `Affaire`');
-                        await con.execute('DROP TABLE `User`');
-                        BDD_Import.onProgress(progress=>{
-                            var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
-                            // Réponse
-                            console.log(`${percent}% Completé`);
-                            ws.send('RepImpBDD' + ';' + `${percent}%`);
-                        });
-                        BDD_Import.import('./BDD_files/BDD_Temps.sql').then(()=>{
-                            var files_imported = BDD_Import.getImported();
-                            console.log(`${files_imported.length} SQL file(s) imported.`);
-                        }).catch(err=>{
-                            // Réponse
-                            ws.send('RepImpBDD' + ';' + 'ERREUR' + ';' + err);
-                            console.error(err);
-                        });
-                    }catch(error){
-                        console.log("Erreur de connexion à la base de données", error);
-                        ws.send('RepImpBDD' + ';' + error);
+                    }
+                    else{
+                        console.log('ImpBDD : MISSING');
+                        ws.send('RepImpBDD' + ';' + `ERROR : Missing TABLE`);
                     }
                 }
                 // ResBDD
@@ -321,10 +324,7 @@ var transporter = nodemailer.createTransport({
                         // Importation BDD
                         const BDD_Import = new Importer({host, user, password, database});
                         // Suppresion ancienne BDD
-                        await con.execute('DROP TABLE `Essaie`');
-                        await con.execute('DROP TABLE `PV`');
-                        await con.execute('DROP TABLE `Affaire`');
-                        await con.execute('DROP TABLE `User`');
+                        await con.execute('DROP TABLE `Essaie`, `PV`, `Affaire`, `User`');
                         // Importation BDD
                         BDD_Import.onProgress(progress=>{
                             var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
