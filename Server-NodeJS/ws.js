@@ -48,10 +48,6 @@ var transporter = nodemailer.createTransport({
         // News Connexion
         console.log("Nouvelle connexion.");
         ws.send("Connexion établie.");
-        // Lancement Date loop for 60 Secondes
-        setInterval(() =>
-            ws.send(`Temps : ${new Date()}`)
-        ,60 * 1000)
         // Message Reçu Répo
         ws.on('message', async function(message){
             // Définition String Message
@@ -67,7 +63,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepListAffaire' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ListPV
@@ -79,7 +74,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepListPV' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ListPVID
@@ -92,7 +86,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepListPVID' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ListEssai
@@ -104,7 +97,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepListEssai' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ListEssaiID
@@ -117,7 +109,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepListEssaiID' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ListUser
@@ -129,9 +120,7 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepListUser' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
-                    }
-                }
+                    }                }
                 // UserConnexion
                 if(message.split(';')[0] == 'UserConnexion'){
                     console.log('UserConnexion : %s', message);
@@ -150,7 +139,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepUserConnexion' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // InfoAffaire
@@ -163,7 +151,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepInfoAffaire' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // InfoEssai
@@ -176,7 +163,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepInfoEssai' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // InfoUser
@@ -189,7 +175,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepInfoUser' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // InfoPV
@@ -202,7 +187,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepInfoPV' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // DelPV
@@ -215,7 +199,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepDelPV' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // AddPV
@@ -230,7 +213,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepAddPV' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // UpdPV
@@ -262,7 +244,6 @@ var transporter = nodemailer.createTransport({
                         }catch(error){
                             console.log("Erreur de connexion à la base de données", error);
                             ws.send('RepUpdPV' + ';' + error);
-                            try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                         }
                     }
                     else{ // Autre
@@ -294,11 +275,10 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepExpBDD' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ImpBDD
-                if((message.slice(0, 22) == '-- phpMyAdmin SQL Dump') || (message.slice(0, 22) == '/*!40101 SET @OLD_CHAR')){
+                if(message.slice(0, 22) == '-- phpMyAdmin SQL Dump'){
                     console.log('ImpBDD : %s', message);
                     // Définition BDD_Temps
                     fs.writeFile('./BDD_files/BDD_Temps.sql', message, err => {
@@ -332,7 +312,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepImpBDD' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
                 // ResBDD
@@ -364,7 +343,6 @@ var transporter = nodemailer.createTransport({
                     }catch(error){
                         console.log("Erreur de connexion à la base de données", error);
                         ws.send('RepResBDD' + ';' + error);
-                        try{var con = await mysql.createConnection({host:BDD_IP,user:BDD_USER,password:BDD_PWD,database:BDD_BASE});}catch(error){console.log("Erreur de connexion à la base de données", error);}
                     }
                 }
             }
