@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `Affaire` (
   `Date` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`idAffaire`),
   KEY `PV` (`PV`)
-) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: Essaie
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `Essaie` (
   PRIMARY KEY (`idEssaie`),
   KEY `Affaire` (`idAffaire`),
   CONSTRAINT `Essaie_ibfk_1` FOREIGN KEY (`idAffaire`) REFERENCES `Affaire` (`idAffaire`)
-) ENGINE = InnoDB AUTO_INCREMENT = 101 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: PV
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `PV` (
   KEY `Affaire` (`idAffaire`),
   CONSTRAINT `PV_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `User` (`idUser`),
   CONSTRAINT `PV_ibfk_2` FOREIGN KEY (`idAffaire`) REFERENCES `Affaire` (`idAffaire`)
-) ENGINE = InnoDB AUTO_INCREMENT = 26 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: User
@@ -60,9 +60,9 @@ CREATE TABLE IF NOT EXISTS `PV` (
 CREATE TABLE IF NOT EXISTS `User` (
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(20) NOT NULL,
-  `Mdp` varchar(20) NOT NULL,
+  `Mdp` varchar(100) NOT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: Affaire
@@ -89,23 +89,23 @@ CREATE TABLE IF NOT EXISTS `User` (
 INSERT INTO
   `User` (`idUser`, `Username`, `Mdp`)
 VALUES
-  (7, 'root', 'root');
+  (0, 'root', '63a9f0ea7bb98050796b649e85481845');
 INSERT INTO
   `User` (`idUser`, `Username`, `Mdp`)
 VALUES
-  (8, 'greg', 'greg');
+  (1, 'greg', 'ea26b0075d29530c636d6791bb5d73f4');
 INSERT INTO
   `User` (`idUser`, `Username`, `Mdp`)
 VALUES
-  (9, 'kylian', 'kiki');
+  (2, 'kylian', '0d61130a6dd5eea85c2c5facfe1c15a7');
 INSERT INTO
   `User` (`idUser`, `Username`, `Mdp`)
 VALUES
-  (10, 'nico', 'nico');
+  (3, 'nico', '410ec15153a6dff0bed851467309bcbd');
 INSERT INTO
   `User` (`idUser`, `Username`, `Mdp`)
 VALUES
-  (11, 'alex', 'alex');
+  (4, 'alex', '534b44a19bf18d20b71ecc4eb77c572f');
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
