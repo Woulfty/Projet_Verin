@@ -110,10 +110,10 @@
                 <h3>Action avec la base de données :</h3>
                 <button class="reset" id="resetbdd">Réinitialiser la base</button>
                 <label>
-                    <span class="buttonfile">Importé la base</span>
+                    <span class="buttonfile">Importer la base</span>
                     <input type="file" class="import" id="importbdd" accept=".sql" onchange="loadFile(this.files[0])" >
                 </label>
-                <button class="export" id="exportbdd">Exporté la base</button>
+                <button class="export" id="exportbdd">Exporter la base</button>
             </div>
 
             <!--déconnexion-->
@@ -187,7 +187,7 @@
                     <input type="text" class="mailbar" id="addmail" placeholder="Entrez votre Email" required > 
                 </div>
                 <div class="buttonadd">
-                    <button id="updpvBDD" class="buttonupdBDD">Ajouter</button>
+                    <button id="updpvBDD" class="buttonupdBDD">Modifié</button>
                 </div>
             </div>
 
@@ -204,7 +204,7 @@
         <script>
             async function loadFile(file){
                 let sqldoc = await file.text();
-                ws.send(sqldoc);
+                ws.send("ImpBDD;" + sqldoc);
             }
         </script>
         <!--API-->

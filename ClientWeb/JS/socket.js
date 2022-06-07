@@ -1,5 +1,7 @@
 //connexion du socket au serveur
 const ws = new WebSocket("ws://192.168.65.44:40510");
+//const ws = new WebSocket("ws://192.168.64.210:40510");
+
 var $ = jQuery;
 //message d'avertisement en console
 console.log(
@@ -51,7 +53,7 @@ ws.addEventListener('error', function(event) {
 
 //reception d'un message
 ws.addEventListener("message", async(event, isBinary) => {
-
+    console.log(event.data);
     // Définition String Message
     message = String(event.data);
 
@@ -282,7 +284,7 @@ ws.addEventListener("message", async(event, isBinary) => {
             //création du champs
             var td1 = document.createElement('td');
             td1.colSpan = "4";
-            td1.innerHTML = "Il n'y a aucun pv pour le moment, ajouté en un !";
+            td1.innerHTML = "Il n'y a aucun pv pour le moment, ajoutez-en un !";
             td1.classList.add("warning");
             // Définition de l'enfant
             tr.appendChild(td1);
@@ -337,7 +339,7 @@ ws.addEventListener("message", async(event, isBinary) => {
     }
     //récéption de la base
     if (message.split(';')[0] == 'RepExpBDD') {
-        var BDD = message.slice(13);
+        var BDD = message.slice(10);
 
         function download(filename, textInput) {
 
@@ -369,7 +371,7 @@ ws.addEventListener("message", async(event, isBinary) => {
     //réponce du serveur a la réinitialisation
     if (message.split(";")[0] == 'RepResBDD'){
         let log = message.split(";")[1];
-        alert("La base a été réinitialiser à " + log);
+        alert(log);
         //on vide le tableau des essais 
         Table = document.getElementById('affaire')
         if (Table != '') {
@@ -381,7 +383,7 @@ ws.addEventListener("message", async(event, isBinary) => {
     //réponce du serveur a l'importation de la BDD
     if (message.split(";")[0] == 'RepImpBDD'){
         let log = message.split(";")[1];
-        alert("La base a été importé à " + log);
+        alert(log);
         Table = document.getElementById('affaire')
         if (Table != '') {
             document.getElementById('affaire').innerHTML = "";
@@ -593,7 +595,7 @@ ws.onopen = function() {
             daffaire.style.display = "none";
             dnewpv.style.display = "block";
             dupdpv.style.display = "none";
-
+            console.log("banane");
             idAffaire = document.getElementById("h3title").innerHTML.slice(17);
             title = document.getElementById('titleaddpv');
             title.innerHTML = "Ajouter un pv pour l'affaire n°" + idAffaire;
@@ -672,9 +674,7 @@ ws.onopen = function() {
             document.getElementById("rc").style.color = 'red';
         }
     };
-
     var size = "600";
-
     $("textarea").bind("input propertychange", function() {
         update();
     });
