@@ -328,7 +328,7 @@ var transporter = nodemailer.createTransport({
                             // Importation BDD
                             const BDD_Import = new Importer({host, user, password, database});
                             // Suppresion ancienne BDD
-                            await con.execute('DROP TABLE `Essaie`, `PV`, `Affaire`, `User`');
+                            await con.execute('DROP TABLE IF EXISTS `Essaie`, `PV`, `Affaire`, `User`');
                             // Importation BDD
                             BDD_Import.onProgress(progress=>{
                                 var percent = Math.floor(progress.bytes_processed / progress.total_bytes * 10000) / 100;
