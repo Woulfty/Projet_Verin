@@ -53,7 +53,6 @@ int affaire::save()
 int affaire::selectAffaire() {
 	QSqlQuery requetes(db);
 	if (db.open()) {
-		//SELECT * FROM `Affaire` ORDER BY `Affaire`.`idAffaire` DESC LIMIT 1
 		requetes.prepare("SELECT `idAffaire` FROM `Affaire` ORDER BY `Affaire`.`idAffaire` DESC LIMIT 1");
 		requetes.exec();
 		requetes.next();

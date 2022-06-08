@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
-    <height>551</height>
+    <width>665</width>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,8 +97,8 @@
    <widget class="QLineEdit" name="IPlineEdit">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>90</y>
+      <x>970</x>
+      <y>380</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -110,8 +110,8 @@
    <widget class="QLineEdit" name="PORtlineEdit">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>120</y>
+      <x>970</x>
+      <y>410</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -120,8 +120,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>90</y>
+      <x>930</x>
+      <y>380</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -133,8 +133,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>120</y>
+      <x>920</x>
+      <y>410</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -146,8 +146,8 @@
    <widget class="QPushButton" name="connectpushButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>150</y>
+      <x>980</x>
+      <y>440</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -159,8 +159,8 @@
    <widget class="QPushButton" name="disconectpushButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>150</y>
+      <x>980</x>
+      <y>440</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -172,8 +172,8 @@
    <widget class="QLabel" name="labelclientConnectToServer">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>190</y>
+      <x>50</x>
+      <y>110</y>
       <width>101</width>
       <height>51</height>
      </rect>
@@ -352,7 +352,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>633</width>
+     <width>665</width>
      <height>21</height>
     </rect>
    </property>

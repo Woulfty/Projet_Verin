@@ -12,7 +12,7 @@ essai::essai(QString Ip, QString DataNam, QString Login, QString Mdp)
 }
 
 
-QVector<QString> essai::selectAffaire(QString idaffaire) {
+QVector<QString> essai::selectEssais(QString idaffaire) {
 	QSqlQuery requetes(db);
 	QVector<QString> stringVector(50);
 
@@ -63,13 +63,14 @@ void essai::supprimeEssai(QString idEssai)
 }
 
 
-void essai::creatEssai(QString idAffaire, QString Frequence, QString TempAcquisition, QString Grandeur) {
+void essai::creatEssai(QString idAffaire, QString NumEssai, QString debit, QString Valeur) {
 	QSqlQuery requetes(db);
-	requetes.prepare("INSERT INTO `Essaie`(`idAffaire`, `Frequence`, `TempAcquisition`, `Grandeur`) VALUES (?, ?, ?, ?)");
+	//requetes.prepare("INSERT INTO `Essaie`(`idAffaire`, `Frequence`, `TempAcquisition`, `Grandeur`) VALUES (?, ?, ?, ?)");
+	requetes.prepare("INSERT INTO `Essaie`(`idAffaire`, `NumEssaie`, `Debit`, `Value`) VALUES (?, ?, ?, ?)");
 	requetes.addBindValue(idAffaire);
-	requetes.addBindValue(Frequence);
-	requetes.addBindValue(TempAcquisition);
-	requetes.addBindValue(Grandeur);
+	requetes.addBindValue(NumEssai);
+	requetes.addBindValue(debit);
+	requetes.addBindValue(Valeur);
 	requetes.exec();
 }
 

@@ -68,7 +68,6 @@ void QtWidgetsApplication1::TCPdataread()
 
 //quand on click sur le bouton pour selectionner une fichier
 void QtWidgetsApplication1::selectFileButtonclicked() {
-	qDebug() << "test";
 	m_fileName = QFileDialog::getOpenFileName(this);
 	ui.lineEdit->setText(m_fileName);
 	if (m_fileName != NULL) {
@@ -98,15 +97,15 @@ void QtWidgetsApplication1::confDecodageFichier()
 			}
 
 			file.close();
+
+			if(data != ""){
 			ui.labelAffiche->setText(data);
 			qDebug() << m_fileName.section('.', 1, 1);
-			//this->TypeAffaire = data.section(';', 0, 0);
 			this->IDCapteur = data.section(';', 0, 0);
 			this->Frequence = data.section(';', 1, 1);
 			this->TotalTime = data.section(';', 2, 2);
 			this->Pv = data.section(';', 3, 3);
 
-			//qDebug() << this->TypeAffaire;
 			qDebug() << this->IDCapteur;
 			qDebug() << this->TotalTime;
 			qDebug() << this->Frequence;
@@ -122,6 +121,10 @@ void QtWidgetsApplication1::confDecodageFichier()
 				client->write(json.toLatin1());
 			}
 			//tcpSocket->write(json.toLatin1());
+			}
+			else {
+				ui.labelAffiche->setText("le fichier seelectionner est vide");
+			}
 		}
 
 	}else{
@@ -196,6 +199,31 @@ void QtWidgetsApplication1::onclientReadyRead()
 
 		Affaire->updateAffaire(id,this->IDCapteur, this->TotalTime, this->Frequence);
 	}
+	else if (methode == QString::number(1)) {
+		int totaltemp = this->TotalTime.toInt();
+		//QVector<QString> jison(totaltemp);
+
+		for (int i = 0; i < totaltemp; i++) {
+			
+			qDebug() << "un essai a etais envoyer";
+			QString jison25 = str.section("}", i, i);
+			this->Id_Affaire = jison25.section(':', 2, 2);
+			this->Id_Affaire = this->Id_Affaire.section(',', 0, 0);
+			qDebug() << this->Id_Affaire + " Id_Affaire";
+			this->NumEssaie = jison25.section(':', 3, 3);
+			this->NumEssaie = this->NumEssaie.section(',', 0, 0);
+			qDebug() << this->NumEssaie + " NumEssais";
+			this->Valeur = jison25.section(':', 4, 4);
+			this->Valeur = this->Valeur.section(',', 0, 0);
+			this->debit = jison25.section(':', 5, 5);
+			this->debit = this->debit.section(',', 0, 0);
+			//this->debit = this->debit.section('}', 0, 0);
+			qDebug() << this->Valeur + " Valeur";
+			qDebug() << this->debit + " debit";
+			Essai->creatEssai(this->Id_Affaire, this->NumEssaie, this->debit, this->Valeur);
+
+		}
+	}
 	
 }
 
@@ -217,7 +245,7 @@ void QtWidgetsApplication1::test() {
 	id = id.section(':', 1, 1);
 	qDebug() << id;
 	QVector<QString> liste_essais(50);
-	liste_essais = Essai->selectAffaire(id);
+	liste_essais = Essai->selectEssais(id);
 	qDebug() << "il y a " + liste_essais.at(0) + " essai";
 	int nb = liste_essais.at(0).toInt();
 	nb++;
@@ -292,7 +320,7 @@ void QtWidgetsApplication1::selectListAffaire()
 	for (int i = 1; i != nb; i++) {
 		qDebug() << "affaire nb " + liste_Affaire[i];
 		IdAffaire = liste_Affaire[i];
-		ui.affaire->addItem("Affaire:" + IdAffaire);
+		//ui.affaire->addItem("Affaire:" + IdAffaire);
 	}
 }
 
