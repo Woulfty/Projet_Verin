@@ -17,10 +17,11 @@ const password = BDD_PWD;
 const database = BDD_BASE;
 
 //  Déclaration Mail
-const MAIL_USER = "mailverinprovidence@gmail.com";
-const MAIL_PASS = "49USHX3iWPnWxF4";
+const MAIL_USER = "17c48a69-0e42-448c-97c2-cee4bf2510d4";
+const MAIL_PASS = "da7e5e87-52cd-454c-8334-a8cc92c57d8f";
 var transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'debugmail.io',
+    port: 25,
     auth:{
         user: MAIL_USER,
         pass: MAIL_PASS
@@ -231,7 +232,7 @@ var transporter = nodemailer.createTransport({
                                 console.log('UpdPV : ACCEPT');
                                 // Envoyer un mail
                                 var mailOptions = {
-                                    from: MAIL_USER, 
+                                    from: 'mailverinprovidence@gmail.com',
                                     to: Mail, 
                                     subject: "Update PV " + idPV, 
                                     text: "MESSAGE AUTOMATIQUE\n\nLe PV " + idPV + " a été modifié :\n" + Texte
