@@ -18,7 +18,7 @@ private:
 
 public:
 	essai(QString Ip, QString DataNam, QString Login, QString Mdp);
-	QVector<QString> selectAffaire(QString);
+	QVector<QString> selectEssais(QString);
 	QVector<QString> selectEssaiID(QString idEssai);
 	void supprimeEssai(QString);
 	void creatEssai(QString idAffaire, QString Frequence, QString TempAcquisition, QString Grandeur);

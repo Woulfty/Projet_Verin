@@ -28,12 +28,22 @@ private:
 	QTcpServer * server;
 	affaire  *Affaire;
 	essai  * Essai;
+	//-------------------------------------------variable affaire------------------------------------------------------------------
 	QString IdAffaire;
 	QString TypeAffaire;
 	QString IDCapteur;
 	QString TotalTime;
 	QString Frequence;
 	QString Pv;
+//----------------------------------------------------variable essai-------------------------------------------------------------------------
+	QString Id_Affaire;
+	QString tempAcquisition;
+	QString	Grandeur;
+	QString NumEssaie;
+	QString	Valeur;
+	QString	debit;
+
+//---------------------------------------------------------------------------------------------------------------------------
 	int ClientConnectoServerToInt = 0;
 	QString ClientConnectoServerToQString = QString::number(ClientConnectoServerToInt);;
 	void reset();
