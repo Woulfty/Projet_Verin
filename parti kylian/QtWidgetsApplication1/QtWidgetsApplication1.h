@@ -24,7 +24,6 @@ private:
 	QTcpSocket * client;
 	QString m_fileName;
 	QString txt;
-	QTcpSocket * tcpSocket;
 	QTcpServer * server;
 	affaire  *Affaire;
 	essai  * Essai;
@@ -58,11 +57,6 @@ private slots:
 	void updateEssai();
 	void creatEssai();
 
-	//----------------------Client--------------------------------------------
-	void connectTCP();
-	void TCPConnected();
-	void TCPdisconnected();
-	void TCPdataread();
 	//-------------------Serveur----------------------------------------------------
 	void onServerNewConnection();
 	void onClientDisconnected();

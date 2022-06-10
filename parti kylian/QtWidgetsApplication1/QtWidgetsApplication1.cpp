@@ -5,7 +5,6 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	ui.disconectpushButton->setVisible(false);
 	QString ip = "192.168.65.20";
 	QString nameDate = "Verin";
 	QString loginData = "admin";
@@ -13,58 +12,14 @@ QtWidgetsApplication1::QtWidgetsApplication1(QWidget *parent)
 	ui.labelclientConnectToServer->setText("client connect : " + ClientConnectoServerToQString);
 	Essai = new essai(ip, nameDate, loginData, MdpData);
 	Affaire = new affaire(ip, nameDate, loginData, MdpData);
-	//---------------------------CLIENT------------------------------------------------------------------------------------------------
-	tcpSocket = new QTcpSocket(this);
-	QObject::connect(tcpSocket, SIGNAL(connected()), this, SLOT(TCPConnected()));
-	QObject::connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(TCPdisconnected()));
-	QObject::connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(TCPdataread()));
 	//---------------------------SERVEUR------------------------------------------------------------------------------------------------
 	server = new QTcpServer(this);
 	QObject::connect(server, SIGNAL(newConnection()), this, SLOT(onServerNewConnection()));
 	server->listen(QHostAddress::AnyIPv4, 4000);
 
-	this->TCPConnected();
 	this->selectListAffaire();
 }
 
-//--------------------------------------------------------------------------------A supprimer-------------------------------------------------------------------
-//quand on click sur le bouton pour se connecter au tcp serveur
-void QtWidgetsApplication1::connectTCP()
-{
-	QString ip = ui.IPlineEdit->text();
-	int port = ui.PORtlineEdit->text().toInt();
-	//QString port = ui.PORtlineEdit->text();
-	tcpSocket->connectToHost(ip, port);
-}
-
-//quand on est connecter au tcp serveur
-void QtWidgetsApplication1::TCPConnected() {
-	ui.connectpushButton->setVisible(false);
-	ui.slectefile->setEnabled(true);
-	ui.disconectpushButton->setVisible(true);
-}
-
-//quand on click sur le bouton pour se déconecter du tcp serveur
-void QtWidgetsApplication1::TCPdisconnected()
-{
-	tcpSocket->disconnectFromHost();
-	ui.connectpushButton->setVisible(true);
-	ui.slectefile->setEnabled(false);
-	ui.disconectpushButton->setVisible(false);
-	ui.lineEdit->setText("");
-	ui.confDcodage->setEnabled(false);
-}
-
-//lire se que on resoi
-void QtWidgetsApplication1::TCPdataread()
-{
-	QByteArray data = tcpSocket->read(tcpSocket->bytesAvailable());
-	QString str(data);
-	ui.labelAffiche->setText(str);
-
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 //quand on click sur le bouton pour selectionner une fichier
 void QtWidgetsApplication1::selectFileButtonclicked() {
@@ -130,10 +85,9 @@ void QtWidgetsApplication1::confDecodageFichier()
 	}else{
 		ui.labelAffiche->setText("erreur le fichier selectionner c'est pas un fichier en .txt c'est un fichier en ." + txt);
 	}
-
 }
 
-
+//quand un client se connectect du serveur
 void QtWidgetsApplication1::onServerNewConnection()
 {
 	client = server->nextPendingConnection();
@@ -148,6 +102,8 @@ void QtWidgetsApplication1::onServerNewConnection()
 	ui.labelclientConnectToServer->setText("client connect : " + ClientConnectoServerToQString);
 
 }
+
+//quand un client se déconnecte du serveur
 void QtWidgetsApplication1::onClientDisconnected() {
 	ClientConnectoServerToInt--;
 	qDebug() << "client tcp c'est deconecter du serveur";
@@ -160,6 +116,7 @@ void QtWidgetsApplication1::onClientDisconnected() {
 	ui.labelclientConnectToServer->setText("client connect : " + ClientConnectoServerToQString);
 }
 
+//on lie le message envoyer au serveur
 void QtWidgetsApplication1::onclientReadyRead()
 {
 	QTcpSocket * odj = qobject_cast<QTcpSocket*>(sender());
@@ -224,10 +181,7 @@ void QtWidgetsApplication1::onclientReadyRead()
 
 		}
 	}
-	
 }
-
-
 
 
 void QtWidgetsApplication1::test() {
@@ -292,11 +246,13 @@ void QtWidgetsApplication1::updateEssai()
 	Essai->updateEssai(id, ui.lineEdit_idAffaire->text(), ui.lineEdit_frequence->text(), ui.lineEdit_tempAqui->text(), ui.lineEdit_grandeur->text());
 	qDebug() << "modification de l'essai " + id;
 }
+
 void QtWidgetsApplication1::creatEssai()
 {
 	Essai->creatEssai(ui.lineEdit_idAffaire->text(), ui.lineEdit_frequence->text(), ui.lineEdit_tempAqui->text(), ui.lineEdit_grandeur->text());
 	qDebug() << "creation de l'essai ";
 }
+
 void QtWidgetsApplication1::reset() {
 	while (ui.essai->count() > 0)
 	{
@@ -320,7 +276,7 @@ void QtWidgetsApplication1::selectListAffaire()
 	for (int i = 1; i != nb; i++) {
 		qDebug() << "affaire nb " + liste_Affaire[i];
 		IdAffaire = liste_Affaire[i];
-		//ui.affaire->addItem("Affaire:" + IdAffaire);
+		ui.affaire->addItem("Affaire:" + IdAffaire);
 	}
 }
 
