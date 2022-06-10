@@ -3,9 +3,9 @@
 #include <qDebug>
 
 PosteBanc::PosteBanc(QWidget *parent)
-	: QMainWindow(parent)
+    : QMainWindow(parent)
 {
-	ui.setupUi(this);
+    ui.setupUi(this);
 	socket = new QTcpSocket(this);
 
 	QObject::connect(socket, SIGNAL(connected()), this, SLOT(onSocketConnected()));
@@ -19,7 +19,7 @@ void PosteBanc::ConnectServeur()
 
 	bool ok;
 	int portAsInt = port.toInt(&ok);
-
+	
 	socket->connectToHost(ip, portAsInt);
 
 	// Si le serveur ne répond pas on affiche un message d'érreur
@@ -51,16 +51,28 @@ void PosteBanc::onSocketReadyRead()
 	QByteArray data = socket->read(socket->bytesAvailable());
 	QJsonDocument jsonResponse = QJsonDocument::fromJson(data);
 	QJsonObject jsonObject = jsonResponse.object();
-
+	
 	// On extrait Les valeur et on les place dans variable
 	int NumAffaire = jsonObject.value("affaire").toInt();
 	int Capteur = jsonObject.value("capteur").toInt();
 	int Frequence = jsonObject.value("frequence").toInt();
 	int TempAcquisition = jsonObject.value("temp").toInt();
 
-	//Creation du graph a l'aide du temp d'acquisition totale
+	
 	CreateGraph(TempAcquisition);
+	/*
+	QLineSeries *test = new QLineSeries();
+	
+	QPen pen = test->pen();
+	pen.setWidth(3);
+	pen.setBrush(QBrush("orange"));
+	test->setPen(pen);
 
+	test->setPointsVisible();
+	*test << QPointF(1, 50) << QPointF(2, 100) << QPointF(3, 150) << QPointF(4, 50);
+	chart->addSeries(test);
+	*/
+	
 
 	// Utilisation d'un setteur pour stocker les paramètre
 	affaire->setValueAffaire(NumAffaire, Capteur, Frequence, TempAcquisition);
@@ -98,7 +110,7 @@ void PosteBanc::ChangeValueAffaire()
 	int NewValueTempAcquisition = ui.tempAcquisitionLine->text().toInt();
 
 	int NumAffaire = affaire->getNumAffaire();
-
+	
 	//
 	QString AffaireUpdateJSON = affaire->JSONupdate(NumAffaire, NewValueCapteur, NewValueFrequence, NewValueTempAcquisition);
 
@@ -136,7 +148,7 @@ void PosteBanc::ChangeValueIHM()
 	ui.LabelCapteur->setText(QString::number(Capteur));
 	ui.LabelFrequence->setText(QString::number(Frequence));
 	ui.LabelAcquisition->setText(QString::number(TempAcquisition));
-
+	
 }
 
 void PosteBanc::DeleteAffaire()
@@ -175,7 +187,7 @@ void PosteBanc::StartRead()
 	int TempAcquisitionLectureSecond = TempAcquisitionLecture * 1000 + FrequenceLecture;
 
 	arduino.ArduinoConnexion();
-
+	
 	//Timer de Fréquence
 	Frequence = new QTimer(this);
 	QObject::connect(Frequence, SIGNAL(timeout()), this, SLOT(Mesure()));
@@ -185,7 +197,7 @@ void PosteBanc::StartRead()
 	TempAcquisition = new QTimer(this);
 	QObject::connect(TempAcquisition, SIGNAL(timeout()), this, SLOT(StopTimer()));
 	TempAcquisition->start(TempAcquisitionLectureSecond);
-
+	
 }
 
 void PosteBanc::Mesure()
@@ -203,45 +215,12 @@ void PosteBanc::SendData()
 	// Boucle qui parcourt le tableaux de donnée pour tous les envoyer
 	int TailleTableau = arduino.getListSize();
 
-	/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	//Création première ligne
-	QLineSeries *LigneValueEntre = new QLineSeries(chart);
-	//Paramètre du pinceaux
-	QPen penEntre = LigneValueEntre->pen();
-	penEntre.setWidth(3);
-	penEntre.setBrush(QBrush("orange"));
-	LigneValueEntre->setPen(penEntre);
-
-	LigneValueEntre->setPointsVisible();
-	/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-	/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	//Création première ligne
-	QLineSeries *LigneValueSortie = new QLineSeries(chart);
-	//Paramètre du pinceaux
-	QPen penSortie = LigneValueSortie->pen();
-	penSortie.setWidth(3);
-	penSortie.setBrush(QBrush("green"));
-	LigneValueSortie->setPen(penSortie);
-
-	LigneValueSortie->setPointsVisible();
-	/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-
-	*LigneValueEntre << QPointF(0, 600) << QPointF(1, 100) << QPointF(2, 200) << QPointF(3, 50) << QPointF(4, 500);
-	chart->addSeries(LigneValueEntre);
-
-	for (int i = 1; i < TailleTableau; i++)
-	{
+	for(int i = 0; i < TailleTableau; i++)
+	{ 
 		float	ValueEntre = arduino.getValueEntre(i);
 		float	ValueSortie = arduino.getValueSortie(i);
 		float	ValueDebit = arduino.getDebit(i);
-
-
-
-		*LigneValueSortie << QPointF(i, ValueSortie);
-		//chart->addSeries(LigneValueSortie);
-
+		
 		int NumeroEssaieBase = i;
 		QString Affaire = affaire->CreateJSON(NumeroEssaieBase, ValueEntre, ValueSortie, ValueDebit);
 
@@ -250,9 +229,9 @@ void PosteBanc::SendData()
 			socket->write(Affaire.toLatin1());
 
 		}
-
+		
 	}
-
+	
 }
 
 void PosteBanc::StopTimer()
@@ -266,8 +245,8 @@ void PosteBanc::StopTimer()
 	arduino.StopConnection();
 	SendData();
 
-
-
+	
+	
 	this->affaire = new Affaire(0, 0, 0, 0);
 	ChangeValueIHM();
 
@@ -282,8 +261,7 @@ void PosteBanc::StopTimer()
 
 void PosteBanc::CreateGraph(int TempAcquisition)
 {
-
-	//Creation Axe Y
+	
 	axisY = new QCategoryAxis();
 	axisY->setRange(0, 700);
 	axisY->setTickCount(50);
@@ -302,19 +280,17 @@ void PosteBanc::CreateGraph(int TempAcquisition)
 	axisY->append("600 kPa", 600);
 	axisY->append("650 kPa", 650);
 	axisY->append("700 kPa", 700);
-
-	//Creation Axe X en fonction du temp d'aquisition totale
+	
+	
 	axisX = new QCategoryAxis();
 	axisX->setRange(0, TempAcquisition);
-	for (int x = 0; x <= TempAcquisition; x++)
+	for (int x = 1; x <= TempAcquisition; x++)
 	{
 		qDebug() << x;
 		axisX->append(QString::number(x), x);
 	}
 
-	//Creéation du graph
 	chart = new QChart();
-
 	//Parametrage du graphiques
 	chart->layout()->setContentsMargins(0, 0, 0, 0);
 	chart->setBackgroundRoundness(0);
@@ -322,15 +298,13 @@ void PosteBanc::CreateGraph(int TempAcquisition)
 	chart->addAxis(axisX, Qt::AlignBottom);
 	chart->addAxis(axisY, Qt::AlignLeft);
 
-	//Titre du graph
+
 	chart->setTitle("Graphique de la Pression en fonction du temps");
 
-
-
+	
 	//Créer l'affichage du graphique et ses parametrages
 	Graph = new QChartView(chart);
 	Graph->setRenderHint(QPainter::Antialiasing);
 	Graph->resize(70 * TempAcquisition, 400);
-	Graph->show();
-	//ui.gridLayout->addWidget(Graph, 0, 0);
+	ui.gridLayout->addWidget(Graph, 0, 0);
 }
