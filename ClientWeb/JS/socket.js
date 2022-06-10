@@ -261,8 +261,8 @@ ws.addEventListener("message", async(event, isBinary) => {
                 var td3 = document.createElement('td');
 
                 td1.innerHTML = "Test n°" + (i + 1);
-                td2.innerHTML = datacourbe[i].Debit + " m3/s";
-                td3.innerHTML = datacourbe[i].Value + " %";
+                td2.innerHTML = parseFloat( datacourbe[i].Debit ).toFixed( 2 ) + " m3/s";
+                td3.innerHTML = parseFloat( datacourbe[i].Value ).toFixed( 2 ) + " %";
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
