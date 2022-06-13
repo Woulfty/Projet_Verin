@@ -259,14 +259,17 @@ ws.addEventListener("message", async(event, isBinary) => {
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
                 var td3 = document.createElement('td');
+                var td4 = document.createElement('td');
 
                 td1.innerHTML = "Test n°" + (i + 1);
-                td2.innerHTML = parseFloat( datacourbe[i].Debit ).toFixed( 2 ) + " m3/s";
-                td3.innerHTML = parseFloat( datacourbe[i].Value ).toFixed( 2 ) + " %";
+                td2.innerHTML = "seconde n°" + (i + 1);
+                td3.innerHTML = parseFloat( datacourbe[i].Debit ).toFixed( 2 ) + " L/s";
+                td4.innerHTML = parseFloat( datacourbe[i].Value ).toFixed( 2 ) + " %";
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
+                tr.appendChild(td4);
                 essaistable.appendChild(tr);
             }
         }

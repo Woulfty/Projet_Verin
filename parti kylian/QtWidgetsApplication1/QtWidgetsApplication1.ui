@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>665</width>
-    <height>467</height>
+    <width>673</width>
+    <height>404</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="slectefile">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -92,81 +92,6 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="IPlineEdit">
-    <property name="geometry">
-     <rect>
-      <x>970</x>
-      <y>380</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>192.168.</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="PORtlineEdit">
-    <property name="geometry">
-     <rect>
-      <x>970</x>
-      <y>410</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>930</x>
-      <y>380</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>IP :</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>920</x>
-      <y>410</y>
-      <width>47</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PORT :</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="connectpushButton">
-    <property name="geometry">
-     <rect>
-      <x>980</x>
-      <y>440</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>connect</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="disconectpushButton">
-    <property name="geometry">
-     <rect>
-      <x>980</x>
-      <y>440</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>disconect</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelclientConnectToServer">
@@ -352,7 +277,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>665</width>
+     <width>673</width>
      <height>21</height>
     </rect>
    </property>
@@ -397,38 +322,6 @@
     <hint type="sourcelabel">
      <x>287</x>
      <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>300</x>
-     <y>199</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>connectpushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>QtWidgetsApplication1Class</receiver>
-   <slot>connectTCP()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>157</x>
-     <y>154</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>300</x>
-     <y>199</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>disconectpushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>QtWidgetsApplication1Class</receiver>
-   <slot>TCPdisconnected()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>157</x>
-     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
