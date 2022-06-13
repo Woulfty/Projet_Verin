@@ -163,6 +163,7 @@ void PosteBanc::DeleteAffaire()
 
 	}
 
+	//Creation d'un nouvelle objet affaire avec des paramètres par défaut
 	this->affaire = new Affaire(0, 0, 0, 0);
 
 	ChangeValueIHM();
@@ -221,6 +222,7 @@ void PosteBanc::SendData()
 		float	ValueSortie = arduino.getValueSortie(i);
 		float	ValueDebit = arduino.getDebit(i);
 		
+		//Creation du JSON pour le serveur
 		int NumeroEssaieBase = i;
 		QString Affaire = affaire->CreateJSON(NumeroEssaieBase, ValueEntre, ValueSortie, ValueDebit);
 
@@ -246,7 +248,7 @@ void PosteBanc::StopTimer()
 	SendData();
 
 	
-	
+	//Creation d'un nouvelle objet avec des paramètres par défaut
 	this->affaire = new Affaire(0, 0, 0, 0);
 	ChangeValueIHM();
 
@@ -261,7 +263,7 @@ void PosteBanc::StopTimer()
 
 void PosteBanc::CreateGraph(int TempAcquisition)
 {
-	
+	// Création du premier axe
 	axisY = new QCategoryAxis();
 	axisY->setRange(0, 700);
 	axisY->setTickCount(50);
@@ -281,7 +283,7 @@ void PosteBanc::CreateGraph(int TempAcquisition)
 	axisY->append("650 kPa", 650);
 	axisY->append("700 kPa", 700);
 	
-	
+	// Création du deuxième axe en fonction des paramètres reçue
 	axisX = new QCategoryAxis();
 	axisX->setRange(0, TempAcquisition);
 	for (int x = 1; x <= TempAcquisition; x++)

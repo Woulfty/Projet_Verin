@@ -67,7 +67,7 @@ void Arduino::ArduinoReceiveData()
 	QString Data = ArduinoSocket->read(ArduinoSocket->bytesAvailable());
 	QStringList ArduinoValue = Data.split(QLatin1Char(','), Qt::SkipEmptyParts);
 
-
+	// Association des valeurs de la liste
 	float ValueEntre = ArduinoValue[0].toFloat();
 	float ValueSortie = ArduinoValue[1].toFloat();
 	float Debit = ArduinoValue[2].toFloat();

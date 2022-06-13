@@ -50,22 +50,26 @@ private:
 
 public slots:
 
+	// Slots lié au Serveur
 	void ConnectServeur();
 	void onSocketConnected();
 	void onSocketDeconnected();
 	void onSocketReadyRead();
 
-
+	// Slot IHM valeur
 	void ChangeValueIHM();
 	
+	// Slot IHM Bouton et activation
 	void EnableChangeValue();
 	void ChangeValueAffaire();
 	void DeleteAffaire();
 	
+	// Slot Démarer l'affaire
 	void StartRead();
 	void Mesure();
 	void SendData();
 	void StopTimer();
 
+	// Slot Graphique ( Non Fonctionnel )
 	void CreateGraph(int);
 };
